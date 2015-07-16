@@ -18,6 +18,7 @@ class ProductsController < ApplicationController
     # a merchant can create a new product using a form
     # (nested routing bc the prod is associated with that merchant only)
     # takes you to a form page
+    @product = Product.new
   end
 
   def create

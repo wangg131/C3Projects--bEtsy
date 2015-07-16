@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   # resources :guests
   resources :merchants do
     get :dashboard
+    resources :products
   end
   # resources :orders
   # resources :order_items
