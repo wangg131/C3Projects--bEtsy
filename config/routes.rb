@@ -16,10 +16,14 @@ Rails.application.routes.draw do
   # resources :carts
   # resources :categories
   # resources :guests
+  patch 'merchants/:merchant_id/products/:id' => 'products#active_update', as: "active_update"
+
   resources :merchants do
     get :dashboard
     resources :products
   end
+
+
   # resources :orders
   # resources :order_items
   # resources :payments

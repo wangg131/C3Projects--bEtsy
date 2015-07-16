@@ -1,6 +1,6 @@
 <h1>Add New Product</h1>
 
-<%= form_for @product, url: new_merchant_product_path(params[:merchant_id]) do |f| %>
+<%= form_for @product, url: merchant_products_path(params[:merchant_id]) do |f| %>
   <fieldset>
     <legend>Product Details</legend>
       <%= f.label :name %>

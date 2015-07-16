@@ -24,6 +24,9 @@ class ProductsController < ApplicationController
   def create
     # submits the form to save the new product to the db
     # redirects you to the merchant dashboard page
+    @product = Product.create(create_params[:product])
+
+    redirect_to merchant_dashboard_path(params[:merchant_id])
   end
 
   def edit
@@ -47,6 +50,23 @@ class ProductsController < ApplicationController
     # a merchant can delete a product from their dashboard page by clicking the 'x' next to the product
     # does it right on the same screen, doesn't take you somewhere else to do it
     # redirects you to the merchant dashboard page when done
+    @product = Product.find(params[:id])
+
+    @product.destroy
+
+    redirect_to(:back)
+  end
+
+  def active_update
+   @product = Product.find(params[:id])
+
+    if @product.active == true
+      @product.update(active: false)
+    else
+      @product.update(active: true)
+    end
+
+    redirect_to(:back)
   end
 
   def instock?
