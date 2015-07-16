@@ -5,9 +5,8 @@ class CreateOrderItems < ActiveRecord::Migration
       t.integer :order_id
       t.float :revenue
       t.boolean :shipped
-      
       t.integer :merchant_id
-
+      
       t.timestamps null: false
     end
   end

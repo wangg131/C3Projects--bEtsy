@@ -12,10 +12,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :exp_date
       t.integer :cvv
       t.integer :billing_zip
-
-      t.integer :merchant_id
-      t.integer :payment_id
-
+      
       t.timestamps null: false
     end
   end
