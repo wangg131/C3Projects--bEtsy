@@ -12,9 +12,10 @@ class OrdersController < ApplicationController
     # the cart displays any 'pending' orders that exist ??
   end
 
-  def new
+  # def new
+    # do we need this??? it might be taken care of by the 'cart' method
     # occurs the first time an item is added to the 'cart'
-  end
+  # end
 
   def create
     # order gets created initially withOUT payment details (this happens at checkout)
