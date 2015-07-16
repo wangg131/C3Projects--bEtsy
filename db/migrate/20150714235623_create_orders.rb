@@ -8,11 +8,11 @@ class CreateOrders < ActiveRecord::Migration
       t.string :city
       t.string :state
       t.integer :zip
-      t.integer :credit_card
+      t.string :credit_card
       t.integer :exp_date
       t.integer :cvv
       t.integer :billing_zip
-      
+
       t.timestamps null: false
     end
   end
