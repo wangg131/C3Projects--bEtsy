@@ -16,13 +16,19 @@ Rails.application.routes.draw do
   # resources :carts
   # resources :categories
   # resources :guests
-  # resources :merchants
+  resources :merchants do
+    get :dashboard
+  end
   # resources :orders
   # resources :order_items
   # resources :payments
   # resources :products
   # resources :reviews
-  # resources :sessions  
+  # resources :sessions
+
+  # controller :merchants do
+  #   get :dashboard
+  # end
 
   # Example resource route with options:
   #   resources :products do

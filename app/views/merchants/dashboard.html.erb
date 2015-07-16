@@ -1,0 +1,19 @@
+<h1>Merchant Dashboard</h1>
+
+<h3><%= link_to "Add Product" %></h3>
+<h3><%= link_to "Add Category" %></h3>
+
+<h5><%= link_to "Orders" %></h5>
+<h5>Revenue: <%= "DOLLABILLS" %></h5>
+
+<h3>Products</h3>
+  <table>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= link_to product.name %></td>
+        <td><%= link_to "X" %></td>
+        <td><%= link_to "Edit" %></td>
+        <td><%= link_to "Activate/Deactivate" %></td>
+      </tr>
+    <% end %>
+  </table>

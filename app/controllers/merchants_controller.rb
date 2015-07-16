@@ -2,7 +2,7 @@ class MerchantsController < ApplicationController
   def index
 
   end
-  
+
   def create
 
   end
@@ -25,5 +25,14 @@ class MerchantsController < ApplicationController
 
   def destroy
 
+  end
+
+  def dashboard
+    # may change the params depending on sessions
+    @merchant = Merchant.find(params[:merchant_id])
+
+    @products = @merchant.products
+
+    # @total_revenue = @products.order_item.revenue
   end
 end
