@@ -16,13 +16,11 @@ Rails.application.routes.draw do
   # resources :carts
   # resources :categories
   # resources :guests
-  patch 'merchants/:merchant_id/products/:id' => 'products#active_update', as: "active_update"
 
-  resources :merchants do
+  resources :merchants, only: [:new, :create, :show] do
     get :dashboard
     resources :products
   end
-
 
   # resources :orders
   # resources :order_items
@@ -35,6 +33,7 @@ Rails.application.routes.draw do
   #   get :dashboard
   # end
 
+  patch 'merchants/:merchant_id/products/:id' => 'products#active_update', as: "active_update"
   # Example resource route with options:
   #   resources :products do
   #     member do

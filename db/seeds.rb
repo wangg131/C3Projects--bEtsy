@@ -15,7 +15,7 @@ CSV.foreach("db/seed_data_merchants.csv", { encoding: "UTF-8", headers: true, he
     Merchant.create(
       name: row[:name],
       email: row[:email],
-      password_digest: row[:password]
+      password: row[:password]
       )
 end
 
@@ -33,4 +33,3 @@ end
 CSV.foreach("db/seed_data_orders.csv", { encoding: "UTF-8", headers: true, header_converters: :symbol, converters: :all}) do |row|
     Order.create(row.to_hash)
 end
-
