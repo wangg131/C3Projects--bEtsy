@@ -14,6 +14,8 @@ class OrderItemsController < ApplicationController
   def new
     # when a customer adds a product to the 'cart' (i.e. adds a new order_item to the order)
     # when a customer increases the qty number for a product in the cart view (i.e. 2 > 3 sweaters)
+
+    # calls the 'check_stock' method to see if it can make a new one
   end
 
   def create
@@ -31,6 +33,11 @@ class OrderItemsController < ApplicationController
   def destroy
     # if a customer decreases the qty number for a product in the cart view (i.e. 3 > 1 sweater)
     # if a customer clicks an 'x' in the cart view to remove all units of that product??
+  end
+
+  def check_stock
+    # when you create a new order_item, it needs to check that the stock for 
+    # that product is >= the total number of order_items that you want
   end
 
 end
