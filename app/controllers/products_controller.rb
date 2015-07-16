@@ -30,11 +30,17 @@ class ProductsController < ApplicationController
     # a merchant can edit details about a product using a form
     # note: changing the price of a product will NOT change the price of the order_item (intentionally)
     # takes you to a form page
+    @product = Product.find(params[:id])
   end
 
   def update
     # submits the form to save changes to the product details
     # redirects you to the merchant dashboard page
+    @product = Product.find(params[:id])
+
+    @product.update(create_params[:product])
+
+    redirect_to merchant_dashboard_path(params[:merchant_id])
   end
 
   def destroy
@@ -47,6 +53,13 @@ class ProductsController < ApplicationController
     # checks to see if product.stock > 0
       # if true, then it's ok to purchase
       # if false, then the product is 'out of stock' and cannot be purchased
+  end
+
+  private
+
+  def create_params
+    params.permit(product: [:name, :description, :price, :stock, :active, :photo_url, :merchant_id])
+
   end
 
 end
