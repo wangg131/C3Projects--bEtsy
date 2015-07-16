@@ -16,7 +16,10 @@ Rails.application.routes.draw do
   # resources :carts
   # resources :categories
   # resources :guests
-  resources :merchants, only: [:new, :create, :show]
+  resources :merchants, only: [:new, :create, :show] do
+    get :dashboard
+    resources :products
+  end
   # resources :orders
   # resources :order_items
   # resources :payments
