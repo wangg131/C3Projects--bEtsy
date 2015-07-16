@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   # resources :carts
   # resources :categories
   # resources :guests
-  # resources :merchants
+  resources :merchants, only: [:new, :create, :show]
   # resources :orders
   # resources :order_items
   # resources :payments

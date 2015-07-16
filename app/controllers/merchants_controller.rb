@@ -2,12 +2,15 @@ class MerchantsController < ApplicationController
   def index
 
   end
-  
-  def create
-
-  end
 
   def new
+    @merchant = Merchant.new
+  end
+  
+  def create
+    @merchant = Merchant.create(merchant_params)
+
+    redirect_to root_path
 
   end
 
@@ -26,4 +29,14 @@ class MerchantsController < ApplicationController
   def destroy
 
   end
+
+#________________________________________________________________________________
+  private
+
+  def merchant_params
+    params.require(:merchant).permit(:name, :email, :password, :password_confirmation)
+  end
+
+
+
 end

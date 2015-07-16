@@ -1,0 +1,20 @@
+<h1>Welcome to Primo!</h1>
+
+<%= form_for @merchant do |f| %>
+
+  <fieldset>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+
+    <%= f.label :password_confirmation %>
+    <%= f.text_field :password_confirmation %>
+  </fieldset>
+
+  <%= f.submit "Create an Account" %>
+<% end %>
