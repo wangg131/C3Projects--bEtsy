@@ -1,0 +1,9 @@
+<h1>Primo!</h1>
+
+<h3>Welcome, <%= @merchant_name %> </h3>
+
+<% if @merchant %>
+<%= link_to "Logout", logout_path , method: :delete, class: "btn btn-default" %>
+<% else %> 
+<%= link_to "Login", login_path, class: "btn btn-default" %>
+<% end %>
