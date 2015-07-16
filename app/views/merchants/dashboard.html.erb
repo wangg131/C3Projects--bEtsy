@@ -14,8 +14,10 @@
         <td><%= link_to "X", merchant_product_path(product.merchant_id, product.id), method: :delete %></td>
         <td><%= link_to "Edit", edit_merchant_product_path(product.merchant_id, product.id) %></td>
         <% if product.active == true %>
+          <td>ACTIVE</td>
           <td><%= link_to "Deactivate", active_update_path(product.merchant_id, product.id), method: :patch %></td>
         <% else %>
+          <td>INACTIVE</td>
           <td><%= link_to "Activate", active_update_path(product.merchant_id, product.id), method: :patch %></td>
         <% end %>
       </tr>
