@@ -1,0 +1,25 @@
+<h1>Merchant Dashboard</h1>
+
+<h3><%= link_to "Add Product", new_merchant_product_path(params[:merchant_id]) %></h3>
+<h3><%= link_to "Add Category" %></h3>
+
+<h5><%= link_to "Orders" %></h5>
+<h5>Revenue: <%= "DOLLABILLS" %></h5>
+
+<h3>Products</h3>
+  <table>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= link_to product.name %></td>
+        <td><%= link_to "X", merchant_product_path(product.merchant_id, product.id), method: :delete %></td>
+        <td><%= link_to "Edit", edit_merchant_product_path(product.merchant_id, product.id) %></td>
+        <% if product.active == true %>
+          <td>ACTIVE</td>
+          <td><%= link_to "Deactivate", active_update_path(product.merchant_id, product.id), method: :patch, action: :active_update %></td>
+        <% else %>
+          <td>INACTIVE</td>
+          <td><%= link_to "Activate", active_update_path(product.merchant_id, product.id), method: :patch, action: :active_update %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>

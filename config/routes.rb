@@ -16,21 +16,23 @@ Rails.application.routes.draw do
   # resources :carts
   # resources :categories
   # resources :guests
+
+  get '/login'  =>  'sessions#new', as: 'login'
+  post '/login' =>  'sessions#create'
+  delete '/logout' => 'sessions#destroy', as: 'logout'
   resources :merchants, only: [:new, :create, :show] do
     get :dashboard
     resources :products
   end
+
+  patch 'merchants/:merchant_id/products/:id/active_update' => 'products#active_update', as: "active_update"
+
   # resources :orders
   # resources :order_items
   # resources :payments
   # resources :products
   # resources :reviews
-  # resources :sessions 
-
-  get '/login'  =>  'sessions#new', as: 'login'
-  post '/login' =>  'sessions#create'  
-  delete '/logout' => 'sessions#destroy', as: 'logout'
-  
+  # resources :sessions
 
   # Example resource route with options:
   #   resources :products do
