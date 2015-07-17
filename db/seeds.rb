@@ -24,6 +24,7 @@ CSV.foreach("db/seed_data_reviews.csv", { encoding: "UTF-8", headers: true, head
 end
 
 CSV.foreach("db/seed_data_categories.csv", { encoding: "UTF-8", headers: true, header_converters: :symbol, converters: :all}) do |row|
+  Category.create(row.to_hash)
 end
 
 CSV.foreach("db/seed_data_order_items.csv", { encoding: "UTF-8", headers: true, header_converters: :symbol, converters: :all}) do |row|

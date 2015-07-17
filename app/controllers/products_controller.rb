@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
       # if instock? == false, you can't add it to the cart
     @product = Product.find(params[:id])
     @reviews = @product.reviews
-   
+
   end
 
   def new
@@ -22,6 +22,7 @@ class ProductsController < ApplicationController
     # (nested routing bc the prod is associated with that merchant only)
     # takes you to a form page
     @product = Product.new
+    @categories = Category.all.order(:name)
   end
 
   def create
@@ -37,6 +38,7 @@ class ProductsController < ApplicationController
     # note: changing the price of a product will NOT change the price of the order_item (intentionally)
     # takes you to a form page
     @product = Product.find(params[:id])
+    @categories = Category.all.order(:name)
   end
 
   def update
@@ -81,8 +83,7 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :stock, :active, :photo_url, :merchant_id)
-
+    params.require(:product).permit(:name, :description, :price, :stock, :active, :photo_url, :merchant_id, :category_id)
   end
 
 end
