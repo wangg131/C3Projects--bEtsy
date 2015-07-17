@@ -3,6 +3,12 @@ class MerchantsController < ApplicationController
 
   end
 
+  def show
+    @merchant = Merchant.find(params[:id])
+    @merchant_products = @merchant.products
+
+  end
+
   def new
     @merchant = Merchant.new
   end
@@ -17,9 +23,6 @@ class MerchantsController < ApplicationController
 
   end
 
-  def show
-
-  end
 
   def update
 

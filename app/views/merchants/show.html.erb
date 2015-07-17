@@ -1,0 +1,12 @@
+<h1><%= @merchant.name %></h1>
+
+<div class="products">
+  <% @merchant_products.each do |product| %>
+    <div class="product-square">
+      <div class="product-image"><%= image_tag(product.photo_url) %></div>
+      <h3><%= product.name %></h3>
+      <h4><%= product.price %></h4>
+      <h4><%= product.description %></h4>
+    </div>
+  <% end %>
+</div>
