@@ -10,6 +10,7 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.create(create_params[:category])
+
     redirect_to :back
   end
 
