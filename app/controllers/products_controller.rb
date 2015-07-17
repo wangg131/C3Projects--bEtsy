@@ -12,6 +12,9 @@ class ProductsController < ApplicationController
       # merchants can't buy their own products (i.e. no 'add to cart' button for them)
       # merchants can't leave reviews for their own products
       # if instock? == false, you can't add it to the cart
+    @product = Product.find(params[:id])
+    @reviews = @product.reviews
+   
   end
 
   def new
@@ -24,9 +27,9 @@ class ProductsController < ApplicationController
   def create
     # submits the form to save the new product to the db
     # redirects you to the merchant dashboard page
-    @product = Product.create(create_params[:product])
+    @product = Product.create(params[:product])
 
-    redirect_to merchant_dashboard_path(params[:merchant_id])
+    redirect_to merchant_dashboard_path(review_params[:merchant_id])
   end
 
   def edit
@@ -41,7 +44,7 @@ class ProductsController < ApplicationController
     # redirects you to the merchant dashboard page
     @product = Product.find(params[:id])
 
-    @product.update(create_params[:product])
+    @product.update(params[:product])
 
     redirect_to merchant_dashboard_path(params[:merchant_id])
   end
@@ -74,11 +77,11 @@ class ProductsController < ApplicationController
       # if true, then it's ok to purchase
       # if false, then the product is 'out of stock' and cannot be purchased
   end
-
+#--------------------------------------------------------------------------------
   private
 
-  def create_params
-    params.permit(product: [:name, :description, :price, :stock, :active, :photo_url, :merchant_id])
+  def product_params
+    params.require(:product).permit(:name, :description, :price, :stock, :active, :photo_url, :merchant_id)
 
   end
 

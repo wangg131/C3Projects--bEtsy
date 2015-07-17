@@ -1,0 +1,52 @@
+<%= link_to "Add to Cart" %>
+<%= link_to "Checkout" %>
+
+<h1>Product Information</h1>
+
+<ul>
+  <li>
+    <%= @product.photo_url %>
+  </li>
+  <li>
+    Product Name: <%= @product.name %>
+  </li>
+  <li>
+    Description: <%= @product.description %>
+  </li>
+  <li>
+    Price: <%= @product.price %>
+  </li>
+  <li>
+    Number in Stock: <%= @product.stock %>
+  </li>
+</ul>
+
+<%= link_to "View this Merchant's Store" %>
+
+<h3> Current Reviews </h3> 
+
+  <table border "1">
+
+  <tr>
+    <th>
+      Review
+    </th>
+    <th>
+      Rating
+    </th>
+  </tr>
+
+<% @reviews.each do |review| %>
+  <tr>
+    <td>
+      <%= review.content %>
+    </td>
+
+    <td>
+      <%= review.rating %>
+    </td>
+
+
+  </tr>
+  <% end %>
+</table>

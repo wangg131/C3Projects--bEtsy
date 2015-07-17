@@ -4,10 +4,13 @@ class ReviewsController < ApplicationController
   end
 
   def create
+    @review = Review.create(review_params)
 
+    redirect_to :back
   end
 
   def new
+    @review = Review.new
 
   end
 
@@ -26,4 +29,11 @@ class ReviewsController < ApplicationController
   def destroy
 
   end
+#________________________________________________________________________________
+  private
+
+  def review_params
+    params.require(:review).permit(:content, :rating, :product_id)
+  end
+
 end
