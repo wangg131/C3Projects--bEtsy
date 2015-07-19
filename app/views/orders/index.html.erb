@@ -10,7 +10,14 @@
 
 <h3>Orders</h3>
 <ul>
-  <% @order_items.each do |order_item| %>
-    <li><%= order_item.product.name %></li>
+  <% @orders.each do |order| %>
+    <li><%= link_to "Order ##{order.id}" %></li>
+      <ul>
+        <% @order_items.each do |order_item| %>
+          <% if order_item.order == order %>
+            <li><%= order_item.product.name %></li>
+          <% end %>
+        <% end %>
+      </ul>
   <% end %>
 </ul>

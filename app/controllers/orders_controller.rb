@@ -3,7 +3,13 @@ class OrdersController < ApplicationController
   def index
     # a merchant can view all of their 'paid' and 'shipped' orders
     @order_items = Merchant.find(params[:merchant_id]).order_items
+    @orders = []
 
+    @order_items.each do |order_item|
+      @orders.push(order_item.order)
+    end
+    
+    @orders = @orders.uniq
 
   end
 
