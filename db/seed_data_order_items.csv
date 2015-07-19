@@ -1,7 +1,7 @@
-product_id,order_id,revenue,shipped
-1,1,25.99,FALSE
-6,1,6.00,TRUE
-1,2,25.99,TRUE
-11,2,40.00,FALSE
-5,2,17.00,FALSE
-4,1,19.00,TRUE
+product_id,order_id,revenue,shipped,merchant_id
+1,1,25.99,FALSE,1
+6,1,6.00,TRUE,1
+1,2,25.99,TRUE,1
+11,2,40.00,FALSE,1
+5,2,17.00,FALSE,5
+4,1,19.00,TRUE,4
