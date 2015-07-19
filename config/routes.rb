@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :merchants, only: [:new, :create, :show] do
     get :dashboard
     resources :products
+    resources :orders, only: [:index, :show]
   end
 
   resources :categories, only: [:new, :create]
