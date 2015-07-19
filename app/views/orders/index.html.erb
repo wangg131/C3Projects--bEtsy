@@ -1,0 +1,16 @@
+<h1>Merchant's Orders</h1>
+
+<h3>Total Revenue</h3>
+<h4>Shipped: </h4>
+<h4>Not Shipped: </h4>
+
+<h3>Total Number of Orders</h3>
+<h4>Shipped: </h4>
+<h4>Not Shipped: </h4>
+
+<h3>Orders</h3>
+<ul>
+  <% @order_items.each do |order_item| %>
+    <li><%= order_item.product.name %></li>
+  <% end %>
+</ul>

@@ -3,7 +3,7 @@
 <h3><%= link_to "Add Product", new_merchant_product_path(params[:merchant_id]) %></h3>
 <h3><%= link_to "Add Category", new_category_path %></h3>
 
-<h5><%= link_to "Orders" %></h5>
+<h5><%= link_to "Orders", merchant_orders_path(params[:merchant_id]) %></h5>
 <h5>Revenue: <%= "DOLLABILLS" %></h5>
 
 <h3>Products</h3>
