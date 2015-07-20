@@ -13,16 +13,23 @@
   <% @orders.each do |order| %>
     <li><%= link_to "Order ##{order.id}" %></li>
         <table class="table table-hover">
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Status</th>
+          </tr>
           <% @order_items.each do |order_item| %>
             <% if order_item.order == order %>
               <tr>
                 <td><%= order_item.product.name %></td>
                 <td><%= number_to_currency(order_item.revenue) %></td>
+                <td><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
               </tr>
             <% end %>
           <% end %>
           <tr>
             <td>TOTAL</td>
+            <td></td>
             <td><%=  %></td>
           </tr>
         </table>
