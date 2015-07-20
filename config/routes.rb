@@ -30,7 +30,12 @@ Rails.application.routes.draw do
 
   resources :categories, only: [:new, :create]
 
+  get 'merchant/:merchant_id/orders/shipped' => 'orders#shipped', as: "orders_shipped"
+  get 'merchant/:merchant_id/orders/unshipped' => 'orders#unshipped', as: "orders_unshipped"
+
   patch 'merchants/:merchant_id/products/:id/active_update' => 'products#active_update', as: "active_update"
+
+  patch 'merchants/:merchant_id/order_items/:id' => 'order_items#mark_shipped', as: "mark_shipped"
 
   # resources :orders
   # resources :order_items

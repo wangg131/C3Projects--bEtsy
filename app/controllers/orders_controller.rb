@@ -20,13 +20,13 @@ class OrdersController < ApplicationController
         @unshipped_count += 1
       end
     end
-
   end
 
   def show
     # a merchant can view a particular order and all of its details (i.e. order_items/totals, etc.)
-    
-
+    @order = Order.find(params[:id])
+    @order_items = Merchant.find(params[:merchant_id]).order_items
+    @redacted_cc = redacted_cc(@order.credit_card)
     # CAN WE DO BOTH OF THESE?
 
     # the cart displays any 'pending' orders that exist ??
@@ -56,6 +56,48 @@ class OrdersController < ApplicationController
     # if the customer 'clears' their cart ??? (need button for this)
   end
 
+  def shipped
+    @order_items = Merchant.find(params[:merchant_id]).order_items.where(shipped: true)
+
+    @orders = get_orders(@order_items)
+
+    @shipped_revenue = 0
+    @unshipped_revenue = 0
+    @shipped_count = 0
+    @unshipped_count = 0
+
+    @order_items.each do |order_item|
+      if order_item.shipped == true
+        @shipped_revenue += order_item.revenue
+        @shipped_count += 1
+      else
+        @unshipped_revenue += order_item.revenue
+        @unshipped_count += 1
+      end
+    end
+  end
+
+  def unshipped
+    @order_items = Merchant.find(params[:merchant_id]).order_items.where(shipped: false)
+
+    @orders = get_orders(@order_items)
+
+    @shipped_revenue = 0
+    @unshipped_revenue = 0
+    @shipped_count = 0
+    @unshipped_count = 0
+
+    @order_items.each do |order_item|
+      if order_item.shipped == true
+        @shipped_revenue += order_item.revenue
+        @shipped_count += 1
+      else
+        @unshipped_revenue += order_item.revenue
+        @unshipped_count += 1
+      end
+    end
+  end
+
   private
 
   def get_orders(order_items)
@@ -68,6 +110,7 @@ class OrdersController < ApplicationController
     return orders.uniq
   end
 
-
-
+  def redacted_cc(credit_card)
+    credit_card.chars.last(4).join
+  end
 end

@@ -16,7 +16,7 @@ CSV.foreach("db/seed_data_merchants.csv", { encoding: "UTF-8", headers: true, he
       name: row[:name],
       email: row[:email],
       password: row[:password],
-     password_confirmation: row[:password_confirmation]
+      password_confirmation: row[:password_confirmation]
       )
 end
 
