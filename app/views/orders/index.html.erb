@@ -12,27 +12,36 @@
 <ul>
   <% @orders.each do |order| %>
     <li><%= link_to "Order ##{order.id}", merchant_order_path(params[:merchant_id], order.id) %></li>
+    <ul>
+      <li>Ordered on: <%= order.updated_at %> </li>
+    </ul>
         <table class="table table-hover">
           <tr>
             <th>Product</th>
+            <th>Quantity</th>
             <th>Price</th>
             <th>Status</th>
+            <th></th>
           </tr>
           <% total = 0 %>
           <% @order_items.each do |order_item| %>
             <% if order_item.order == order %>
               <tr>
                 <td><%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></td>
+                <td>DO THIS</td>
                 <td><%= number_to_currency(order_item.revenue) %></td>
                 <% total += order_item.revenue %>
                 <td><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
+                <td> <%= order_item.shipped ? ("") : (link_to "Shipped", mark_shipped_path(params[:merchant_id], order_item.id), method: :patch, class: "btn btn-default") %> </td>
               </tr>
             <% end %>
           <% end %>
           <tfoot>
             <tr>
               <td>TOTAL</td>
+              <td></td>
               <td><%= number_to_currency(total) %></td>
+              <td></td>
               <td></td>
             </tr>
           </tfoot>

@@ -7,7 +7,7 @@ class OrderItemsController < ApplicationController
   end
 
   # def show
-    # Do we need this??? If a customer clicks on an order_item, 
+    # Do we need this??? If a customer clicks on an order_item,
     # I think that it will actually take them to the products#show page
   # end
 
@@ -36,8 +36,18 @@ class OrderItemsController < ApplicationController
   end
 
   def check_stock
-    # when you create a new order_item, it needs to check that the stock for 
+    # when you create a new order_item, it needs to check that the stock for
     # that product is >= the total number of order_items that you want
   end
+
+  def mark_shipped
+    order_item = OrderItem.find(params[:id])
+    order_item.update(shipped: true)
+
+    redirect_to(:back)
+  end
+  
+  private
+
 
 end

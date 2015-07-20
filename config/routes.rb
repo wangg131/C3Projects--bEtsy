@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 
   patch 'merchants/:merchant_id/products/:id/active_update' => 'products#active_update', as: "active_update"
 
+  patch 'merchants/:merchant_id/order_items/:id' => 'order_items#mark_shipped', as: "mark_shipped"
+
   # resources :orders
   # resources :order_items
   # resources :payments
