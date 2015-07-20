@@ -15,6 +15,8 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @reviews = @product.reviews
 
+    @review = Review.new
+
   end
 
   def new
@@ -79,11 +81,18 @@ class ProductsController < ApplicationController
       # if true, then it's ok to purchase
       # if false, then the product is 'out of stock' and cannot be purchased
   end
+
+  
+
 #--------------------------------------------------------------------------------
   private
 
   def product_params
     params.require(:product).permit(:name, :description, :price, :stock, :active, :photo_url, :merchant_id, :category_id)
+  end
+
+  def review_params
+    params.require(:review).permit(:content, :rating, :product_id)
   end
 
 end
