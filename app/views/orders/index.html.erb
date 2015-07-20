@@ -22,7 +22,7 @@
           <% @order_items.each do |order_item| %>
             <% if order_item.order == order %>
               <tr>
-                <td><%= order_item.product.name %></td>
+                <td><%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></td>
                 <td><%= number_to_currency(order_item.revenue) %></td>
                 <% total += order_item.revenue %>
                 <td><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
