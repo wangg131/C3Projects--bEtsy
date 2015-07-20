@@ -8,7 +8,6 @@ class CreateProducts < ActiveRecord::Migration
       t.boolean :active
       t.string :photo_url
       t.integer :merchant_id
-      t.integer :category_id
 
       t.timestamps null: false
     end
