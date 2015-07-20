@@ -2,10 +2,30 @@ class OrdersController < ApplicationController
 
   def index
     # a merchant can view all of their 'paid' and 'shipped' orders
+    @order_items = Merchant.find(params[:merchant_id]).order_items
+
+    @orders = get_orders(@order_items)
+
+    @shipped_revenue = 0
+    @unshipped_revenue = 0
+    @shipped_count = 0
+    @unshipped_count = 0
+
+    @order_items.each do |order_item|
+      if order_item.shipped == true
+        @shipped_revenue += order_item.revenue
+        @shipped_count += 1
+      else
+        @unshipped_revenue += order_item.revenue
+        @unshipped_count += 1
+      end
+    end
+
   end
 
   def show
     # a merchant can view a particular order and all of its details (i.e. order_items/totals, etc.)
+    
 
     # CAN WE DO BOTH OF THESE?
 
@@ -27,7 +47,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    # when the customer enters their payment info, 
+    # when the customer enters their payment info,
     # it updates the order record, making it "complete"
     # order.status == 'paid' when they have entered their payment info
   end
@@ -35,5 +55,19 @@ class OrdersController < ApplicationController
   def destroy
     # if the customer 'clears' their cart ??? (need button for this)
   end
+
+  private
+
+  def get_orders(order_items)
+    orders = []
+
+    order_items.each do |order_item|
+      orders.push(order_item.order)
+    end
+
+    return orders.uniq
+  end
+
+
 
 end
