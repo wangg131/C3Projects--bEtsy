@@ -85,10 +85,12 @@ class ProductsController < ApplicationController
   end
 
   def categories_update(product)
-    input_categories = params[:categories].to_i
+    input_categories = params[:product][:categories]
 
-    if input_categories != nil
-      product.categories << Category.find(params[:categories])
+    input_categories.each do |input|
+      if input != ""
+        product.categories << Category.find(input)
+      end
     end
   end
 #--------------------------------------------------------------------------------

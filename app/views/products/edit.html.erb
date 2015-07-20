@@ -23,10 +23,7 @@
 
       <%= f.hidden_field :merchant_id, :value => params[:merchant_id] %>
 
-      <% @categories.each do |category| %>
-        <%= f.label category.name %>
-        <%= check_box_tag :categories, checked_value = category.id, unchecked_value =  nil %>
-      <% end %>
+      <%= f.collection_check_boxes( :categories, @categories, :id, :name, checked: @product.categories.map(&:id)) %>
   </fieldset>
   <%= f.submit %>
 <% end %>
