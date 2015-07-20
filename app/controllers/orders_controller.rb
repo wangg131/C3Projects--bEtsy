@@ -20,7 +20,6 @@ class OrdersController < ApplicationController
         @unshipped_count += 1
       end
     end
-
   end
 
   def show
@@ -112,10 +111,6 @@ class OrdersController < ApplicationController
   end
 
   def redacted_cc(credit_card)
-    #1234123412341234
     credit_card.chars.last(4).join
   end
-
-
-
 end
