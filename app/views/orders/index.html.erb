@@ -1,23 +1,30 @@
 <h1>Merchant's Orders</h1>
 
-<h3>Total Revenue</h3>
-<h4>Shipped: </h4>
-<h4>Not Shipped: </h4>
+<h3>Total Revenue: <%= number_to_currency(@shipped_revenue + @unshipped_revenue) %> </h3>
+<h4>Shipped: <%= number_to_currency(@shipped_revenue)%></h4>
+<h4>Not Shipped: <%= number_to_currency(@unshipped_revenue) %></h4>
 
-<h3>Total Number of Orders</h3>
-<h4>Shipped: </h4>
-<h4>Not Shipped: </h4>
+<h3>Total Number of Orders: <%= @shipped_count + @unshipped_count %></h3>
+<h4>Shipped: <%= @shipped_count %></h4>
+<h4>Not Shipped: <%= @unshipped_count %></h4>
 
 <h3>Orders</h3>
 <ul>
   <% @orders.each do |order| %>
     <li><%= link_to "Order ##{order.id}" %></li>
-      <ul>
-        <% @order_items.each do |order_item| %>
-          <% if order_item.order == order %>
-            <li><%= order_item.product.name %></li>
+        <table class="table table-hover">
+          <% @order_items.each do |order_item| %>
+            <% if order_item.order == order %>
+              <tr>
+                <td><%= order_item.product.name %></td>
+                <td><%= number_to_currency(order_item.revenue) %></td>
+              </tr>
+            <% end %>
           <% end %>
-        <% end %>
-      </ul>
+          <tr>
+            <td>TOTAL</td>
+            <td><%=  %></td>
+          </tr>
+        </table>
   <% end %>
 </ul>

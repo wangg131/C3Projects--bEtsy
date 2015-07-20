@@ -3,13 +3,23 @@ class OrdersController < ApplicationController
   def index
     # a merchant can view all of their 'paid' and 'shipped' orders
     @order_items = Merchant.find(params[:merchant_id]).order_items
-    @orders = []
+
+    @orders = get_orders(@order_items)
+
+    @shipped_revenue = 0
+    @unshipped_revenue = 0
+    @shipped_count = 0
+    @unshipped_count = 0
 
     @order_items.each do |order_item|
-      @orders.push(order_item.order)
+      if order_item.shipped == true
+        @shipped_revenue += order_item.revenue
+        @shipped_count += 1
+      else
+        @unshipped_revenue += order_item.revenue
+        @unshipped_count += 1
+      end
     end
-    
-    @orders = @orders.uniq
 
   end
 
@@ -43,6 +53,18 @@ class OrdersController < ApplicationController
 
   def destroy
     # if the customer 'clears' their cart ??? (need button for this)
+  end
+
+  private
+
+  def get_orders(order_items)
+    orders = []
+
+    order_items.each do |order_item|
+      orders.push(order_item.order)
+    end
+
+    return orders.uniq
   end
 
 end
