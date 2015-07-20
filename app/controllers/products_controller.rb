@@ -13,8 +13,8 @@ class ProductsController < ApplicationController
       # merchants can't leave reviews for their own products
       # if instock? == false, you can't add it to the cart
     @product = Product.find(params[:id])
-    @reviews = @product.reviews
 
+    @reviews = @product.reviews
   end
 
   def new
@@ -22,6 +22,7 @@ class ProductsController < ApplicationController
     # (nested routing bc the prod is associated with that merchant only)
     # takes you to a form page
     @product = Product.new
+
     @categories = Category.all.order(:name)
   end
 
@@ -38,6 +39,7 @@ class ProductsController < ApplicationController
     # note: changing the price of a product will NOT change the price of the order_item (intentionally)
     # takes you to a form page
     @product = Product.find(params[:id])
+
     @categories = Category.all.order(:name)
   end
 
@@ -45,6 +47,8 @@ class ProductsController < ApplicationController
     # submits the form to save changes to the product details
     # redirects you to the merchant dashboard page
     @product = Product.find(params[:id])
+
+    categories_update(@product)
 
     @product.update(product_params)
 
@@ -79,11 +83,15 @@ class ProductsController < ApplicationController
       # if true, then it's ok to purchase
       # if false, then the product is 'out of stock' and cannot be purchased
   end
+
+  def categories_update(product)
+    product.categories << params[:categories]
+  end
 #--------------------------------------------------------------------------------
   private
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :stock, :active, :photo_url, :merchant_id, :category_id)
+    params.require(:product).permit(:name, :description, :price, :stock, :active, :photo_url, :merchant_id)
   end
 
 end

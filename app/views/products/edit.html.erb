@@ -23,8 +23,8 @@
 
       <%= f.hidden_field :merchant_id, :value => params[:merchant_id] %>
 
-      <%= f.label :category_id %>
-      <%= f.collection_select :category_id, @categories, :id, :name %>
+      <%= f.label :categories %>
+      <%= f.collection_select :categories, @categories, :name %>
   </fieldset>
   <%= f.submit %>
 <% end %>
