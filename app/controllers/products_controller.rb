@@ -85,13 +85,19 @@ class ProductsController < ApplicationController
   end
 
   def categories_update(product)
-    product.categories << params[:categories]
+    input_categories = params[:product][:categories]
+
+    input_categories.each do |input|
+      if input != nil
+        product.categories << input
+      end
+    end
   end
 #--------------------------------------------------------------------------------
   private
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :stock, :active, :photo_url, :merchant_id)
+    params.require(:product).permit(:name, :description, :price, :stock, :active, :photo_url, :merchant_id, :categories)
   end
 
 end
