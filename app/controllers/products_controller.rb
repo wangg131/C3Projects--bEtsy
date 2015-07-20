@@ -85,6 +85,8 @@ class ProductsController < ApplicationController
   end
 
   def categories_update(product)
+    product.categories.destroy_all
+
     input_categories = params[:product][:categories]
 
     input_categories.each do |input|
