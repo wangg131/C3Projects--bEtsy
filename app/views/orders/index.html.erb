@@ -11,7 +11,7 @@
 <h3>Orders</h3>
 <ul>
   <% @orders.each do |order| %>
-    <li><%= link_to "Order ##{order.id}" %></li>
+    <li><%= link_to "Order ##{order.id}", merchant_order_path(params[:merchant_id], order.id) %></li>
         <table class="table table-hover">
           <tr>
             <th>Product</th>
