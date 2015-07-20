@@ -5,32 +5,24 @@
   <tr>
     <td class="text-right">Status:</td>
     <td><%= @order.status %></td>
+    <td class="text-right">Credit Card:</td>
+    <td>XXXX-XXXX-XXXX-<%= @redacted_cc %></td>
   </tr>
   <tr>
     <td class="text-right">Name:</td>
     <td><%= @order.name %></td>
-  </tr>
-  <tr>
-    <td class="text-right">Email:</td>
-    <td><%= @order.email %></td>
-  </tr>
-  <tr>
-    <td class="text-right">Address:</td>
-    <td><%= @order.street %> <%= @order.city %>,<%= @order.state %> <%= @order.zip %></td>
-  </tr>
-  <tr>
-    <td class="text-right">Credit Card:</td>
-    <td><%= @order.credit_card %></td>
-  </tr>
-  <tr>
     <td class="text-right">Exp Date:</td>
     <td><%= @order.exp_date %></td>
   </tr>
   <tr>
+    <td class="text-right">Email:</td>
+    <td><%= @order.email %></td>
     <td class="text-right">CCV Code:</td>
     <td><%= @order.cvv %></td>
   </tr>
   <tr>
+    <td class="text-right">Address:</td>
+    <td><%= @order.street %> <%= @order.city %>,<%= @order.state %> <%= @order.zip %></td>
     <td class="text-right">Billing Zip:</td>
     <td><%= @order.billing_zip %></td>
   </tr>
@@ -51,7 +43,7 @@
   <% end %>
   <tfoot>
     <tr>
-      <td>TOTAL</td>
+      <td>ORDER TOTAL</td>
       <td><%= number_to_currency(total) %></td>
       <td></td>
     </tr>
