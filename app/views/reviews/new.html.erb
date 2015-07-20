@@ -21,7 +21,7 @@
   </li>
 </ul>
 
-<%= link_to "View this Merchant's Store", merchant_path %>
+
 
 <h3> Current Reviews </h3> 
 
@@ -50,7 +50,19 @@
   </tr>
   <% end %>
 </table>
+<%= form_for @review, url: product_reviews_path(params[:product_id]) do |f| %>
 
-<h3>Want to Review this Product?</h3>
 
-<%= link_to "Review this Product", new_product_review_path(@product.id) %>
+  <fieldset>
+    <%= f.label :content %>
+    <%= f.text_field :content %>
+
+    <%= f.label :rating %>
+    <%= f.text_field :rating %>
+
+    <%= f.hidden_field :product_id, :value => params[:product_id] %>
+
+  </fieldset>
+
+  <%= f.submit "Add this Review" %>
+<% end %>
