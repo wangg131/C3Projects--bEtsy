@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
     # redirects you to the merchant dashboard page
     @product = Product.find(params[:id])
 
-    @product.update(params[:product])
+    @product.update(product_params)
 
     redirect_to merchant_dashboard_path(params[:merchant_id])
   end
