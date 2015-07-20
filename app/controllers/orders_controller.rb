@@ -57,6 +57,48 @@ class OrdersController < ApplicationController
     # if the customer 'clears' their cart ??? (need button for this)
   end
 
+  def shipped
+    @order_items = Merchant.find(params[:merchant_id]).order_items.where(shipped: true)
+
+    @orders = get_orders(@order_items)
+
+    @shipped_revenue = 0
+    @unshipped_revenue = 0
+    @shipped_count = 0
+    @unshipped_count = 0
+
+    @order_items.each do |order_item|
+      if order_item.shipped == true
+        @shipped_revenue += order_item.revenue
+        @shipped_count += 1
+      else
+        @unshipped_revenue += order_item.revenue
+        @unshipped_count += 1
+      end
+    end
+  end
+
+  def unshipped
+    @order_items = Merchant.find(params[:merchant_id]).order_items.where(shipped: false)
+
+    @orders = get_orders(@order_items)
+
+    @shipped_revenue = 0
+    @unshipped_revenue = 0
+    @shipped_count = 0
+    @unshipped_count = 0
+
+    @order_items.each do |order_item|
+      if order_item.shipped == true
+        @shipped_revenue += order_item.revenue
+        @shipped_count += 1
+      else
+        @unshipped_revenue += order_item.revenue
+        @unshipped_count += 1
+      end
+    end
+  end
+
   private
 
   def get_orders(order_items)
