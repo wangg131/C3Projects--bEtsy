@@ -1,0 +1,36 @@
+<h1>Order #<%= @order.id %> Details</h1>
+
+<table class="table">
+  <tr>
+    <td class="align-right">Status:</td>
+    <td><%= @order.status %></td>
+  </tr>
+  <tr>
+    <td class="align-right">Name:</td>
+    <td><%= @order.name %></td>
+  </tr>
+  <tr>
+    <td class="align-right">Email:</td>
+    <td><%= @order.email %></td>
+  </tr>
+  <tr>
+    <td class="align-right">Address:</td>
+    <td><%= @order.street %> <%= @order.city %>,<%= @order.state %> <%= @order.zip %></td>
+  </tr>
+  <tr>
+    <td>Credit Card:</td>
+    <td><%= @order.credit_card %></td>
+  </tr>
+  <tr>
+    <td>Exp Date:</td>
+    <td><%= @order.exp_date %></td>
+  </tr>
+  <tr>
+    <td>CCV Code:</td>
+    <td><%= @order.cvv %></td>
+  </tr>
+  <tr>
+    <td>Billing Zip:</td>
+    <td><%= @order.billing_zip %></td>
+  </tr>
+</table>
