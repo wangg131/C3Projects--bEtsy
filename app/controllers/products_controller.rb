@@ -29,7 +29,7 @@ class ProductsController < ApplicationController
   def create
     # submits the form to save the new product to the db
     # redirects you to the merchant dashboard page
-    @product = Product.create(params[:product])
+    @product = Product.create(product_params)
 
     redirect_to merchant_dashboard_path(review_params[:merchant_id])
   end
@@ -48,9 +48,9 @@ class ProductsController < ApplicationController
     # redirects you to the merchant dashboard page
     @product = Product.find(params[:id])
 
-    categories_update(@product)
-
     @product.update(product_params)
+
+    categories_update(@product)
 
     redirect_to merchant_dashboard_path(params[:merchant_id])
   end
@@ -85,12 +85,10 @@ class ProductsController < ApplicationController
   end
 
   def categories_update(product)
-    input_categories = params[:product][:categories]
+    input_categories = params[:categories].to_i
 
-    input_categories.each do |input|
-      if input != nil
-        product.categories << input
-      end
+    if input_categories != nil
+      product.categories << Category.find(params[:categories])
     end
   end
 #--------------------------------------------------------------------------------
