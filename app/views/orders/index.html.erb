@@ -18,20 +18,24 @@
             <th>Price</th>
             <th>Status</th>
           </tr>
+          <% total = 0 %>
           <% @order_items.each do |order_item| %>
             <% if order_item.order == order %>
               <tr>
                 <td><%= order_item.product.name %></td>
                 <td><%= number_to_currency(order_item.revenue) %></td>
+                <% total += order_item.revenue %>
                 <td><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
               </tr>
             <% end %>
           <% end %>
-          <tr>
-            <td>TOTAL</td>
-            <td></td>
-            <td><%=  %></td>
-          </tr>
+          <tfoot>
+            <tr>
+              <td>TOTAL</td>
+              <td><%= number_to_currency(total) %></td>
+              <td></td>
+            </tr>
+          </tfoot>
         </table>
   <% end %>
 </ul>

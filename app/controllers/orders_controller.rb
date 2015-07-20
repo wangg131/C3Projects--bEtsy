@@ -25,6 +25,7 @@ class OrdersController < ApplicationController
 
   def show
     # a merchant can view a particular order and all of its details (i.e. order_items/totals, etc.)
+    
 
     # CAN WE DO BOTH OF THESE?
 
