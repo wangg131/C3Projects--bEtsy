@@ -1,19 +1,28 @@
-<h1>Merchant Dashboard</h1>
+<h3>Merchant Dashboard</h3>
 
-<h3><%= link_to "Add Product", new_merchant_product_path(params[:merchant_id]) %></h3>
-<h3><%= link_to "Add Category", new_category_path %></h3>
+<div class="merch-dash-tools row">
+  <div class="col-md-3">
+    <h5><%= link_to "Add Product", new_merchant_product_path(params[:merchant_id]), class: "btn btn-default" %></h5>
+    <h5><%= link_to "Add Category", new_category_path, class: "btn btn-default" %></h5>
+  </div>
+  <div class="col-md-3 col-md-offset-6">
+    <div>
+      <h5><%= link_to "Orders", merchant_orders_path(params[:merchant_id]), class: "btn btn-default" %></h5>
+    </div>
+    <div>
+      <h5>Revenue: <%= "DOLLABILLS" %></h5>
+    </div>
+  </div>
+</div>
 
-<h5><%= link_to "Orders", merchant_orders_path(params[:merchant_id]) %></h5>
-<h5>Revenue: <%= "DOLLABILLS" %></h5>
-
-<h3>Products</h3>
-  <table>
+<h4>Products</h4>
+  <table class="table">
     <% @products.each do |product| %>
       <tr>
         <td><%= link_to product.name %></td>
         <td><%= link_to "X", merchant_product_path(product.merchant_id, product.id), method: :delete %></td>
         <td><%= link_to "Edit", edit_merchant_product_path(product.merchant_id, product.id) %></td>
-        <td><%= product.active ? "ACTIVE: " : "INACTIVE: " %></td>
+        <td><%= product.active ? "ACTIVE" : "INACTIVE" %></td>
         <td><%= link_to "Change status", product_path(product.id), method: :patch %></td>
       </tr>
     <% end %>
