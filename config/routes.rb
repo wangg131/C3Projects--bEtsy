@@ -30,6 +30,9 @@ Rails.application.routes.draw do
 
   patch 'merchants/:merchant_id/products/:id/active_update' => 'products#active_update', as: "active_update"
 
+  get '/cart'             =>  'carts#show'
+  post '/add_to_cart/:id' =>  'carts#add_to_cart', as: 'add_to_cart'
+
   # resources :orders
   # resources :order_items
   # resources :payments

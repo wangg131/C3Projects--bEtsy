@@ -4,8 +4,6 @@ class OrderItem < ActiveRecord::Base
   # Validations 
   validates :product_id, presence: true
   validates :order_id, presence: true
-  validates :revenue, presence: true
-  validates :shipped, presence: true
 
   # Associations 
   belongs_to :order

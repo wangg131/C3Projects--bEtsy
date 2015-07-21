@@ -1,5 +1,5 @@
-<%= link_to "Add to Cart" %>
-<%= link_to "Checkout" %>
+<%= link_to "Add to Cart" , add_to_cart_path, method: :post , class: "btn btn-default" %>
+<%= link_to "Checkout", class: "btn btn-default" %>
 
 <h1>Product Information</h1>
 
@@ -50,3 +50,4 @@
   </tr>
   <% end %>
 </table>
+

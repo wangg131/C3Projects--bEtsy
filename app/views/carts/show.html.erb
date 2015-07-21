@@ -1,0 +1,9 @@
+<h1>Cart</h1>
+
+<ul>
+  <% @order_products.each do |item| %>
+    <li><%= item.name %></li>
+  <% end %>
+</ul>
+
+<%= link_to "Back", redirect :back %>
