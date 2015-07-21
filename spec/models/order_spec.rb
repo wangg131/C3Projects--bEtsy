@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Order, type: :model do 
 
   describe "model validations" do
@@ -19,5 +21,5 @@ RSpec.describe Order, type: :model do
 
   #     expect(Album.best(3)).to eq right_rank
   #   end
-  end
+  # end
 end

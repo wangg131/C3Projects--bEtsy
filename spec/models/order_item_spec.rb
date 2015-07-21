@@ -1,4 +1,6 @@
-RSpec.describe Album, type: :model do 
+require 'rails_helper'
+
+RSpec.describe OrderItem, type: :model do 
 
   describe "model validations" do
     it "requires a product_id, order_id, revenue, and shipped all the time" do

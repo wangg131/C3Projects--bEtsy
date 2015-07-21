@@ -1,4 +1,6 @@
-RSpec.describe Product, type: :model do 
+require 'rails_helper'
+
+# RSpec.describe Product, type: :model do 
 
   # describe "model validations" do
   #   it "requires a name, description, and artist all the time" do
@@ -20,4 +22,4 @@ RSpec.describe Product, type: :model do
   #     expect(Album.best(3)).to eq right_rank
   #   end
   # end
-end
+# end
