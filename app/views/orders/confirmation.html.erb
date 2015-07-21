@@ -7,11 +7,13 @@
   <th>Price</th>
   <% @order_items.each do |item| %>
   <tr>
-    <td><%= item.name %></td>
-    <td><%= number_to_currency(item.price) %></td>
+    <td><%= item.product.name %></td>
+    <td><%= number_to_currency(item.revenue) %></td>
   </tr>
   <% end %>
-  <tr><td><%= "Total: #{}" %></td></tr>
+  <tr>
+    <td><%= "Total: #{number_to_currency(@total)}" %></td>
+  </tr>
 </table>
 
 <h3>Billed To:</h3>
