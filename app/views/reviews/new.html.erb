@@ -23,7 +23,7 @@
 
 
 
-<h3> Current Reviews </h3> 
+<h3> Current Reviews </h3>
 
   <table border "1">
 
@@ -50,7 +50,7 @@
   </tr>
   <% end %>
 </table>
-<%= form_for @review, url: product_reviews_path(params[:product_id]) do |f| %>
+<%= bootstrap_form_for @review, url: product_reviews_path(params[:product_id]) do |f| %>
 
 
   <fieldset>

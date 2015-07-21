@@ -37,14 +37,12 @@
 
 <h4>Want to Review this Product?</h4>
 
-<%= form_for @review, url: product_reviews_path(params[:id]) do |f| %>
+<%= bootstrap_form_for @review, url: product_reviews_path(params[:id]) do |f| %>
 
 
   <fieldset>
-    <%= f.label :content %>
-    <%= f.text_field :content %>
+    <%= f.text_area :content %>
 
-    <%= f.label :rating %>
     <%= f.text_field :rating %>
 
     <%= f.hidden_field :product_id, :value => params[:id] %>
