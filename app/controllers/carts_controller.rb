@@ -1,15 +1,13 @@
 class CartsController < ApplicationController
 
-  def new_order
-    @order = Order.create
-    params[:order_id] = @order.id
+  def show
+    # @order_products = current_order.products
+    @order_items = current_order.order_items
+
+    # raise
   end
 
   def add_to_cart
-    new_order if OrderItem.count == 0 
-    # if it's the first item being added to the cart, need to generate 
-    # the new order to associate with it first
-
     product = Product.find(params[:id])
 
     params[:product_id] = product.id
@@ -19,20 +17,14 @@ class CartsController < ApplicationController
       shipped: false,
       quantity: 1)
 
+    raise
     # @order.products << @order_item
-    redirect_to :back
+    redirect_to '/cart'
   end
 
-  def show
-    order = Order.find(1)
-    @order_products = order.products
-  end
 
 #________________________________________________________________________________
   private
 
-  # def order_item_params
-  #   params.require(:order_item).permit(:product_id, :order_id, :revenue, :shipped, :merchant_id)
-  # end
-  
+
 end

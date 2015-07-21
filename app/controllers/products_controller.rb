@@ -2,7 +2,8 @@ class ProductsController < ApplicationController
 
   def index
     # a guest or merchant can view all products with their details
-
+    @product = Product.all
+    @order_item = current_order.order_items.new
     # a guest or merchant can view all products by category
   end
 
@@ -13,7 +14,7 @@ class ProductsController < ApplicationController
       # merchants can't leave reviews for their own products
       # if instock? == false, you can't add it to the cart
     @product = Product.find(params[:id])
-
+    @order_item = current_order.order_items.new
     @review = Review.new
 
     @reviews = @product.reviews

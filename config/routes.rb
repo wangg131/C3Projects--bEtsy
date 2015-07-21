@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :products do
     resources :reviews, only: [:new, :create]
   end
-  # resources :carts
+  # resources :carts, only: [:show]
   # resources :categories
   # resources :guests
 
@@ -46,7 +46,7 @@ Rails.application.routes.draw do
 
 
   # resources :orders
-  # resources :order_items
+  resources :order_items
   # resources :payments
   # resources :products
   # resources :reviews

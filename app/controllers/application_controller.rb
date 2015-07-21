@@ -18,4 +18,14 @@ class ApplicationController < ActionController::Base
     redirect_to login_path unless session[:merchant_id]
   end
 
+  helper_method :current_order
+
+  def current_order
+    if !session[:order_id].nil?
+      Order.find(session[:order_id])
+    else
+      Order.create
+    end
+  end
+
 end
