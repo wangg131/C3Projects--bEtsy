@@ -35,6 +35,12 @@ class ProductsController < ApplicationController
 
     @review = Review.create(review_params)
 
+    categories_update(@product)
+
+    if params[:review]
+      @review = Review.create(review_params)
+    end
+
     redirect_to merchant_dashboard_path(params[:merchant_id])
   end
 
