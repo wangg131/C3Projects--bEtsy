@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
     @product = Product.create(product_params)
     @review = Review.create(review_params)
 
-    redirect_to merchant_dashboard_path(review_params[:merchant_id])
+    redirect_to merchant_dashboard_path(params[:merchant_id])
   end
 
   def edit
