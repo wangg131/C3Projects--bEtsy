@@ -21,7 +21,7 @@
 }
 
 header {
-  height: 50px;
+  min-height: 50px;
 }
 
 .account-and-cart-buttons,
@@ -35,5 +35,15 @@ input {
 }
 
 .login-form {
+  margin-top: 40px;
+}
+
+img {
+  height: 300px;
+  display: block;
+  margin: 0 auto;
+}
+
+table {
   margin-top: 40px;
 }
