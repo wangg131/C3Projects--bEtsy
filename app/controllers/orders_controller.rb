@@ -70,10 +70,11 @@ class OrdersController < ApplicationController
   def confirmation
     @order = Order.find(params[:order_id])
 
-    @order_items = @order.products
+    @order_items = @order.order_items
 
-    @customer_info = []
-    @customer_info.push(@order.name, @order.email, @order.street, @order.city, @order.state, @order.zip)
+    @total = get_total(@order_items)
+
+    @customer_info = get_customer_info(@order)
   end
 
   def shipped
@@ -116,6 +117,18 @@ class OrdersController < ApplicationController
         @unshipped_count += 1
       end
     end
+  end
+
+  def get_total(order_items)
+    order_items.inject(0) do |sum, i|
+      sum + i.revenue
+    end
+  end
+
+  def get_customer_info(order)
+    customer_info = []
+
+    customer_info.push(order.name, order.email, order.street, order.city, order.state, order.zip)
   end
 
   private
