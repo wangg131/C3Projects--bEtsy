@@ -9,46 +9,66 @@
 <h4>Not Shipped: <%= unshipped_count %></h4>
 
 <h3>Orders</h3>
-<%= link_to "All Orders", merchant_orders_path(params[:merchant_id]), class: "btn btn-default" %>
-<%= link_to "Shipped Orders", orders_shipped_path(params[:merchant_id]), class: "btn btn-default" %>
-<%= link_to "Unshipped Orders", orders_unshipped_path(params[:merchant_id]), class: "btn btn-default" %>
-
-<ul>
-  <% orders.each do |order| %>
-    <li><strong><%= link_to "Order ##{order.id}", merchant_order_path(params[:merchant_id], order.id) %></strong></li>
-    <ul>
-      <li>Ordered on: <%= order.updated_at %> </li>
-    </ul>
-        <table class="table table-hover">
-          <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-          <% total = 0 %>
-          <% order_items.each do |order_item| %>
-            <% if order_item.order == order %>
-              <tr>
-                <td class="col-sm-4"><%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></td>
-                <td class="col-sm-2">DO THIS</td>
-                <td class="col-sm-2"><%= number_to_currency(order_item.revenue) %></td>
-                <% total += order_item.revenue %>
-                <td class="col-sm-2"><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
-                <td class="col-sm-2"> <%= order_item.shipped ? (" ") : (link_to "Shipped", mark_shipped_path(params[:merchant_id], order_item.id), method: :patch, class: "btn btn-default") %> </td>
-              </tr>
-            <% end %>
-          <% end %>
-          <tfoot>
-            <tr>
-              <td>TOTAL</td>
-              <td></td>
-              <td><strong><%= number_to_currency(total) %></strong></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tfoot>
-        </table>
+<ul class="nav nav-tabs">
+  <% if request.path == merchant_orders_path(params[:merchant_id]) %>
+    <li role="presentation" class="active">
+  <% else %>
+    <li role="presentation">
   <% end %>
+    <%= link_to "All Orders", merchant_orders_path(params[:merchant_id]), class: "btn btn-default" %>
+  </li>
+
+  <% if request.path == orders_shipped_path(params[:merchant_id]) %>
+    <li role="presentation" class="active">
+  <% else %>
+    <li role="presentation">
+  <% end %>
+    <%= link_to "Shipped Orders", orders_shipped_path(params[:merchant_id]), class: "btn btn-default" %>
+  </li>
+
+  <% if request.path == orders_unshipped_path(params[:merchant_id]) %>
+    <li role="presentation" class="active">
+  <% else %>
+    <li role="presentation">
+  <% end %>
+    <%= link_to "Unshipped Orders", orders_unshipped_path(params[:merchant_id]), class: "btn btn-default" %>
+  </li>
 </ul>
+
+
+<% orders.each do |order| %>
+  <h4><strong><%= link_to "Order ##{order.id}", merchant_order_path(params[:merchant_id], order.id) %></strong></h4>
+  <h6>Ordered on: <%= order.updated_at %></h6>
+
+  <table class="table table-hover">
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+    <% total = 0 %>
+    <% order_items.each do |order_item| %>
+      <% if order_item.order == order %>
+        <tr>
+          <td class="col-sm-4"><%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></td>
+          <td class="col-sm-2">DO THIS</td>
+          <td class="col-sm-2"><%= number_to_currency(order_item.revenue) %></td>
+          <% total += order_item.revenue %>
+          <td class="col-sm-2"><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
+          <td class="col-sm-2"> <%= order_item.shipped ? (" ") : (link_to "Shipped", mark_shipped_path(params[:merchant_id], order_item.id), method: :patch, class: "btn btn-default") %> </td>
+        </tr>
+      <% end %>
+    <% end %>
+    <tfoot>
+      <tr>
+        <td>TOTAL</td>
+        <td></td>
+        <td><strong><%= number_to_currency(total) %></strong></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+  <% end %>
