@@ -22,6 +22,38 @@ class OrdersController < ApplicationController
     end
   end
 
+  def shipped_revenue(order_items)
+    revenue = 0
+    order_items.each do |order_item|
+      revenue += order_item.revenue if order_item.shipped
+    end
+    return revenue
+  end
+
+  def unshipped_revenue(order_items)
+    revenue = 0
+    order_items.each do |order_item|
+      revenue += order_item.revenue unless order_item.shipped
+    end
+    return revenue
+  end
+
+  def shipped_count(order_items)
+    count = 0
+    order_items.each do |order_item|
+      count += 1 if order_item.shipped
+    end
+    return count
+  end
+
+  def unshipped_count(order_items)
+    count = 0
+    order_items.each do |order_item|
+      count += 1 unless order_item.shipped
+    end
+    return count
+  end
+
   def show
     # a merchant can view a particular order and all of its details (i.e. order_items/totals, etc.)
     @order = Order.find(params[:id])

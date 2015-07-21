@@ -1,6 +1,4 @@
 class Merchant < ActiveRecord::Base
-  # Scopes
-
   # Validations
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: {with: /@/}
@@ -14,5 +12,13 @@ class Merchant < ActiveRecord::Base
   has_many :orders, :through => :order_items
   has_many :order_items
 
+  # Scopes
+
+  #Merchant.find(1).shipped(true/false) returns all shipped order items
+  def shipped(boolean)
+    order_items.where(shipped: boolean)
+  end
+
+  #order_items.revenue returns revenue of all order_items
 
 end
