@@ -13,7 +13,11 @@ class CartsController < ApplicationController
     product = Product.find(params[:id])
 
     params[:product_id] = product.id
-    @order_item = OrderItem.create(product_id: params[:product_id], order_id: params[:order_id])
+    @order_item = OrderItem.create(
+      product_id: params[:product_id], 
+      order_id: params[:order_id], 
+      shipped: false,
+      quantity: 1)
 
     # @order.products << @order_item
     redirect_to :back
@@ -30,5 +34,5 @@ class CartsController < ApplicationController
   # def order_item_params
   #   params.require(:order_item).permit(:product_id, :order_id, :revenue, :shipped, :merchant_id)
   # end
-
+  
 end
