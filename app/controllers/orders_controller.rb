@@ -2,9 +2,9 @@ class OrdersController < ApplicationController
 
   def index
     # a merchant can view all of their 'paid' and 'shipped' orders
-    @order_items = Merchant.find(params[:merchant_id]).order_items
-
-    @orders = get_orders(@order_items)
+    merchant = Merchant.find(params[:merchant_id])
+    @order_items = merchant.order_items
+    @orders = merchant.orders.uniq
 
     @shipped_revenue = 0
     @unshipped_revenue = 0
@@ -75,9 +75,9 @@ class OrdersController < ApplicationController
   end
 
   def shipped
-    @order_items = Merchant.find(params[:merchant_id]).order_items.where(shipped: true)
-
-    @orders = get_orders(@order_items)
+    merchant = Merchant.find(params[:merchant_id])
+    @order_items = merchant.order_items.where(shipped: true)
+    @orders = merchant.orders.uniq
 
     @shipped_revenue = 0
     @unshipped_revenue = 0
@@ -96,9 +96,9 @@ class OrdersController < ApplicationController
   end
 
   def unshipped
-    @order_items = Merchant.find(params[:merchant_id]).order_items.where(shipped: false)
-
-    @orders = get_orders(@order_items)
+    merchant = Merchant.find(params[:merchant_id])
+    @order_items = merchant.order_items.where(shipped: false)
+    @orders = merchant.orders.uniq
 
     @shipped_revenue = 0
     @unshipped_revenue = 0
@@ -120,17 +120,6 @@ class OrdersController < ApplicationController
 
   def order_params
   params.require(:order).permit(:status, :name, :email, :street, :city, :state, :zip, :credit_card, :exp_date, :cvv, :billing_zip)
-  end
-
-  def get_orders(order_items)
-
-    orders = []
-
-    order_items.each do |order_item|
-      orders.push(order_item.order)
-    end
-
-    return orders.uniq
   end
 
   def redacted_cc(credit_card)
