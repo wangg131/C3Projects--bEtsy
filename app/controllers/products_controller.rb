@@ -48,11 +48,18 @@ class ProductsController < ApplicationController
     # redirects you to the merchant dashboard page
     @product = Product.find(params[:id])
 
-    @product.update(product_params)
+    if params[:merchant_id]
+      @product.update(product_params)
 
-    categories_update(@product)
+      categories_update(@product)
 
-    redirect_to merchant_dashboard_path(params[:merchant_id])
+      redirect_to merchant_dashboard_path(params[:merchant_id])
+    else
+      active_update(@product)
+
+      redirect_to(:back)
+    end
+
   end
 
   def destroy
@@ -62,18 +69,6 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
 
     @product.destroy
-
-    redirect_to(:back)
-  end
-
-  def active_update
-   @product = Product.find(params[:id])
-
-    if @product.active == true
-      @product.update(active: false)
-    else
-      @product.update(active: true)
-    end
 
     redirect_to(:back)
   end
@@ -94,6 +89,10 @@ class ProductsController < ApplicationController
         product.categories << Category.find(input)
       end
     end
+  end
+
+  def active_update(product)
+    product.active ? product.update(active: false) : product.update(active: true)
   end
 #--------------------------------------------------------------------------------
   private

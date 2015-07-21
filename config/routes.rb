@@ -27,8 +27,6 @@ Rails.application.routes.draw do
 
   resources :categories, only: [:new, :create]
 
-  patch 'merchants/:merchant_id/products/:id/active_update' => 'products#active_update', as: "active_update"
-
   # resources :orders
   # resources :order_items
   # resources :payments

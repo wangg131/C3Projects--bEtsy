@@ -5,8 +5,8 @@ class MerchantsController < ApplicationController
 
   def show
     @merchant = Merchant.find(params[:id])
-    @merchant_products = @merchant.products
 
+    @merchant_products = @merchant.products
   end
 
   def new
@@ -37,7 +37,6 @@ class MerchantsController < ApplicationController
     @merchant = Merchant.find(params[:merchant_id])
 
     @products = @merchant.products
-
     # @total_revenue = @products.order_item.revenue
   end
 
