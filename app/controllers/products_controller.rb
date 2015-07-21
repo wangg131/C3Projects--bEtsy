@@ -32,6 +32,7 @@ class ProductsController < ApplicationController
     # submits the form to save the new product to the db
     # redirects you to the merchant dashboard page
     @product = Product.create(product_params)
+
     @review = Review.create(review_params)
 
     redirect_to merchant_dashboard_path(params[:merchant_id])
