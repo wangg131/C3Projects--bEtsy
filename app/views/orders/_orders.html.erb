@@ -1,12 +1,18 @@
 <h1>Merchant's Orders</h1>
 
-<h3>Total Revenue: <%= number_to_currency(shipped_revenue + unshipped_revenue) %> </h3>
-<h4>Shipped: <%= number_to_currency(shipped_revenue)%></h4>
-<h4>Not Shipped: <%= number_to_currency(unshipped_revenue) %></h4>
+<div class="row">
+  <div class="col-md-6">
+    <h3>Total Revenue: <%= number_to_currency(shipped_revenue + unshipped_revenue) %> </h3>
+    <h4>Shipped: <%= number_to_currency(shipped_revenue)%></h4>
+    <h4>Not Shipped: <%= number_to_currency(unshipped_revenue) %></h4>
+  </div>
 
-<h3>Total Number of Orders: <%= shipped_count + unshipped_count %></h3>
-<h4>Shipped: <%= shipped_count %></h4>
-<h4>Not Shipped: <%= unshipped_count %></h4>
+  <div class="col-md-6">
+    <h3>Total Number of Orders: <%= shipped_count + unshipped_count %></h3>
+    <h4>Shipped: <%= shipped_count %></h4>
+    <h4>Not Shipped: <%= unshipped_count %></h4>
+  </div>
+</div>
 
 <h3>Orders</h3>
 <ul class="nav nav-tabs">
@@ -53,7 +59,7 @@
       <% if order_item.order == order %>
         <tr>
           <td class="col-sm-4"><%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></td>
-          <td class="col-sm-2">DO THIS</td>
+          <td class="col-sm-2"><%= order_item.quantity %></td>
           <td class="col-sm-2"><%= number_to_currency(order_item.revenue) %></td>
           <% total += order_item.revenue %>
           <td class="col-sm-2"><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>

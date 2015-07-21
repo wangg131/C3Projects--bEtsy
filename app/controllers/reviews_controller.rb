@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
   end
 
   def new
-    @product = Product.find(params[:product_id])
+    @product = Product.find(params[:id])
     @reviews = @product.reviews
     @review = Review.new
     

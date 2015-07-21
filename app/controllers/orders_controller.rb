@@ -2,24 +2,14 @@ class OrdersController < ApplicationController
 
   def index
     # a merchant can view all of their 'paid' and 'shipped' orders
-    @order_items = Merchant.find(params[:merchant_id]).order_items
+    merchant = Merchant.find(params[:merchant_id])
+    @order_items = merchant.order_items
+    @orders = merchant.orders.uniq
 
-    @orders = get_orders(@order_items)
-
-    @shipped_revenue = 0
-    @unshipped_revenue = 0
-    @shipped_count = 0
-    @unshipped_count = 0
-
-    @order_items.each do |order_item|
-      if order_item.shipped == true
-        @shipped_revenue += order_item.revenue
-        @shipped_count += 1
-      else
-        @unshipped_revenue += order_item.revenue
-        @unshipped_count += 1
-      end
-    end
+    @shipped_revenue = merchant.shipped?(true).sum("revenue")
+    @unshipped_revenue = merchant.shipped?(false).sum("revenue")
+    @shipped_count = merchant.shipped?(true).count
+    @unshipped_count = merchant.shipped?(false).count
   end
 
   def show
@@ -78,45 +68,25 @@ class OrdersController < ApplicationController
   end
 
   def shipped
-    @order_items = Merchant.find(params[:merchant_id]).order_items.where(shipped: true)
+    merchant = Merchant.find(params[:merchant_id])
+    @order_items = merchant.order_items.where(shipped: true)
+    @orders = merchant.orders.uniq
 
-    @orders = get_orders(@order_items)
-
-    @shipped_revenue = 0
+    @shipped_revenue = merchant.shipped?(true).sum("revenue")
     @unshipped_revenue = 0
-    @shipped_count = 0
+    @shipped_count = merchant.shipped?(true).count
     @unshipped_count = 0
-
-    @order_items.each do |order_item|
-      if order_item.shipped == true
-        @shipped_revenue += order_item.revenue
-        @shipped_count += 1
-      else
-        @unshipped_revenue += order_item.revenue
-        @unshipped_count += 1
-      end
-    end
   end
 
   def unshipped
-    @order_items = Merchant.find(params[:merchant_id]).order_items.where(shipped: false)
-
-    @orders = get_orders(@order_items)
+    merchant = Merchant.find(params[:merchant_id])
+    @order_items = merchant.order_items.where(shipped: false)
+    @orders = merchant.orders.uniq
 
     @shipped_revenue = 0
-    @unshipped_revenue = 0
+    @unshipped_revenue = merchant.shipped?(false).sum("revenue")
     @shipped_count = 0
-    @unshipped_count = 0
-
-    @order_items.each do |order_item|
-      if order_item.shipped == true
-        @shipped_revenue += order_item.revenue
-        @shipped_count += 1
-      else
-        @unshipped_revenue += order_item.revenue
-        @unshipped_count += 1
-      end
-    end
+    @unshipped_count = merchant.shipped?(false).count
   end
 
   def get_total(order_items)
@@ -135,17 +105,6 @@ class OrdersController < ApplicationController
 
   def order_params
   params.require(:order).permit(:status, :name, :email, :street, :city, :state, :zip, :credit_card, :exp_date, :cvv, :billing_zip)
-  end
-
-  def get_orders(order_items)
-
-    orders = []
-
-    order_items.each do |order_item|
-      orders.push(order_item.order)
-    end
-
-    return orders.uniq
   end
 
   def redacted_cc(credit_card)
