@@ -2,6 +2,9 @@ class OrderItemsController < ApplicationController
 
   def create
     @order = current_order
+
+    calc_revenue
+
     @order_item = @order.order_items.create(order_item_params)
     session[:order_id] = @order.id
 
@@ -9,13 +12,18 @@ class OrderItemsController < ApplicationController
   end
 
   def update
-    # writes the edits of the order_item to the db
-    @order = current_order
-    @order_item = @order.order_items.find(params[:id])
-    @order_item.update_attributes(order_item_params)
-    @order_items = @order.order_items
+    @order_item = OrderItem.find(params[:id])
 
+    calc_revenue
+
+    @order_item.update_attributes(order_item_params)
+    
     redirect_to(:back)
+  end
+
+  def calc_revenue
+    product = Product.find(params[:order_item][:product_id])
+    params[:order_item][:revenue] = params[:order_item][:quantity].to_i * product.price
   end
 
   def destroy
@@ -45,7 +53,7 @@ class OrderItemsController < ApplicationController
   private
 
   def order_item_params
-    params.require(:order_item).permit(:product_id, :order_id, :revenue, :shipped, :merchant_id)
+    params.require(:order_item).permit(:product_id, :order_id, :revenue, :quantity, :shipped, :merchant_id)
   end
 
 end

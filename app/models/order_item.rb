@@ -12,31 +12,24 @@ class OrderItem < ActiveRecord::Base
   belongs_to :product
   belongs_to :merchant
 
-  before_save :finalize
+  # before_save :finalize
 
-  def unit_price
-    if persisted?
-      self[:revenue]
-    else
-      product.price
-    end
-  end
-
-  def total_price
-    unit_price * quantity
-  end
+  # def total_price
+  #   @order_item = OrderItem.find(params[:order_id])
+  #   @order_item.revenue * @order_item.quantity
+  # end
 
 
 #############################################################
   private
 
-    def product_present
-      if product.active? == false
-        errors.add(:product, "Sorry, this product is no longer available.")
-      end
-    end
+    # def product_present
+    #   if product.active? == false
+    #     errors.add(:product, "Sorry, this product is no longer available.")
+    #   end
+    # end
 
-    def finalize
-      self[:revenue] = total_price
-    end
+    # def finalize
+    #   self[:revenue] = total_price
+    # end
 end
