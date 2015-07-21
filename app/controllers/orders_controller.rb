@@ -44,16 +44,30 @@ class OrdersController < ApplicationController
   def edit
     # every time a new order_item is added/removed from the cart
     # when the customer adds their payment details
+    @order = Order.find(params[:id])
   end
 
   def update
     # when the customer enters their payment info,
     # it updates the order record, making it "complete"
     # order.status == 'paid' when they have entered their payment info
+    @order = Order.find(params[:id])
+
+    @order.update(order_params)
+
+    @order.update(status: "paid")
+
+    redirect_to order_confirmation_path(params[:id])
   end
+
 
   def destroy
     # if the customer 'clears' their cart ??? (need button for this)
+  end
+
+  def confirmation
+    @order = Order.find(params[:order_id])
+    raise
   end
 
   def shipped
@@ -100,7 +114,12 @@ class OrdersController < ApplicationController
 
   private
 
+  def order_params
+  params.require(:order).permit(:status, :name, :email, :street, :city, :state, :zip, :credit_card, :exp_date, :cvv, :billing_zip)
+  end
+
   def get_orders(order_items)
+
     orders = []
 
     order_items.each do |order_item|

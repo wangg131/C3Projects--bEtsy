@@ -1,0 +1,37 @@
+<h1>Add Payment Details</h1>
+<%= form_for @order, url: order_path(params[:id]) do |f| %>
+  <fieldset>
+    <legend>Payment Details</legend>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+
+      <%= f.label :street %>
+      <%= f.text_field :street %>
+
+      <%= f.label :city %>
+      <%= f.text_field :city %>
+
+      <%= f.label :state %>
+      <%= f.text_field :state %>
+
+      <%= f.label :zip %>
+      <%= f.text_field :zip %>
+
+      <%= f.label :credit_card %>
+      <%= f.text_field :credit_card %>
+
+      <%= f.label :exp_date %>
+      <%= f.text_field :exp_date %>
+
+      <%= f.label :cvv %>
+      <%= f.text_field :cvv %>
+
+      <%= f.label :billing_zip %>
+      <%= f.text_field :billing_zip %>
+     </fieldset>
+
+  <%= f.submit %>
+<% end %>
