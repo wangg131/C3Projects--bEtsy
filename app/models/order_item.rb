@@ -1,6 +1,4 @@
 class OrderItem < ActiveRecord::Base
-  # Scopes
-
   # Validations
   validates :product_id, presence: true
   validates :order_id, presence: true
@@ -26,8 +24,8 @@ class OrderItem < ActiveRecord::Base
     unit_price * quantity
   end
 
-
-#############################################################
+  # Scopes
+  
   private
 
     def product_present
@@ -39,4 +37,7 @@ class OrderItem < ActiveRecord::Base
     def finalize
       self[:revenue] = total_price
     end
+
+
+
 end
