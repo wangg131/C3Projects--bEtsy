@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     if !session[:order_id].nil?
       Order.find(session[:order_id])
     else
-      Order.create
+      Order.create(status: "pending")
     end
   end
 
