@@ -1,41 +1,53 @@
 <h3><%= @order_items.count %> <%= @order_items.count == 1 ? "Item" : "Items" %> in Your Cart</h3>
 
+
 <% if @order_items.count == 0 %>
   <p class="text-center">
     There are no items in your shopping cart.  Please <%= link_to "go back", root_path %> and add some items to your cart.
   </p>
 <% else %>
-  <table class="table">
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th></th>
-      <th></th>
-    </tr>
-    <% @order_items.each do |item| %>
+  <div class="row">
+    <table class="table">
       <tr>
-        <td><%= image_tag(item.product.photo_url, class: "cart-thumbnail") %></td>
-        
-        <td><%= link_to "#{item.product.name}", merchant_product_path(merchant_id: item.product.merchant_id, id: item.product.id) %></td>
-        
-        <td><%= number_to_currency(item.product.price) %></td>
-        
-        <%= form_for item do |f| %>
-          <td><%= f.number_field :quantity, value: item.quantity.to_i, class: "form_control", min: 1 %></td>
-          <%= f.hidden_field :product_id, value: item.product_id %>
-          <%= f.hidden_field :id, value: item.id %>
-          <td><%= f.submit "Update Quantity", class: "btn btn-default" %></td>
-        <% end %>
-
-        <td>Total: <%= number_to_currency(item.revenue) %></td>
+        <th></th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th></th>
+        <th></th>
       </tr>
-    <% end %>
+      <% @order_items.each do |item| %>
+        <tr>
+          <td><%= image_tag(item.product.photo_url, class: "cart-thumbnail") %></td>
+          
+          <td><%= link_to "#{item.product.name}", merchant_product_path(merchant_id: item.product.merchant_id, id: item.product.id) %></td>
+          
+          <td><%= number_to_currency(item.product.price) %></td>
+          
+          <%= form_for item do |f| %>
+            <td><%= f.number_field :quantity, value: item.quantity.to_i, class: "form_control", min: 1 %></td>
+            <%= f.hidden_field :product_id, value: item.product_id %>
+            <%= f.hidden_field :id, value: item.id %>
+            <td><%= f.submit "Update Quantity", class: "btn btn-default" %></td>
+          <% end %>
 
-
-  </table>
-
-  <%= link_to "Checkout" %>
+          <td>Total: <%= number_to_currency(item.revenue) %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>ORDER TOTAL: </td>
+        <td><%= number_to_currency(@order_total) %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-md-offset-11">
+      <%= link_to "Checkout" %>
+    </div>
+  </div>
 <% end %>
 
