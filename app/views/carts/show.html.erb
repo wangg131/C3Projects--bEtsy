@@ -10,7 +10,7 @@
   <% @order_products.each do |item| %>
     <tr>
       <td><%= image_tag(item.photo_url, class: "cart-thumbnail") %></td>
-      <td><%= item.name %></td>
+      <td><%= link_to "#{item.name}", merchant_product_path(merchant_id: item.merchant_id, id: item.id) %></td>
       <td><%= number_to_currency(item.price) %></td>
       <td><%= "Quantity_Here_Later" %></td>
     </tr>
