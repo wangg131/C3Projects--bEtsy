@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20150720073857) do
   create_table "order_items", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "order_id"
+    t.integer  "quantity"
     t.float    "revenue"
     t.boolean  "shipped"
     t.integer  "merchant_id"
