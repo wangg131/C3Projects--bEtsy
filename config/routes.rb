@@ -30,6 +30,10 @@ Rails.application.routes.draw do
 
   resources :categories, only: [:new, :create]
 
+  resources :orders, only: [:edit, :update, :show] do
+    get :confirmation
+  end
+
   get 'merchant/:merchant_id/orders/shipped' => 'orders#shipped', as: "orders_shipped"
   get 'merchant/:merchant_id/orders/unshipped' => 'orders#unshipped', as: "orders_unshipped"
 
@@ -39,6 +43,7 @@ Rails.application.routes.draw do
 
   get '/cart'             =>  'carts#show'
   post '/add_to_cart/:id' =>  'carts#add_to_cart', as: 'add_to_cart'
+
 
   # resources :orders
   # resources :order_items
