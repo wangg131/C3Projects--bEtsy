@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_order
+  helper_method :cart_units
 
   def current_order
     if !session[:order_id].nil?
@@ -26,6 +27,16 @@ class ApplicationController < ActionController::Base
     else
       Order.create
     end
+  end
+
+  def cart_units
+    cart_units = 0
+
+    current_order.order_items.each do |order_item|
+      cart_units += order_item.quantity
+    end
+
+    return cart_units
   end
 
 end
