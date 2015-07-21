@@ -55,7 +55,7 @@ class OrdersController < ApplicationController
 
     @order.update(order_params)
 
-    @order.update(status: "paid")
+    @order.update(status: "complete")
 
     redirect_to order_confirmation_path(params[:id])
   end
@@ -67,7 +67,11 @@ class OrdersController < ApplicationController
 
   def confirmation
     @order = Order.find(params[:order_id])
-    raise
+
+    @order_items = @order.products
+
+    @customer_info = []
+    @customer_info.push(@order.name, @order.email, @order.street, @order.city, @order.state, @order.zip)
   end
 
   def shipped
