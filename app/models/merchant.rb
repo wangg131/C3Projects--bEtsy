@@ -15,10 +15,7 @@ class Merchant < ActiveRecord::Base
   # Scopes
 
   #Merchant.find(1).shipped(true/false) returns all shipped order items
-  def shipped(boolean)
+  def shipped?(boolean)
     order_items.where(shipped: boolean)
   end
-
-  #order_items.revenue returns revenue of all order_items
-
 end

@@ -6,52 +6,10 @@ class OrdersController < ApplicationController
     @order_items = merchant.order_items
     @orders = merchant.orders.uniq
 
-    @shipped_revenue = 0
-    @unshipped_revenue = 0
-    @shipped_count = 0
-    @unshipped_count = 0
-
-    @order_items.each do |order_item|
-      if order_item.shipped == true
-        @shipped_revenue += order_item.revenue
-        @shipped_count += 1
-      else
-        @unshipped_revenue += order_item.revenue
-        @unshipped_count += 1
-      end
-    end
-  end
-
-  def shipped_revenue(order_items)
-    revenue = 0
-    order_items.each do |order_item|
-      revenue += order_item.revenue if order_item.shipped
-    end
-    return revenue
-  end
-
-  def unshipped_revenue(order_items)
-    revenue = 0
-    order_items.each do |order_item|
-      revenue += order_item.revenue unless order_item.shipped
-    end
-    return revenue
-  end
-
-  def shipped_count(order_items)
-    count = 0
-    order_items.each do |order_item|
-      count += 1 if order_item.shipped
-    end
-    return count
-  end
-
-  def unshipped_count(order_items)
-    count = 0
-    order_items.each do |order_item|
-      count += 1 unless order_item.shipped
-    end
-    return count
+    @shipped_revenue = merchant.shipped?(true).sum("revenue")
+    @unshipped_revenue = merchant.shipped?(false).sum("revenue")
+    @shipped_count = merchant.shipped?(true).count
+    @unshipped_count = merchant.shipped?(false).count
   end
 
   def show
@@ -111,20 +69,10 @@ class OrdersController < ApplicationController
     @order_items = merchant.order_items.where(shipped: true)
     @orders = merchant.orders.uniq
 
-    @shipped_revenue = 0
+    @shipped_revenue = merchant.shipped?(true).sum("revenue")
     @unshipped_revenue = 0
-    @shipped_count = 0
+    @shipped_count = merchant.shipped?(true).count
     @unshipped_count = 0
-
-    @order_items.each do |order_item|
-      if order_item.shipped == true
-        @shipped_revenue += order_item.revenue
-        @shipped_count += 1
-      else
-        @unshipped_revenue += order_item.revenue
-        @unshipped_count += 1
-      end
-    end
   end
 
   def unshipped
@@ -133,19 +81,9 @@ class OrdersController < ApplicationController
     @orders = merchant.orders.uniq
 
     @shipped_revenue = 0
-    @unshipped_revenue = 0
+    @unshipped_revenue = merchant.shipped?(false).sum("revenue")
     @shipped_count = 0
-    @unshipped_count = 0
-
-    @order_items.each do |order_item|
-      if order_item.shipped == true
-        @shipped_revenue += order_item.revenue
-        @shipped_count += 1
-      else
-        @unshipped_revenue += order_item.revenue
-        @unshipped_count += 1
-      end
-    end
+    @unshipped_count = merchant.shipped?(false).count
   end
 
   private
