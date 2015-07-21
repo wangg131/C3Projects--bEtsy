@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
     # a merchant can view all of their 'paid' and 'shipped' orders
     merchant = Merchant.find(params[:merchant_id])
     @order_items = merchant.order_items
-    @orders = merchant.orders.uniq
+    @orders = merchant.orders.uniq.reverse
 
     @shipped_revenue = merchant.shipped?(true).sum("revenue")
     @unshipped_revenue = merchant.shipped?(false).sum("revenue")
@@ -72,7 +72,7 @@ class OrdersController < ApplicationController
   def shipped
     merchant = Merchant.find(params[:merchant_id])
     @order_items = merchant.order_items.where(shipped: true)
-    @orders = merchant.orders.uniq
+    @orders = merchant.orders.uniq.reverse
 
     @shipped_revenue = merchant.shipped?(true).sum("revenue")
     @unshipped_revenue = 0
@@ -83,7 +83,7 @@ class OrdersController < ApplicationController
   def unshipped
     merchant = Merchant.find(params[:merchant_id])
     @order_items = merchant.order_items.where(shipped: false)
-    @orders = merchant.orders.uniq
+    @orders = merchant.orders.uniq.reverse
 
     @shipped_revenue = 0
     @unshipped_revenue = merchant.shipped?(false).sum("revenue")
