@@ -37,6 +37,9 @@ Rails.application.routes.draw do
 
   patch 'merchants/:merchant_id/order_items/:id' => 'order_items#mark_shipped', as: "mark_shipped"
 
+  get '/cart'             =>  'carts#show'
+  post '/add_to_cart/:id' =>  'carts#add_to_cart', as: 'add_to_cart'
+
   # resources :orders
   # resources :order_items
   # resources :payments
