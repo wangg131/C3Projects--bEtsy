@@ -7,6 +7,7 @@ class MerchantsController < ApplicationController
     @merchant = Merchant.find(params[:id])
 
     @merchant_products = @merchant.products
+
   end
 
   def new
@@ -35,9 +36,13 @@ class MerchantsController < ApplicationController
   def dashboard
     # may change the params depending on sessions
     @merchant = Merchant.find(params[:merchant_id])
-
     @products = @merchant.products
-    # @total_revenue = @products.order_item.revenue
+    @order_items = @merchant.order_items
+
+    @revenue = 0
+    @order_items.each do |order_item|
+      @revenue += order_item.revenue
+    end
   end
 
 #________________________________________________________________________________

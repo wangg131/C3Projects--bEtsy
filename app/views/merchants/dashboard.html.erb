@@ -10,7 +10,7 @@
       <h5><%= link_to "Orders", merchant_orders_path(params[:merchant_id]), class: "btn btn-default" %></h5>
     </div>
     <div>
-      <h5>Revenue: <%= "DOLLABILLS" %></h5>
+      <h5>Revenue: <%= number_to_currency(@revenue) %></h5>
     </div>
   </div>
 </div>
@@ -19,7 +19,7 @@
   <table class="table">
     <% @products.each do |product| %>
       <tr>
-        <td><%= link_to product.name %></td>
+        <td><%= link_to product.name, product_path(product.id) %></td>
         <td><%= link_to "X", merchant_product_path(product.merchant_id, product.id), method: :delete %></td>
         <td><%= link_to "Edit", edit_merchant_product_path(product.merchant_id, product.id) %></td>
         <td><%= product.active ? "ACTIVE" : "INACTIVE" %></td>
