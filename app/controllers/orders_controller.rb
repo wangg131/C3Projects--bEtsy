@@ -25,7 +25,9 @@ class OrdersController < ApplicationController
   def show
     # a merchant can view a particular order and all of its details (i.e. order_items/totals, etc.)
     @order = Order.find(params[:id])
+
     @order_items = Merchant.find(params[:merchant_id]).order_items
+
     @redacted_cc = redacted_cc(@order.credit_card)
     # CAN WE DO BOTH OF THESE?
 
