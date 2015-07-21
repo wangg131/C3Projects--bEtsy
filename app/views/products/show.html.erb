@@ -23,7 +23,7 @@
   <table class="table">
     <tr>
       <th>Reviews</th>
-      <th>Ratings</th>
+      <th>Ratings <%= "(average rating = #{@average})" %></th>
     </tr>
 
     <% @reviews.each do |review| %>

@@ -17,6 +17,8 @@ class ProductsController < ApplicationController
     @review = Review.new
 
     @reviews = @product.reviews
+
+    @average = average_rating(@reviews)
   end
 
   def new
@@ -87,6 +89,10 @@ class ProductsController < ApplicationController
     # checks to see if product.stock > 0
       # if true, then it's ok to purchase
       # if false, then the product is 'out of stock' and cannot be purchased
+  end
+
+  def average_rating(reviews)
+    reviews.inject(0) { |sum, r| sum + r.rating}.to_f / reviews.size
   end
 
   def categories_update(product)
