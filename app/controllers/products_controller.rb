@@ -13,10 +13,10 @@ class ProductsController < ApplicationController
       # merchants can't leave reviews for their own products
       # if instock? == false, you can't add it to the cart
     @product = Product.find(params[:id])
-    @reviews = @product.reviews
 
     @review = Review.new
 
+    @reviews = @product.reviews
   end
 
   def new
@@ -24,13 +24,14 @@ class ProductsController < ApplicationController
     # (nested routing bc the prod is associated with that merchant only)
     # takes you to a form page
     @product = Product.new
+
     @categories = Category.all.order(:name)
   end
 
   def create
     # submits the form to save the new product to the db
     # redirects you to the merchant dashboard page
-    @product = Product.create(params[:product])
+    @product = Product.create(product_params)
 
     redirect_to merchant_dashboard_path(review_params[:merchant_id])
   end
@@ -40,6 +41,7 @@ class ProductsController < ApplicationController
     # note: changing the price of a product will NOT change the price of the order_item (intentionally)
     # takes you to a form page
     @product = Product.find(params[:id])
+
     @categories = Category.all.order(:name)
   end
 
@@ -48,9 +50,18 @@ class ProductsController < ApplicationController
     # redirects you to the merchant dashboard page
     @product = Product.find(params[:id])
 
-    @product.update(product_params)
+    if params[:merchant_id]
+      @product.update(product_params)
 
-    redirect_to merchant_dashboard_path(params[:merchant_id])
+      categories_update(@product)
+
+      redirect_to merchant_dashboard_path(params[:merchant_id])
+    else
+      active_update(@product)
+
+      redirect_to(:back)
+    end
+
   end
 
   def destroy
@@ -64,31 +75,33 @@ class ProductsController < ApplicationController
     redirect_to(:back)
   end
 
-  def active_update
-   @product = Product.find(params[:id])
-
-    if @product.active == true
-      @product.update(active: false)
-    else
-      @product.update(active: true)
-    end
-
-    redirect_to(:back)
-  end
-
   def instock?
     # checks to see if product.stock > 0
       # if true, then it's ok to purchase
       # if false, then the product is 'out of stock' and cannot be purchased
   end
 
-  
+  def categories_update(product)
+    product.categories.destroy_all
+
+    input_categories = params[:product][:categories]
+
+    input_categories.each do |input|
+      if input != ""
+        product.categories << Category.find(input)
+      end
+    end
+  end
+
+  def active_update(product)
+    product.active ? product.update(active: false) : product.update(active: true)
+  end
 
 #--------------------------------------------------------------------------------
   private
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :stock, :active, :photo_url, :merchant_id, :category_id)
+    params.require(:product).permit(:name, :description, :price, :stock, :active, :photo_url, :merchant_id, :categories)
   end
 
   def review_params
