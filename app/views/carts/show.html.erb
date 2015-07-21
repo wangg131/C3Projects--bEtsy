@@ -15,6 +15,7 @@
         <th>Quantity</th>
         <th></th>
         <th></th>
+        <th>Total</th>
       </tr>
       <% @order_items.each do |item| %>
         <tr>
@@ -30,11 +31,12 @@
             <%= f.hidden_field :id, value: item.id %>
             <td><%= f.submit "Update Quantity", class: "btn btn-default" %></td>
           <% end %>
-
-          <td>Total: <%= number_to_currency(item.revenue) %></td>
+          <td><%= link_to "Remove", order_item_path(item.id), data: {confirm: "Are you sure you want to remove this item from your cart?"}, method: :delete, class: "btn btn-default" %></td>
+          <td><%= number_to_currency(item.revenue) %></td>
         </tr>
       <% end %>
       <tr>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
