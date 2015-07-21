@@ -11,7 +11,7 @@ class Merchant < ActiveRecord::Base
   has_secure_password
 
   has_many :products
-  has_many :orders
+  has_many :orders, :through => :order_items
   has_many :order_items
 
 
