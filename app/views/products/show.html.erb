@@ -1,57 +1,41 @@
-<%= link_to "Add to Cart" , add_to_cart_path, method: :post , class: "btn btn-default" %>
-<%= link_to "Checkout", class: "btn btn-default" %>
 
-<h1>Product Information</h1>
+<h3><%= @product.name %></h3>
+<h5><%= link_to @product.merchant.name, merchant_path(id: @product.merchant.id) %></h5>
 
-<ul>
-  <li>
-    <div class="product-image"><%= image_tag(@product.photo_url) %></div>
-  </li>
-  <li>
-    Product Name: <%= @product.name %>
-  </li>
-  <li>
-    Description: <%= @product.description %>
-  </li>
-  <li>
-    Price: <%= @product.price %>
-  </li>
-  <li>
-    Number in Stock: <%= @product.stock %>
-  </li>
-</ul>
+<div class="row">
+  <div class="col-md-6">
+    <%= image_tag(@product.photo_url) %>
+  </div>
+  <div class="col-md-6">
+    <dl class="dl-horizontal">
+      <dt>Price: </dt>
+      <dd><%= number_to_currency(@product.price) %></dd>
+      <dt>Number Instock: </dt>
+      <dd><%= @product.stock %></dd>
+      <dt>Description: </dt>
+      <dd><%= @product.description %></dd>
+    </dl>
+    <%= link_to "Add to Cart" , add_to_cart_path, method: :post , class: "col-md-offset-9 btn btn-default" %>
+  </div>
+</div>
 
-<%= link_to "View this Merchant's Store", merchant_path %>
+<div class="row">
+  <table class="table">
+    <tr>
+      <th>Reviews</th>
+      <th>Ratings</th>
+    </tr>
 
-<h3> Current Reviews </h3> 
+    <% @reviews.each do |review| %>
+    <tr>
+      <td><%= review.content %></td>
+      <td><%= review.rating %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
 
-  <table border "1">
+<h4>Want to Review this Product?</h4>
 
-  <tr>
-    <th>
-      Review
-    </th>
-    <th>
-      Rating
-    </th>
-  </tr>
-
-<% @reviews.each do |review| %>
-  <tr>
-    <td>
-      <%= review.content %>
-    </td>
-
-    <td>
-      <%= review.rating %>
-    </td>
-
-
-  </tr>
-  <% end %>
-</table>
-
-<h3>Want to Review this Product?</h3>
-
-<%= link_to "Review this Product", new_product_review_path(@product.id) %>
+<%= link_to "Review This Product", new_product_review_path(@product.id), class: "btn btn-default" %>
 

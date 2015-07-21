@@ -1,9 +1,21 @@
-<h1>Cart</h1>
+<h3><%= @order_products.count %> <%= @order_products.count == 1 ? "Item" : "Items" %> in Your Cart</h3>
 
-<ul>
+<table class="table">
+  <tr>
+    <th></th>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Quantity</th>
+  </tr>
   <% @order_products.each do |item| %>
-    <li><%= item.name %></li>
+    <tr>
+      <td><%= image_tag(item.photo_url, class: "cart-thumbnail") %></td>
+      <td><%= item.name %></td>
+      <td><%= number_to_currency(item.price) %></td>
+      <td><%= "Quantity_Here_Later" %></td>
+    </tr>
   <% end %>
-</ul>
+</table>
 
-<%= link_to "Back", redirect :back %>
+<%= link_to "Checkout" %>
+
