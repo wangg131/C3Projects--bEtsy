@@ -28,6 +28,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'bootstrap-sass'
 
+gem 'bootstrap_forms', '~> 2.0.0'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
