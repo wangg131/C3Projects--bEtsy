@@ -49,6 +49,8 @@ class OrdersController < ApplicationController
 
     @order.update(status: "complete")
 
+    session[:order_id] = nil
+
     redirect_to order_confirmation_path(params[:id])
   end
 
