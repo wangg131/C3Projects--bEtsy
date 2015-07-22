@@ -4,7 +4,7 @@
     <% @products.each do |product| %>
       <div class="product-square col-sm-4">
         <div class="product-image"><%= image_tag(product.photo_url) %></div>
-        <h3><%= link_to product.name, product_path(id: product.id) %></h3>
+        <h3><%= link_to product.name, product_path(product.id) %></h3>
         <h4><%= number_to_currency(product.price) %> each</h4>
         <p>Available: <%= product.stock %></p>
         <p><%= product.description %></p>

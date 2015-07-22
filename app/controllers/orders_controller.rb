@@ -1,10 +1,32 @@
 class OrdersController < ApplicationController
-
   def index
     # a merchant can view all of their 'paid' and 'shipped' orders
+    @merchant = Merchant.find(params[:merchant_id])
+    # find only orders that are complete
+    @orders = @merchant.orders.where(status: "complete").uniq.reverse
+    @order_items = @merchant.order_items
+
+    # @shipped_revenue = merchant.shipped?(true).sum("revenue")
+    # @unshipped_revenue = merchant.shipped?(false).sum("revenue")
+    # @shipped_count = merchant.shipped?(true).count
+    # @unshipped_count = merchant.shipped?(false).count
+  end
+
+  def shipped
     merchant = Merchant.find(params[:merchant_id])
-    @order_items = merchant.order_items
-    @orders = merchant.orders.uniq
+    @order_items = merchant.order_items.where(shipped: true)
+    @orders = merchant.orders.uniq.reverse
+
+    @shipped_revenue = merchant.shipped?(true).sum("revenue")
+    @unshipped_revenue = merchant.shipped?(false).sum("revenue")
+    @shipped_count = merchant.shipped?(true).count
+    @unshipped_count = merchant.shipped?(false).count
+  end
+
+  def unshipped
+    merchant = Merchant.find(params[:merchant_id])
+    @order_items = merchant.order_items.where(shipped: false)
+    @orders = merchant.orders.uniq.reverse
 
     @shipped_revenue = merchant.shipped?(true).sum("revenue")
     @unshipped_revenue = merchant.shipped?(false).sum("revenue")
@@ -69,27 +91,6 @@ class OrdersController < ApplicationController
     @customer_info = get_customer_info(@order)
   end
 
-  def shipped
-    merchant = Merchant.find(params[:merchant_id])
-    @order_items = merchant.order_items.where(shipped: true)
-    @orders = merchant.orders.uniq
-
-    @shipped_revenue = merchant.shipped?(true).sum("revenue")
-    @unshipped_revenue = 0
-    @shipped_count = merchant.shipped?(true).count
-    @unshipped_count = 0
-  end
-
-  def unshipped
-    merchant = Merchant.find(params[:merchant_id])
-    @order_items = merchant.order_items.where(shipped: false)
-    @orders = merchant.orders.uniq
-
-    @shipped_revenue = 0
-    @unshipped_revenue = merchant.shipped?(false).sum("revenue")
-    @shipped_count = 0
-    @unshipped_count = merchant.shipped?(false).count
-  end
 
   def get_total(order_items)
     order_items.inject(0) do |sum, i|

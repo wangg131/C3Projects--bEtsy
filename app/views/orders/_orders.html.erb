@@ -2,15 +2,19 @@
 
 <div class="row">
   <div class="col-md-6">
-    <h3>Total Revenue: <%= number_to_currency(shipped_revenue + unshipped_revenue) %> </h3>
-    <h4>Shipped: <%= number_to_currency(shipped_revenue)%></h4>
-    <h4>Not Shipped: <%= number_to_currency(unshipped_revenue) %></h4>
+    <h3>Total Revenue: <%= number_to_currency(order_items.sum("revenue")) %> </h3>
+    <h4>Shipped: <%= number_to_currency(merchant.shipped?(true).sum("revenue"))%></h4>
+    <h4>Not Shipped: <%= number_to_currency(merchant.shipped?(false).sum("revenue")) %></h4>
   </div>
 
+  <!-- these totals aren't correct bc merchant.shipped is pulling all order items in an order
+  some of these order items do not belong to this particular merchant. maybe need to
+  change the shipped method? -->
+
   <div class="col-md-6">
-    <h3>Total Number of Orders: <%= shipped_count + unshipped_count %></h3>
-    <h4>Shipped: <%= shipped_count %></h4>
-    <h4>Not Shipped: <%= unshipped_count %></h4>
+    <h3>Total Number of Orders: <%= order_items.count %></h3>
+    <h4>Shipped: <%= merchant.shipped?(true).count %></h4>
+    <h4>Not Shipped: <%= merchant.shipped?(false).count %></h4>
   </div>
 </div>
 
@@ -43,38 +47,40 @@
 
 
 <% orders.each do |order| %>
-  <h4><strong><%= link_to "Order ##{order.id}", merchant_order_path(params[:merchant_id], order.id) %></strong></h4>
-  <h6>Ordered on: <%= order.updated_at %></h6>
 
-  <table class="table table-hover">
-    <tr>
-      <th>Product</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Status</th>
-      <th></th>
-    </tr>
-    <% total = 0 %>
-    <% order_items.each do |order_item| %>
-      <% if order_item.order == order %>
-        <tr>
-          <td class="col-sm-4"><%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></td>
-          <td class="col-sm-2"><%= order_item.quantity %></td>
-          <td class="col-sm-2"><%= number_to_currency(order_item.revenue) %></td>
-          <% total += order_item.revenue %>
-          <td class="col-sm-2"><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
-          <td class="col-sm-2"> <%= order_item.shipped ? (" ") : (link_to "Shipped", mark_shipped_path(params[:merchant_id], order_item.id), method: :patch, class: "btn btn-default") %> </td>
-        </tr>
-      <% end %>
-    <% end %>
-    <tfoot>
+    <h4><strong><%= link_to "Order ##{order.id}", merchant_order_path(params[:merchant_id], order.id) %></strong></h4>
+    <h6>Ordered on: <%= order.updated_at %></h6>
+
+    <table class="table table-hover">
       <tr>
-        <td>TOTAL</td>
-        <td></td>
-        <td><strong><%= number_to_currency(total) %></strong></td>
-        <td></td>
-        <td></td>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th></th>
       </tr>
-    </tfoot>
-  </table>
-  <% end %>
+      <% total = 0 %>
+      <% order_items.each do |order_item| %>
+        <% if order_item.order == order %>
+          <tr>
+            <td class="col-sm-4"><%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></td>
+            <td class="col-sm-2"><%= order_item.quantity %></td>
+            <td class="col-sm-2"><%= number_to_currency(order_item.revenue) %></td>
+            <% total += order_item.revenue %>
+            <td class="col-sm-2"><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
+            <td class="col-sm-2"> <%= order_item.shipped ? (" ") : (link_to "Shipped", mark_shipped_path(params[:merchant_id], order_item.id), method: :patch, class: "btn btn-default") %> </td>
+          </tr>
+        <% end %>
+      <% end %>
+      <tfoot>
+        <tr>
+          <td>TOTAL</td>
+          <td></td>
+          <td><strong><%= number_to_currency(total) %></strong></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+
+<% end %>
