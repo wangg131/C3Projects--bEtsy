@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   helper_method :cart_units
 
   def current_order
-    if !session[:order_id].nil?
+    unless session[:order_id].nil?
       Order.find(session[:order_id])
     else
       Order.create(status: "pending")
