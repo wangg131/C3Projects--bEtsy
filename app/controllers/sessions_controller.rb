@@ -19,11 +19,13 @@ def destroy
 
   if session[:order_id]
     order = Order.find(session[:order_id])
+    session[:order_id] = nil
+
     if order.status == "pending"
       order.destroy
     end
   end
-  
+
   redirect_to root_path
 end
 
