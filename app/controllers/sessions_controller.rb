@@ -16,10 +16,12 @@ end
 
 def destroy
   session[:merchant_id] = nil
-  order = Order.find(session[:order_id])
 
-  if order.status == "pending"
-    order.destroy
+  if session[:order_id]
+    order = Order.find(session[:order_id])
+    if order.status == "pending"
+      order.destroy
+    end
   end
   
   redirect_to root_path
