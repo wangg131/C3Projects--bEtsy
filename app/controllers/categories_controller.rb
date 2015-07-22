@@ -1,6 +1,8 @@
 class CategoriesController < ApplicationController
   def index
     # need this for shopping for items by category
+    @categories = Category.all
+    @products = Product.all
   end
 
   def new
