@@ -6,25 +6,31 @@ class OrdersController < ApplicationController
   def index
     # a merchant can view all of their 'completed' orders
     # a merchant can view all of their 'paid' and 'shipped' orders
+    if session[:merchant_id] == params[:merchant_id].to_i
+      @merchant = Merchant.find(params[:merchant_id])
+      # find only orders that are complete
+      @orders = @merchant.orders.where(status: "complete").uniq.reverse
+      @order_items = @orders.order_items.where(merchant_id: @merchant.id)
 
-    @merchant = Merchant.find(params[:merchant_id])
-    # find only orders that are complete
-    @orders = @merchant.orders.where(status: "complete").uniq.reverse
-    @order_items = @orders.order_items.where(merchant_id: @merchant.id)
-
-    # from completed orders, find order items that belong to this merchant
-    # sum up the revenue from these order items
-    @shipped_revenue = shipped_revenue(@orders)
-    @unshipped_revenue = unshipped_revenue(@orders)
+      # from completed orders, find order items that belong to this merchant
+      # sum up the revenue from these order items
+      @shipped_revenue = shipped_revenue(@orders)
+      @unshipped_revenue = unshipped_revenue(@orders)
 
 
-    count = 0
-    @orders.each do |order|
-      order.order_items.each do |order_item|
-        if order_item == order
-          count += 1
+      count = 0
+      @orders.each do |order|
+        order.order_items.each do |order_item|
+          if order_item == order
+            count += 1
+          end
         end
       end
+
+    else
+      flash[:error] = "You do not have access to that merchant's orders."
+
+      redirect_to merchant_path(session[:merchant_id])
     end
 
     # @shipped_revenue = merchant.shipped?(true).sum("revenue")
