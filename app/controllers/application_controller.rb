@@ -33,7 +33,8 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
-  # def restrict_across_guest
+  # def verify_user_order
+  #   if session[:order_id]
 
   # end
 

@@ -62,7 +62,11 @@ class OrdersController < ApplicationController
   def edit
     # every time a new order_item is added/removed from the cart
     # when the customer adds their payment details
-    @order = Order.find(params[:id])
+    if session[:order_id] == params[:id]
+      @order = Order.find(params[:id])
+    else
+      flash[:error]
+    end
   end
 
   def update

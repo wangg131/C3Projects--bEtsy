@@ -7,6 +7,7 @@ class OrderItemsController < ApplicationController
     calc_revenue
 
     @order_item = @order.order_items.create(order_item_params)
+
     session[:order_id] = @order.id
 
     redirect_to '/cart'
