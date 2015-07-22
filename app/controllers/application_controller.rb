@@ -33,9 +33,9 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
-  def restrict_across_guest
+  # def restrict_across_guest
 
-  end
+  # end
 
   helper_method :current_order
   helper_method :cart_units
