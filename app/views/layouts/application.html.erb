@@ -20,7 +20,7 @@
             </div>
 
           <% else %>
-            <div class="account-buttons col-md-3 col-md-offset-7">
+            <div class="account-buttons col-md-2 col-md-offset-8">
               <%= link_to "Login", login_path, class: "btn btn-default" %>
               <%= link_to "Sign Up!", new_merchant_path, class: "btn btn-default" %>
             </div>
@@ -30,7 +30,6 @@
 
 
     <nav class="navbar navbar-default">
-
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <a class="navbar-brand" href="/">Primo</a>
@@ -63,9 +62,8 @@
 
     </nav>
 
-    <div class="container">
       <%= yield %>
-    </div>
+
   </body>
 </div>
 </html>
