@@ -20,6 +20,19 @@ class ProductsController < ApplicationController
     @reviews = @product.reviews
 
     @average = average_rating(@reviews)
+
+    existing_cart_product = current_order.order_items.select {|item| item.product_id == @product.id }
+
+    if existing_cart_product.length > 0
+      calc_additional_stock_available(existing_cart_product[0])
+    end
+  end
+
+  def calc_additional_stock_available(existing_cart_product)
+    cart_product_units = existing_cart_product.quantity
+    @additional_stock_available = @product.stock.to_i - cart_product_units.to_i
+
+    return @additional_stock_available
   end
 
   def new
