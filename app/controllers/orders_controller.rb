@@ -8,8 +8,6 @@ class OrdersController < ApplicationController
     @orders = @merchant.orders.where(status: "complete").uniq.reverse
 
     @order_items = find_relevant_order_items(@orders, @merchant.id)
-    @order_items_shipped = shipped?(@order_items, true)
-    @order_items_unshipped = shipped?(@order_items, false)
 
     # from completed orders, find order items that belong to this merchant
     # sum up the revenue from these order items
@@ -25,6 +23,7 @@ class OrdersController < ApplicationController
     @orders = @merchant.orders.where(status: "complete").uniq.reverse
     @order_items = find_relevant_order_items(@orders, @merchant.id)
     @order_items_shipped = shipped?(@order_items, true)
+    @shipped_orders = find_orders_by_status(@orders, true, @merchant.id)
 
     @shipped_revenue = revenue(@order_items)
     @unshipped_revenue = revenue(@order_items)
@@ -37,6 +36,9 @@ class OrdersController < ApplicationController
     @orders = @merchant.orders.where(status: "complete").uniq.reverse
     @order_items = find_relevant_order_items(@orders, @merchant.id)
     @order_items_unshipped = shipped?(@order_items, false)
+
+    @unshipped_orders = find_orders_by_status(@orders, false, @merchant.id)
+
 
     @shipped_revenue = revenue(@order_items)
     @unshipped_revenue = revenue(@order_items)
@@ -135,18 +137,18 @@ class OrdersController < ApplicationController
     return relevant_order_items.flatten
   end
 
-  def find_orders_by_status(orders, bool)
+  def find_orders_by_status(orders, bool, merchant_id)
     relevant_orders = []
     orders.each do |order|
-      all_order_items = order.order_items
-
+      # order_items include order_items that don't belong to the merchant
+      all_order_items = find_relevant_order_items([order], merchant_id)
       all_order_items.each do |order_item|
         if order_item.shipped == bool
           relevant_orders.push(order_item.order)
         end
       end
     end
-    return relevant_orders
+    return relevant_orders.uniq
   end
 
 
