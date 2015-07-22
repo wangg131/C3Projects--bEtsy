@@ -1,5 +1,7 @@
 class OrderItemsController < ApplicationController
 
+  before_action :check_for_duplicate_product, only: [:create]
+
   def create
     @order = current_order
 
@@ -9,6 +11,28 @@ class OrderItemsController < ApplicationController
     session[:order_id] = @order.id
 
     redirect_to '/cart'
+  end
+
+  def check_for_duplicate_product
+    order = current_order
+    @product_id = params[:order_item][:product_id] 
+    matching_product = order.order_items.select {|order_item| order_item.product_id == @product_id.to_i}
+    
+    if matching_product.length > 0
+      update_existing_cart_product(matching_product[0])
+    end
+  end
+
+  def update_existing_cart_product(matching_product)
+    current_quantity = matching_product.quantity
+    add_quantity = params[:order_item][:quantity]
+    params[:order_item][:quantity] = current_quantity.to_i + add_quantity.to_i
+    
+    calc_revenue
+    
+    matching_product.update_attributes(order_item_params)
+    
+    redirect_to(:back)   
   end
 
   def update
