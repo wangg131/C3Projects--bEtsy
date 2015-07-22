@@ -36,7 +36,7 @@
   <table class="table">
     <tr>
       <th>Reviews</th>
-      <th>Ratings</th>
+      <th>Ratings <%= "(average = #{@average})" %></th>
     </tr>
 
     <% @reviews.each do |review| %>
@@ -50,18 +50,28 @@
 
 <h4>Want to Review this Product?</h4>
 
-<%= form_for @review, url: product_reviews_path(params[:id]) do |f| %>
-
+<%= bootstrap_form_for @review, url: product_reviews_path(params[:id]) do |f| %>
 
   <fieldset>
-    <%= f.label :content %>
-    <%= f.text_field :content %>
+    <h4>Rating <small>rate this product on a scale from 1 - 5 </small></h4>
+    <%= f.label "1" %>
+    <%= f.radio_button :rating, 1, inline: true %>
 
-    <%= f.label :rating %>
-    <%= f.text_field :rating %>
+    <%= f.label "2" %>
+    <%= f.radio_button :rating, 2, inline: true %>
+
+    <%= f.label "3" %>
+    <%= f.radio_button :rating, 3, inline: true %>
+
+    <%= f.label "4" %>
+    <%= f.radio_button :rating, 4, inline: true %>
+
+    <%= f.label "5" %>
+    <%= f.radio_button :rating, 5, inline: true %>
+
+    <%= f.text_area :content %>
 
     <%= f.hidden_field :product_id, :value => params[:id] %>
-
   </fieldset>
 
   <%= f.submit "Add this Review" %>
