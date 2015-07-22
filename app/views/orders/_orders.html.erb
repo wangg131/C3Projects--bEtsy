@@ -12,9 +12,9 @@
   change the shipped method? -->
 
   <div class="col-md-6">
-    <h3>Total Number of Orders: <%= order_items.count %></h3>
-    <h4>Shipped: <%= merchant.shipped?(true).count %></h4>
-    <h4>Not Shipped: <%= merchant.shipped?(false).count %></h4>
+    <h3>Total Number of Order Items: <%= (shipped_count + unshipped_count) %></h3>
+    <h4>Shipped: <%= shipped_count %></h4>
+    <h4>Not Shipped: <%= unshipped_count %></h4>
   </div>
 </div>
 
@@ -47,7 +47,6 @@
 
 
 <% orders.each do |order| %>
-
     <h4><strong><%= link_to "Order ##{order.id}", merchant_order_path(params[:merchant_id], order.id) %></strong></h4>
     <h6>Ordered on: <%= order.updated_at %></h6>
 
