@@ -17,7 +17,14 @@ class MerchantsController < ApplicationController
   def create
     @merchant = Merchant.create(merchant_params)
 
-    redirect_to root_path
+    if @merchant.save
+      session[:merchant_id] = @merchant.id
+      redirect_to root_path
+    else
+      flash.now[:error] = "Try again, account was not created."
+      render :new
+    end
+
   end
 
   def edit
