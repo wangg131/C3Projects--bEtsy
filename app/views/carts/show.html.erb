@@ -26,7 +26,7 @@
           <td><%= number_to_currency(item.product.price) %></td>
           
           <%= form_for item do |f| %>
-            <td><%= f.number_field :quantity, value: item.quantity.to_i, class: "form_control", min: 1 %></td>
+            <td><%= f.number_field :quantity, value: item.quantity.to_i, class: "form_control", min: 1, max: item.product.stock %></td>
             <%= f.hidden_field :product_id, value: item.product_id %>
             <%= f.hidden_field :id, value: item.id %>
             <td><%= f.submit "Update Quantity", class: "btn btn-default" %></td>
