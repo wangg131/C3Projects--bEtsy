@@ -9,24 +9,20 @@
 </head>
 <div class="container-fluid">
   <body>
-    <div class="row">
-      <header>
-        <div class="col-md-2">
-          <h1>Primo!</h1>
-        </div>
-          <% if session[:merchant_id] %>
-            <div class="account-buttons col-md-1 col-md-offset-9">
-              <%= link_to "Logout", logout_path , method: :delete, class: "btn btn-default" %>
-            </div>
 
-          <% else %>
-            <div class="account-buttons col-md-2 col-md-offset-8">
-              <%= link_to "Login", login_path, class: "btn btn-default" %>
-              <%= link_to "Sign Up!", new_merchant_path, class: "btn btn-default" %>
-            </div>
-          <% end %>
-      </header>
-    </div>
+    <header>
+        <% if session[:merchant_id] %>
+          <div class="account-buttons">
+            <%= link_to "Logout", logout_path , method: :delete, class: "btn btn-default pull-right" %>
+          </div>
+
+        <% else %>
+          <div class="account-buttons">
+            <%= link_to "Login", login_path, class: "btn btn-default pull-right" %>
+            <%= link_to "Sign Up!", new_merchant_path, class: "btn btn-default pull-right" %>
+          </div>
+        <% end %>
+    </header>
 
 
     <nav class="navbar navbar-default">
