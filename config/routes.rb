@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :show]
   end
 
-  resources :categories, only: [:new, :create]
+  resources :categories, only: [:new, :create, :index, :show]
 
   resources :orders, only: [:edit, :update, :show] do
     get :confirmation
@@ -44,9 +44,8 @@ Rails.application.routes.draw do
   get '/cart'             =>  'carts#show'
   post '/add_to_cart/:id' =>  'carts#add_to_cart', as: 'add_to_cart'
 
-
-  # resources :orders
   resources :order_items
+  # resources :orders
   # resources :payments
   # resources :products
   # resources :reviews

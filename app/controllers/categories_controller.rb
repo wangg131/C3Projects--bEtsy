@@ -16,14 +16,18 @@ class CategoriesController < ApplicationController
     redirect_to :back
   end
 
+  def show
+    @products = Product.find(params[:id])
+    @category = Category.find(params[:id])
+    @products = @products.categories(params[:id])
+  end
+
 
   # def edit
   #
   # end
   #
-  # def show
-  #
-  # end
+
   #
   # def update
   #
