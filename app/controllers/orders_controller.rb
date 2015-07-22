@@ -19,9 +19,9 @@ class OrdersController < ApplicationController
     @orders = merchant.orders.uniq.reverse
 
     @shipped_revenue = merchant.shipped?(true).sum("revenue")
-    @unshipped_revenue = 0
+    @unshipped_revenue = merchant.shipped?(false).sum("revenue")
     @shipped_count = merchant.shipped?(true).count
-    @unshipped_count = 0
+    @unshipped_count = merchant.shipped?(false).count
   end
 
   def unshipped
@@ -29,9 +29,9 @@ class OrdersController < ApplicationController
     @order_items = merchant.order_items.where(shipped: false)
     @orders = merchant.orders.uniq.reverse
 
-    @shipped_revenue = 0
+    @shipped_revenue = merchant.shipped?(true).sum("revenue")
     @unshipped_revenue = merchant.shipped?(false).sum("revenue")
-    @shipped_count = 0
+    @shipped_count = merchant.shipped?(true).count
     @unshipped_count = merchant.shipped?(false).count
   end
 
