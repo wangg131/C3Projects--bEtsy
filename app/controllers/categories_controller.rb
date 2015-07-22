@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  before_action :require_login, only: [:new, :create]
   def index
     # need this for shopping for items by category
     @categories = Category.all
