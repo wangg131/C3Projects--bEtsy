@@ -11,13 +11,13 @@ def create
   else
     flash.now[:error] = "Try again, password incorrect."
     render :new
-  end 
+  end
 end
 
 def destroy
   session[:merchant_id] = nil
-
   order = Order.find(session[:order_id])
+
   if order.status == "pending"
     order.destroy
   end

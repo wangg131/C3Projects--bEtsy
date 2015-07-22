@@ -1,16 +1,15 @@
 class OrdersController < ApplicationController
-
   def index
     # a merchant can view all of their 'paid' and 'shipped' orders
-    merchant = Merchant.find(params[:merchant_id])
+    @merchant = Merchant.find(params[:merchant_id])
     # find only orders that are complete
-    @orders = merchant.orders.uniq.reverse
-    @order_items = merchant.order_items
+    @orders = @merchant.orders.where(status: "complete").uniq.reverse
+    @order_items = @merchant.order_items
 
-    @shipped_revenue = merchant.shipped?(true).sum("revenue")
-    @unshipped_revenue = merchant.shipped?(false).sum("revenue")
-    @shipped_count = merchant.shipped?(true).count
-    @unshipped_count = merchant.shipped?(false).count
+    # @shipped_revenue = merchant.shipped?(true).sum("revenue")
+    # @unshipped_revenue = merchant.shipped?(false).sum("revenue")
+    # @shipped_count = merchant.shipped?(true).count
+    # @unshipped_count = merchant.shipped?(false).count
   end
 
   def shipped
