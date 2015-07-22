@@ -11,7 +11,7 @@
   <body>
 
     <header>
-      <% if flash[:error] && !login_path %>
+      <% if flash[:error] %>
         <div>
           <%= flash[:error] %>
         </div>

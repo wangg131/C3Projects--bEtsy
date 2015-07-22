@@ -94,7 +94,7 @@ class OrdersController < ApplicationController
     if session[:order_id] == params[:id]
       @order = Order.find(params[:id])
     else
-      flash[:error] = "You do not have access to this order."
+      flash[:error] = "You do not have access to that order."
 
       redirect_to root_path
     end

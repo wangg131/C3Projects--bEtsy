@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       session[:merchant_id] = @merchant.id
       redirect_to root_path
     else
-      flash.now[:error] = "Try again, password incorrect."
+      flash.now[:login_error] = "Try again, password incorrect."
       render :new
     end
   end

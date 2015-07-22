@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   def require_login
     unless session[:merchant_id]
 
-      flash[:error] = "You must be logged in to perform that action"
+      flash[:login_error] = "You must be logged in to perform that action"
 
       redirect_to login_path
     end

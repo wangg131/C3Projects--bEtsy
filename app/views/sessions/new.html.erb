@@ -3,9 +3,9 @@
 
     <h3>Login</h3>
 
-    <% if flash.now[:error] %>
+    <% if flash.now[:login_error] %>
       <div>
-        <%= flash.now[:error] %>
+        <%= flash.now[:login_error] %>
       </div>
       <br>
     <% end %>
