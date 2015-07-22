@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
   def index
+    # a merchant can view all of their 'completed' orders
+
     # a merchant can view all of their 'paid' and 'shipped' orders
     @merchant = Merchant.find(params[:merchant_id])
     # find only orders that are complete
@@ -41,37 +43,32 @@ class OrdersController < ApplicationController
     @order_items = Merchant.find(params[:merchant_id]).order_items
 
     @redacted_cc = redacted_cc(@order.credit_card)
-    # CAN WE DO BOTH OF THESE?
-
-    # the cart displays any 'pending' orders that exist ??
   end
-
-  # def new
-    # do we need this??? it might be taken care of by the 'cart' method
-    # occurs the first time an item is added to the 'cart'
-  # end
 
   def create
     # order gets created initially withOUT payment details (this happens at checkout)
   end
 
   def edit
-    # every time a new order_item is added/removed from the cart
-    # when the customer adds their payment details
     @order = Order.find(params[:id])
   end
 
   def update
-    # when the customer enters their payment info,
-    # it updates the order record, making it "complete"
-    # order.status == 'paid' when they have entered their payment info
     @order = Order.find(params[:id])
-
     @order.update(order_params)
-
     @order.update(status: "complete")
 
-    session[:order_id] = nil
+    @order.order_items.each do |order_item|
+      product = Product.find(order_item.product_id)
+      previous_stock = product[:stock]
+      ordered_stock = order_item.quantity
+
+      product[:stock] = previous_stock.to_i - ordered_stock.to_i
+
+      puts product[:stock]
+    end
+
+    session[:order_id] = nil # this clears the cart after you've checked out
 
     redirect_to order_confirmation_path(params[:id])
   end
@@ -83,11 +80,8 @@ class OrdersController < ApplicationController
 
   def confirmation
     @order = Order.find(params[:order_id])
-
     @order_items = @order.order_items
-
     @total = get_total(@order_items)
-
     @customer_info = get_customer_info(@order)
   end
 
