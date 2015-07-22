@@ -67,9 +67,15 @@ class ProductsController < ApplicationController
     # a merchant can edit details about a product using a form
     # note: changing the price of a product will NOT change the price of the order_item (intentionally)
     # takes you to a form page
-    @product = Product.find(params[:id])
+    if session[:merchant_id] == params[:merchant_id].to_i
+      @product = Product.find(params[:id])
 
-    @categories = Category.all.order(:name)
+      @categories = Category.all.order(:name)
+    else
+      flash[:error] = "You do not have access to that merchant's products"
+
+      redirect_to merchant_dashboard_path(session[:merchant_id])
+    end
   end
 
   def update
