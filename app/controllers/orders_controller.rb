@@ -99,9 +99,8 @@ class OrdersController < ApplicationController
       previous_stock = product[:stock]
       ordered_stock = order_item.quantity
 
-      product[:stock] = previous_stock.to_i - ordered_stock.to_i
-
-      puts product[:stock]
+      new_stock = previous_stock.to_i - ordered_stock.to_i
+      product.update(stock: new_stock)
     end
 
     session[:order_id] = nil # this clears the cart after you've checked out

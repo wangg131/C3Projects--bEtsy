@@ -27,24 +27,4 @@ class CartsController < ApplicationController
     return @order_total
   end
 
-  def add_to_cart
-    product = Product.find(params[:id])
-
-    params[:product_id] = product.id
-    @order_item = OrderItem.create(
-      product_id: params[:product_id], 
-      order_id: params[:order_id], 
-      shipped: false,
-      quantity: 1)
-
-    raise
-    # @order.products << @order_item
-    redirect_to '/cart'
-  end
-
-
-#________________________________________________________________________________
-  private
-
-
 end

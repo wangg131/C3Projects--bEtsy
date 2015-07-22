@@ -23,7 +23,9 @@ class ProductsController < ApplicationController
 
     existing_cart_product = current_order.order_items.select {|item| item.product_id == @product.id }
 
-    if existing_cart_product.length > 0
+    if existing_cart_product.length == 0
+      @additional_stock_available = @product.stock.to_i
+    elsif existing_cart_product.length > 0
       calc_additional_stock_available(existing_cart_product[0])
     end
   end
