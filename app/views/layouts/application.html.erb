@@ -24,7 +24,6 @@
             <div class="account-and-cart-buttons col-md-3 col-md-offset-7">
               <%= link_to "Login", login_path, class: "btn btn-default" %>
               <%= link_to "Sign Up!", new_merchant_path, class: "btn btn-default" %>
-              <a href= "/cart" class="btn btn-default"><i class="fa fa-shopping-cart"></i> (<%= cart_units %>)</a>
             </div>
           <% end %>
       </header>
@@ -59,7 +58,8 @@
             <% if session[:merchant_id] %>
               <li><%= link_to "Merchant Dashboard", merchant_dashboard_path(session[:merchant_id]) %></li>
             <% end %>
-              <p class="navbar-text">Welcome, <%= @merchant_name %></p>
+              <li><p class="navbar-text">Welcome, <%= @merchant_name %></p></li>
+              <li><a href= "/cart"><i class="fa fa-shopping-cart"></i> (<%= cart_units %>)</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
 
