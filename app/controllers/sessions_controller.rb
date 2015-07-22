@@ -4,6 +4,7 @@ def new
 end
 
 def create
+  reset_session
   @merchant = Merchant.find_by(email: params[:session][:email])
   if @merchant && @merchant.authenticate(params[:session][:password])
     session[:merchant_id] = @merchant.id
