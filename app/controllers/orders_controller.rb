@@ -1,12 +1,28 @@
 class OrdersController < ApplicationController
   def index
     # a merchant can view all of their 'completed' orders
-
     # a merchant can view all of their 'paid' and 'shipped' orders
+
     @merchant = Merchant.find(params[:merchant_id])
     # find only orders that are complete
     @orders = @merchant.orders.where(status: "complete").uniq.reverse
-    @order_items = @merchant.order_items
+    @order_items = @orders.order_items.where(merchant_id: @merchant.id)
+
+    # from completed orders, find order items that belong to this merchant
+    # sum up the revenue from these order items
+    @shipped_revenue = shipped_revenue(@orders)
+    @unshipped_revenue = unshipped_revenue(@orders)
+    
+    raise
+
+    count = 0
+    @orders.each do |order|
+      order.order_items.each do |order_item|
+        if order_item == order
+          count += 1
+        end
+      end
+    end
 
     # @shipped_revenue = merchant.shipped?(true).sum("revenue")
     # @unshipped_revenue = merchant.shipped?(false).sum("revenue")
@@ -14,26 +30,46 @@ class OrdersController < ApplicationController
     # @unshipped_count = merchant.shipped?(false).count
   end
 
-  def shipped
-    merchant = Merchant.find(params[:merchant_id])
-    @order_items = merchant.order_items.where(shipped: true)
-    @orders = merchant.orders.uniq.reverse
+  def shipped_revenue(orders)
+    shipped_rev = 0
+    orders.each do |order|
+      relevant_items = order.order_items.where(merchant_id: @merchant.id)
+      order_total = relevant_items.where(shipped: true).sum("revenue")
+      shipped_rev += order_total
+    end
+    return shipped_rev
+  end
 
-    @shipped_revenue = merchant.shipped?(true).sum("revenue")
-    @unshipped_revenue = merchant.shipped?(false).sum("revenue")
-    @shipped_count = merchant.shipped?(true).count
-    @unshipped_count = merchant.shipped?(false).count
+  def unshipped_revenue(orders)
+    unshipped_rev = 0
+    orders.each do |order|
+      relevant_items = order.order_items.where(merchant_id: @merchant.id)
+      order_total = relevant_items.where(shipped: false).sum("revenue")
+      unshipped_rev = order_total
+    end
+    return unshipped_rev
+  end
+
+  def shipped
+    @merchant = Merchant.find(params[:merchant_id])
+    @orders = @merchant.orders.where(status: "complete").uniq.reverse
+    @order_items = @merchant.order_items.where(shipped: true)
+
+    # @shipped_revenue = merchant.shipped?(true).sum("revenue")
+    # @unshipped_revenue = merchant.shipped?(false).sum("revenue")
+    # @shipped_count = merchant.shipped?(true).count
+    # @unshipped_count = merchant.shipped?(false).count
   end
 
   def unshipped
-    merchant = Merchant.find(params[:merchant_id])
-    @order_items = merchant.order_items.where(shipped: false)
-    @orders = merchant.orders.uniq.reverse
+    @merchant = Merchant.find(params[:merchant_id])
+    @orders = @merchant.orders.where(status: "complete").uniq.reverse
+    @order_items = @merchant.order_items.where(shipped: false)
 
-    @shipped_revenue = merchant.shipped?(true).sum("revenue")
-    @unshipped_revenue = merchant.shipped?(false).sum("revenue")
-    @shipped_count = merchant.shipped?(true).count
-    @unshipped_count = merchant.shipped?(false).count
+    # @shipped_revenue = merchant.shipped?(true).sum("revenue")
+    # @unshipped_revenue = merchant.shipped?(false).sum("revenue")
+    # @shipped_count = merchant.shipped?(true).count
+    # @unshipped_count = merchant.shipped?(false).count
   end
 
   def show
