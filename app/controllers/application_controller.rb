@@ -38,5 +38,5 @@ class ApplicationController < ActionController::Base
 
     return cart_units
   end
-
 end
+
