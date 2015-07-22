@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  before_action :require_login, except: [:edit, :update, :confirmation]
+
   def index
     # a merchant can view all of their 'paid' and 'shipped' orders
     @merchant = Merchant.find(params[:merchant_id])
