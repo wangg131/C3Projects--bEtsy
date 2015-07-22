@@ -33,7 +33,7 @@
 </div>
 <h5><%= "Average rating for this product is #{@average} " %></h5>
 
-<% if session[:merchant_id] != @product.merchant_id %>
+<% unless session[:merchant_id] == @product.merchant_id %>
   <div class="row">
     <table class="table">
       <tr>
