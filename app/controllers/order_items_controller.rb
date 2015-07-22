@@ -1,5 +1,4 @@
 class OrderItemsController < ApplicationController
-
   before_action :check_for_duplicate_product, only: [:create]
 
   def create

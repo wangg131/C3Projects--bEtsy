@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
 
    def set_login_name
      @merchant = Merchant.find_by(id: session[:merchant_id])
+
      @merchant_name = @merchant ? @merchant.name : "Guest"
    end
 
@@ -21,6 +22,19 @@ class ApplicationController < ActionController::Base
 
       redirect_to login_path
     end
+  end
+
+  # def restrict_across_merchant
+  #   unless session[:merchant_id] == params[:merchant_id]
+
+  #     flash[:error] = "You may not view a page you do not have access to"
+
+  #     redirect_to merchant_dashboard_path(session[:merchant_id])
+  #   end
+  # end
+
+  def restrict_across_guest
+
   end
 
   helper_method :current_order
