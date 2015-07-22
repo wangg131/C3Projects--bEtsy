@@ -42,9 +42,15 @@ class ProductsController < ApplicationController
     # a merchant can create a new product using a form
     # (nested routing bc the prod is associated with that merchant only)
     # takes you to a form page
-    @product = Product.new
+    if session[:merchant_id] == params[:merchant_id].to_i
+      @product = Product.new
 
-    @categories = Category.all.order(:name)
+      @categories = Category.all.order(:name)
+    else
+      flash[:error] = "You do not have access to that merchant's products"
+
+      redirect_to merchant_dashboard_path(session[:merchant_id])
+    end
   end
 
   def create
