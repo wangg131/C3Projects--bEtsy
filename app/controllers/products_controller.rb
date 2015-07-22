@@ -91,9 +91,6 @@ class ProductsController < ApplicationController
       # if false, then the product is 'out of stock' and cannot be purchased
   end
 
-  def average_rating(reviews)
-    reviews.inject(0) { |sum, r| sum + r.rating}.to_f / reviews.size
-  end
 
   def categories_update(product)
     product.categories.destroy_all
@@ -111,6 +108,9 @@ class ProductsController < ApplicationController
     product.active ? product.update(active: false) : product.update(active: true)
   end
 
+  def average_rating(reviews)
+    reviews.inject(0) { |sum, r| sum + r.rating}.to_f / reviews.size
+  end
 #--------------------------------------------------------------------------------
   private
 

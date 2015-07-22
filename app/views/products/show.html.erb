@@ -23,7 +23,7 @@
   <table class="table">
     <tr>
       <th>Reviews</th>
-      <th>Ratings <%= "(average rating = #{@average})" %></th>
+      <th>Ratings <%= "(average = #{@average})" %></th>
     </tr>
 
     <% @reviews.each do |review| %>
@@ -38,7 +38,6 @@
 <h4>Want to Review this Product?</h4>
 
 <%= bootstrap_form_for @review, url: product_reviews_path(params[:id]) do |f| %>
-
 
   <fieldset>
     <h4>Rating <small>rate this product on a scale from 1 - 5 </small></h4>
@@ -60,7 +59,6 @@
     <%= f.text_area :content %>
 
     <%= f.hidden_field :product_id, :value => params[:id] %>
-
   </fieldset>
 
   <%= f.submit "Add this Review" %>
