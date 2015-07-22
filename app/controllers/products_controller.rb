@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
 
   def index
     # a guest or merchant can view all products with their details
-    @product = Product.all
+    @products = Product.all
     @order_item = current_order.order_items.new
     # a guest or merchant can view all products by category
   end
