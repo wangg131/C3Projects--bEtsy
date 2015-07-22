@@ -1,4 +1,8 @@
 class OrdersController < ApplicationController
+  before_action :require_login, except: [:edit, :update, :confirmation]
+
+  #before_action :restrict_across_merchant, except: [:edit, :update, :confirmation]
+
   def index
     # a merchant can view all of their 'completed' orders
     # a merchant can view all of their 'paid' and 'shipped' orders
@@ -12,8 +16,7 @@ class OrdersController < ApplicationController
     # sum up the revenue from these order items
     @shipped_revenue = shipped_revenue(@orders)
     @unshipped_revenue = unshipped_revenue(@orders)
-    
-    raise
+
 
     count = 0
     @orders.each do |order|
@@ -86,7 +89,15 @@ class OrdersController < ApplicationController
   end
 
   def edit
-    @order = Order.find(params[:id])
+    # every time a new order_item is added/removed from the cart
+    # when the customer adds their payment details
+    if session[:order_id] == params[:id]
+      @order = Order.find(params[:id])
+    else
+      flash[:error] = "You do not have access to this order."
+
+      redirect_to root_path
+    end
   end
 
   def update
