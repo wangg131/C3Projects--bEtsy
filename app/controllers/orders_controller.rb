@@ -1,8 +1,6 @@
 class OrdersController < ApplicationController
   def index
-<<<<<<< HEAD
     # a merchant can view all of their 'completed' orders
-=======
     # a merchant can view all of their 'paid' and 'shipped' orders
     @merchant = Merchant.find(params[:merchant_id])
     # find only orders that are complete
@@ -16,7 +14,6 @@ class OrdersController < ApplicationController
   end
 
   def shipped
->>>>>>> e5867f60d2d4783827b7814ef182d8b996c9100b
     merchant = Merchant.find(params[:merchant_id])
     @order_items = merchant.order_items.where(shipped: true)
     @orders = merchant.orders.uniq.reverse

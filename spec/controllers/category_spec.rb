@@ -8,4 +8,31 @@ RSpec.describe CategoriesController, type: :controller do
       expect(response).to have_http_status(200)
     end
   end
+
+    describe "GET #new" do
+    it "responds successfully with an HTTP 200 status code" do
+
+
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+  end
+
+    describe "POST #create" do
+    it "responds successfully with an HTTP 200 status code" do
+
+
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+  end
+
+    describe "GET #show" do
+    it "responds successfully with an HTTP 200 status code" do
+
+
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+  end
 end
