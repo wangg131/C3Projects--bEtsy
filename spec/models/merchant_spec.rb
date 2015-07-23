@@ -11,4 +11,11 @@ RSpec.describe Merchant, type: :model do
     end
   end
 
+  describe "model validations" do
+    it "has many products, order_items and orders (through order_items)" do
+      expect(Merchant.reflect_on_association(:products).macro).to eq(:has_many)
+      expect(Merchant.reflect_on_association(:orders).macro).to eq(:has_many)
+      expect(Merchant.reflect_on_association(:order_items).macro).to eq(:has_many)
+    end
+  end
 end
