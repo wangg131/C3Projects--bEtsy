@@ -48,11 +48,11 @@
         <% if order_item.order_id == @order.id %>
           <tr>
             <td class="col-sm-4"><%= order_item.product.name %></td>
-            <td class="col-sm-2"><%= order_item.quantity %></td>
-            <td class="col-sm-3"><%= number_to_currency(order_item.product.price) %></td>
-            <td class="col-sm-3"><%= number_to_currency(order_item.revenue) %></td>
+            <td class="col-sm-1"><%= order_item.quantity %></td>
+            <td class="col-sm-2"><%= number_to_currency(order_item.product.price) %></td>
+            <td class="col-sm-2"><%= number_to_currency(order_item.revenue) %></td>
             <% total += order_item.revenue %>
-            <td><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
+            <td class="col-sm-3"><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
           </tr>
         <% end %>
       <% end %>
