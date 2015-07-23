@@ -42,14 +42,14 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>ORDER TOTAL: </td>
-        <td><%= number_to_currency(@order_total) %></td>
+        <td><strong>ORDER TOTAL: </strong></td>
+        <td><strong><%= number_to_currency(@order_total) %></strong></td>
       </tr>
     </table>
   </div>
   <div class="row">
     <div class="col-md-offset-11">
-      <%= link_to "Checkout", edit_order_path(current_order.id) %>
+      <%= link_to "Checkout", edit_order_path(current_order.id), class: "btn btn-primary" %>
     </div>
   </div>
 <% end %>
