@@ -11,18 +11,38 @@ class ApplicationController < ActionController::Base
 
    def set_login_name
      @merchant = Merchant.find_by(id: session[:merchant_id])
+
      @merchant_name = @merchant ? @merchant.name : "Guest"
    end
 
   def require_login
-    redirect_to login_path unless session[:merchant_id]
+    unless session[:merchant_id]
+
+      flash[:login_error] = "You must be logged in to perform that action"
+
+      redirect_to login_path
+    end
   end
+
+  # def restrict_across_merchant
+  #   unless session[:merchant_id] == params[:merchant_id]
+
+  #     flash[:error] = "You may not view a page you do not have access to"
+
+  #     redirect_to merchant_dashboard_path(session[:merchant_id])
+  #   end
+  # end
+
+  # def verify_user_order
+  #   if session[:order_id]
+
+  # end
 
   helper_method :current_order
   helper_method :cart_units
 
   def current_order
-    if !session[:order_id].nil?
+    unless session[:order_id].nil?
       Order.find(session[:order_id])
     else
       Order.create(status: "pending")
@@ -38,5 +58,5 @@ class ApplicationController < ActionController::Base
 
     return cart_units
   end
-
 end
+

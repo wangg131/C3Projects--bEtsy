@@ -11,17 +11,24 @@
   <body>
 
     <header>
-        <% if session[:merchant_id] %>
-          <div class="account-buttons">
-            <%= link_to "Logout", logout_path , method: :delete, class: "btn btn-default pull-right" %>
-          </div>
+      <% if flash[:error] %>
+        <div>
+          <%= flash[:error] %>
+        </div>
+      <% end %>
 
-        <% else %>
-          <div class="account-buttons">
-            <%= link_to "Login", login_path, class: "btn btn-default pull-right" %>
-            <%= link_to "Sign Up!", new_merchant_path, class: "btn btn-default pull-right" %>
-          </div>
-        <% end %>
+      <% if session[:merchant_id] %>
+        <div class="account-buttons">
+          <%= link_to "Logout", logout_path , method: :delete, class: "btn btn-default pull-right" %>
+        </div>
+
+      <% else %>
+
+        <div class="account-buttons">
+          <%= link_to "Login", login_path, class: "btn btn-default pull-right" %>
+          <%= link_to "Sign Up!", new_merchant_path, class: "btn btn-default pull-right" %>
+        </div>
+      <% end %>
     </header>
 
 
@@ -40,8 +47,6 @@
                 <li><%= link_to "All Products", products_path %></li>
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">By Category</li>
-                <li><%= link_to "By Category", categories_path %></li>
-                <li role="separator" class="divider"></li>
                 <% @categories.each do |category| %>
                   <li><%= link_to "#{category.name}", category_path(category.id) %></li>
                 <% end %>

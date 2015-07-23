@@ -1,4 +1,5 @@
 class MerchantsController < ApplicationController
+  before_action :require_login, only: [:dashboard]
   def index
 
   end
@@ -17,7 +18,14 @@ class MerchantsController < ApplicationController
   def create
     @merchant = Merchant.create(merchant_params)
 
-    redirect_to root_path
+    if @merchant.save
+      session[:merchant_id] = @merchant.id
+      redirect_to root_path
+    else
+      flash.now[:error] = "Try again, account was not created."
+      render :new
+    end
+
   end
 
   def edit
@@ -34,14 +42,24 @@ class MerchantsController < ApplicationController
   end
 
   def dashboard
+    if session[:merchant_id] == params[:merchant_id].to_i
     # may change the params depending on sessions
-    @merchant = Merchant.find(params[:merchant_id])
-    @products = @merchant.products
-    @order_items = @merchant.order_items
+      @merchant = Merchant.find(params[:merchant_id])
 
-    @revenue = 0
-    @order_items.each do |order_item|
-      @revenue += order_item.revenue
+      @products = @merchant.products
+
+      @order_items = @merchant.order_items
+
+      @revenue = 0
+
+      @order_items.each do |order_item|
+        @revenue += order_item.revenue
+      end
+
+     else
+      flash[:error] = "You do not have access to this merchant's dashboard"
+
+      redirect_to root_path
     end
   end
 
@@ -51,6 +69,4 @@ class MerchantsController < ApplicationController
   def merchant_params
     params.require(:merchant).permit(:name, :email, :password, :password_confirmation)
   end
-
-
 end

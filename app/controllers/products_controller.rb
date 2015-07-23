@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :require_login, except: [:index, :show]
 
   def index
     # a guest or merchant can view all products with their details
@@ -23,7 +24,9 @@ class ProductsController < ApplicationController
 
     existing_cart_product = current_order.order_items.select {|item| item.product_id == @product.id }
 
-    if existing_cart_product.length > 0
+    if existing_cart_product.length == 0
+      @additional_stock_available = @product.stock.to_i
+    elsif existing_cart_product.length > 0
       calc_additional_stock_available(existing_cart_product[0])
     end
   end
@@ -39,9 +42,15 @@ class ProductsController < ApplicationController
     # a merchant can create a new product using a form
     # (nested routing bc the prod is associated with that merchant only)
     # takes you to a form page
-    @product = Product.new
+    if session[:merchant_id] == params[:merchant_id].to_i
+      @product = Product.new
 
-    @categories = Category.all.order(:name)
+      @categories = Category.all.order(:name)
+    else
+      flash[:error] = "You do not have access to that merchant's products"
+
+      redirect_to merchant_dashboard_path(session[:merchant_id])
+    end
   end
 
   def create
@@ -64,9 +73,15 @@ class ProductsController < ApplicationController
     # a merchant can edit details about a product using a form
     # note: changing the price of a product will NOT change the price of the order_item (intentionally)
     # takes you to a form page
-    @product = Product.find(params[:id])
+    if session[:merchant_id] == params[:merchant_id].to_i
+      @product = Product.find(params[:id])
 
-    @categories = Category.all.order(:name)
+      @categories = Category.all.order(:name)
+    else
+      flash[:error] = "You do not have access to that merchant's products"
+
+      redirect_to merchant_dashboard_path(session[:merchant_id])
+    end
   end
 
   def update
