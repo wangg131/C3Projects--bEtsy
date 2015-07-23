@@ -54,7 +54,8 @@
       <tr>
         <th>Product</th>
         <th>Quantity</th>
-        <th>Price</th>
+        <th>Unit Price</th>
+        <th>Total Revenue</th>
         <th>Status</th>
         <th></th>
       </tr>
@@ -62,8 +63,9 @@
       <% order_items.each do |order_item| %>
         <% if order_item.order == order %>
           <tr>
-            <td class="col-sm-4"><%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></td>
-            <td class="col-sm-2"><%= order_item.quantity %></td>
+            <td class="col-sm-3"><%= link_to "#{order_item.product.name}", product_path(order_item.product_id) %></td>
+            <td class="col-sm-1"><%= order_item.quantity %></td>
+            <td class="col-sm-2"><%= number_to_currency(order_item.product.price) %></td>
             <td class="col-sm-2"><%= number_to_currency(order_item.revenue) %></td>
             <% total += order_item.revenue %>
             <td class="col-sm-2"><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
@@ -74,6 +76,7 @@
       <tfoot>
         <tr>
           <td>TOTAL</td>
+          <td></td>
           <td></td>
           <td><strong><%= number_to_currency(total) %></strong></td>
           <td></td>

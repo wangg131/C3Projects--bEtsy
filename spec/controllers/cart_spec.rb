@@ -15,7 +15,7 @@ RSpec.describe CartsController, type: :controller do
     #       current_order = Order.create
     #       current_order.order_items << OrderItem.
     #       @order_items = current_order.order_items
-          
+
     #       calc_unit_total
 
     #       expect(@unit_total).to_eq 7
@@ -24,8 +24,8 @@ RSpec.describe CartsController, type: :controller do
         # it "calculates total dollars" do
         # end
 
-      end
-    end
+      # end
+    # end
   end
 
 
