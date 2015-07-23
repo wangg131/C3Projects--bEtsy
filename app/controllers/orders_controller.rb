@@ -71,7 +71,8 @@ class OrdersController < ApplicationController
   def edit
     # every time a new order_item is added/removed from the cart
     # when the customer adds their payment details
-    if session[:order_id] == params[:id]
+
+    if session[:order_id] == params[:id].to_i
       @order = Order.find(params[:id])
     else
       flash[:error] = "You do not have access to that order."
