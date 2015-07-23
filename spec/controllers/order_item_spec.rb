@@ -17,16 +17,43 @@ RSpec.describe OrderItemsController, type: :controller do
   
   # end
 
-  it "marks things as shipped" do
-    order_item = OrderItem.find(5)
-    merchant_id = order_item.merchant_id
+  # describe "POST #create" do
+  #   let(:order_item_params) do
+  #     {
+  #       order_item: {
+  #         product_id: 2,
+  #         order_id: current_order.id,
+  #         reveneue: 14.00,
+  #         quantity: 1
+  #       }
+  #     }
+  #   end
 
-    patch :mark_shipped, merchant_id: merchant_id, id: order_item.id
+  #   it "creates a new order_item" do
+  #     # make a 'create' scenario that would trigger this... 
+  #     # current_order = Order.create(status: "pending")
 
-    order_item.reload
-    
-    expect(order_item.shipped).to eq true
+  #     old_order_item = OrderItem.last
+
+  #     post :create, order_item_params
+
+  #     new_order_item = OrderItem.last
+
+  #     expect(new_order_item).to_not eq(old_order_item)
+  #   end
+  # end
+
+  describe "PATCH #mark_shipped" do
+    it "marks things as shipped" do
+      order_item = OrderItem.find(5)
+      merchant_id = order_item.merchant_id
+
+      patch :mark_shipped, merchant_id: merchant_id, id: order_item.id
+
+      order_item.reload
+
+      expect(order_item.shipped).to eq true
+    end
   end
-
 
 end
