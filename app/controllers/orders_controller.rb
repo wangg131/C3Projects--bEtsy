@@ -22,8 +22,8 @@ class OrdersController < ApplicationController
 
       # from completed orders, find order items that belong to this merchant
       # sum up the revenue from these order items
-      @shipped_revenue = revenue(@order_items)
-      @unshipped_revenue = revenue(@order_items)
+      @shipped_revenue = revenue(@order_items, true)
+      @unshipped_revenue = revenue(@order_items, false)
       @shipped_count = count_items(@order_items, true)
       @unshipped_count = count_items(@order_items, false)
 
@@ -53,8 +53,8 @@ class OrdersController < ApplicationController
     @order_items_shipped = shipped?(@order_items, true)
     @shipped_orders = find_orders_by_status(@orders, true, @merchant.id)
 
-    @shipped_revenue = revenue(@order_items)
-    @unshipped_revenue = revenue(@order_items)
+    @shipped_revenue = revenue(@order_items, true)
+    @unshipped_revenue = revenue(@order_items, false)
     @shipped_count = count_items(@order_items, true)
     @unshipped_count = count_items(@order_items, false)
 
@@ -69,8 +69,8 @@ class OrdersController < ApplicationController
     @unshipped_orders = find_orders_by_status(@orders, false, @merchant.id)
 
 
-    @shipped_revenue = revenue(@order_items)
-    @unshipped_revenue = revenue(@order_items)
+    @shipped_revenue = revenue(@order_items, true)
+    @unshipped_revenue = revenue(@order_items, false)
     @shipped_count = count_items(@order_items, true)
     @unshipped_count = count_items(@order_items, false)
   end
@@ -189,10 +189,12 @@ class OrdersController < ApplicationController
   end
 
 
-  def revenue(order_items)
+  def revenue(order_items, bool)
     revenue = 0
     order_items.each do |order_item|
+      if order_item.shipped == bool
         revenue += order_item.revenue
+      end
     end
     return revenue
   end
