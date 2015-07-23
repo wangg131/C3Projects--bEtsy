@@ -4,14 +4,6 @@ class OrdersController < ApplicationController
   #before_action :restrict_across_merchant, except: [:edit, :update, :confirmation]
 
   def index
-
-    # a merchant can view all of their 'completed' orders
-    # a merchant can view all of their 'paid' and 'shipped' orders
-    @merchant = Merchant.find(params[:merchant_id])
-    # find only orders that are complete
-    @orders = @merchant.orders.where(status: "complete").uniq.reverse
-    @order_items = @merchant.order_items
-
     if session[:merchant_id] == params[:merchant_id].to_i
       @merchant = Merchant.find(params[:merchant_id])
 
@@ -32,25 +24,14 @@ class OrdersController < ApplicationController
 
       redirect_to merchant_dashboard_path(session[:merchant_id])
     end
-
-
   end
 
   def shipped
-
-    merchant = Merchant.find(params[:merchant_id])
-    @order_items = merchant.order_items.where(shipped: true)
-    @orders = merchant.orders.uniq.reverse
-
-    @shipped_revenue = merchant.shipped?(true).sum("revenue")
-    @unshipped_revenue = merchant.shipped?(false).sum("revenue")
-    @shipped_count = merchant.shipped?(true).count
-    @unshipped_count = merchant.shipped?(false).count
-
     @merchant = Merchant.find(params[:merchant_id])
     @orders = @merchant.orders.where(status: "complete").uniq.reverse
     @order_items = find_relevant_order_items(@orders, @merchant.id)
     @order_items_shipped = shipped?(@order_items, true)
+
     @shipped_orders = find_orders_by_status(@orders, true, @merchant.id)
 
     @shipped_revenue = revenue(@order_items, true)
@@ -67,7 +48,6 @@ class OrdersController < ApplicationController
     @order_items_unshipped = shipped?(@order_items, false)
 
     @unshipped_orders = find_orders_by_status(@orders, false, @merchant.id)
-
 
     @shipped_revenue = revenue(@order_items, true)
     @unshipped_revenue = revenue(@order_items, false)
