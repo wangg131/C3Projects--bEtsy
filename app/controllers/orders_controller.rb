@@ -178,7 +178,7 @@ class OrdersController < ApplicationController
     end
     return revenue
   end
-
+############################################################
   private
 
   def order_params
