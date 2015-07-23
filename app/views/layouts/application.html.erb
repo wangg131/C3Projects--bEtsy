@@ -16,9 +16,12 @@
           <%= flash[:error] %>
         </div>
       <% end %>
-
-      <div class="logo">
-        <%= image_tag("primo_logo.jpg") %>
+      <div class="row">
+        <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+          <div class="logo">
+            <%= image_tag("primo_logo.jpg", :class => "img_preview") %>
+          </div>
+        </div>
       </div>
 
       <% if session[:merchant_id] %>
