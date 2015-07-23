@@ -1,42 +1,33 @@
 <div class="jumbotron">
   <h1>Rad Picks</h1>
-  <div class="row">
-    <div class="row">
+
+  <div class="row product-row">
       <% @product_first_row.each do |product| %>
           <div class="col-md-4">
-            <div class="product-image"><%= image_tag(product.photo_url) %></div>
+            <ul style="list-style: none;">
+              <li><div class="product-image"><%= image_tag(product.photo_url) %></div></li>
+              <li><h3><%= link_to product.name, product_path(product.id) %></h3></li>
+              <li><h5><%= number_to_currency(product.price) %> each</h5></li>
+              <li><h5>Available: <%= product.stock %></h5></li>
+              <li><h4><%= product.description %></h4></li>
+            </ul>
           </div>
       <% end %>
-    </div>
-    <div class="row">
-      <% @product_first_row.each do |product| %>
-          <div class="col-md-4">
-            <h4><%= link_to product.name, product_path(product.id) %></h4>
-            <h5><%= number_to_currency(product.price) %> each</h5>
-            <p>Available: <%= product.stock %></p>
-            <h6><%= product.description %></h6>
-          </div>
-      <% end %>
-    </div>
   </div>
 
-  <div class="row">
-    <div class="row">
+  <div class="row product-row">
       <% @product_second_row.each do |product| %>
           <div class="col-md-4">
-            <div class="product-image"><%= image_tag(product.photo_url) %></div>
+            <ul style="list-style: none;">
+              <li><div class="product-image"><%= image_tag(product.photo_url) %></div></li>
+              <li><h3><%= link_to product.name, product_path(product.id) %></h3></li>
+              <li><h5><%= number_to_currency(product.price) %> each</h5></li>
+              <li><h5>Available: <%= product.stock %></h5></li>
+              <li><h4><%= product.description %></h4></li>
+            </ul>
           </div>
       <% end %>
-    </div>
-    <div class="row">
-      <% @product_second_row.each do |product| %>
-          <div class="col-md-4">
-            <h4><%= link_to product.name, product_path(product.id) %></h4>
-            <h5><%= number_to_currency(product.price) %> each</h5>
-            <p>Available: <%= product.stock %></p>
-            <h6><%= product.description %></h6>
-          </div>
-      <% end %>
-    </div>
   </div>
+
+
 </div>

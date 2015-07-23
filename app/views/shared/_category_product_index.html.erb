@@ -11,7 +11,7 @@
       <td><%= image_tag(product.photo_url, class: "cart-thumbnail") %></td>
       <td>
       <%= link_to product.name, product_path(product.id) %></td>
-      <td><%= product.price %></td>
+      <td><%= number_to_currency(product.price) %></td>
     </tr>
     <% end %>
   </table>

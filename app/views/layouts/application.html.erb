@@ -17,6 +17,10 @@
         </div>
       <% end %>
 
+      <div class="logo">
+        <%= image_tag("primo_logo.jpg") %>
+      </div>
+
       <% if session[:merchant_id] %>
         <div class="account-buttons">
           <%= link_to "Logout", logout_path , method: :delete, class: "btn btn-default pull-right" %>
@@ -64,7 +68,8 @@
         </div><!-- /.navbar-collapse -->
 
     </nav>
-      <%= yield %>
+
+    <%= yield %>
 
   </body>
 </div>

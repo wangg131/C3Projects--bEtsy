@@ -56,6 +56,10 @@ td {
   height: 50px;
 }
 
+ul li {
+  text-align: center;
+}
+
 .cart-thumbnail {
   height: 100px;
 }
@@ -69,6 +73,23 @@ td {
 }
 
 .product-image img {
-  width: 200px;
-  height: auto;
+  width: auto;
+  height: 200px;
+}
+
+.logo img {
+  height: 200px;
+  width: auto;
+}
+
+.logo {
+  margin-top: 15px;
+}
+
+.navbar {
+  margin-top: 60px;
+}
+
+.product-row {
+  margin-top: 30px;
 }
