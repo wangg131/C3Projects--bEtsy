@@ -59,7 +59,7 @@ class MerchantsController < ApplicationController
      else
       flash[:error] = "You do not have access to that merchant's dashboard"
 
-      redirect_to root_path
+      redirect_to merchant_dashboard_path(session[:merchant_id])
     end
   end
 

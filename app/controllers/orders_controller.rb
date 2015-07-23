@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
     else
       flash[:error] = "You do not have access to that merchant's orders."
 
-      redirect_to merchant_path(session[:merchant_id])
+      redirect_to merchant_dashboard_path(session[:merchant_id])
     end
 
   end
