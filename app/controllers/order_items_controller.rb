@@ -33,6 +33,9 @@ class OrderItemsController < ApplicationController
     matching_product.update_attributes(order_item_params)
 
     redirect_to(:back)
+
+    rescue 
+      redirect_to root_path
   end
 
   def update
@@ -43,6 +46,9 @@ class OrderItemsController < ApplicationController
     @order_item.update_attributes(order_item_params)
 
     redirect_to(:back)
+
+    rescue 
+      redirect_to root_path
   end
 
   def calc_revenue
@@ -59,11 +65,9 @@ class OrderItemsController < ApplicationController
     @order_items = @order.order_items
 
     redirect_to(:back)
-  end
 
-  def check_stock
-    # when you create a new order_item, it needs to check that the stock for
-    # that product is >= the total number of order_items that you want
+    rescue 
+      redirect_to root_path
   end
 
   def mark_shipped
@@ -71,6 +75,9 @@ class OrderItemsController < ApplicationController
     order_item.update(shipped: true)
 
     redirect_to(:back)
+
+    rescue 
+      redirect_to root_path
   end
 
 ###############################################
