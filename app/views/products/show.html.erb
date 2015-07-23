@@ -31,14 +31,25 @@
     </div>
   </div>
 </div>
-<h5><%= "Average rating for this product is #{@average} " %></h5>
+<% unless @reviews.blank? %>
+
+  <h5><%= "Average rating for this product is #{@average} " %></h5>
+<% else %>
+
+  <h5>Leave the first review for this product!</h5>
+
+<% end %>
 
 <% unless session[:merchant_id] == @product.merchant_id %>
   <div class="row">
     <table class="table">
       <tr>
         <th>Reviews</th>
-        <th>Ratings <%= "(average = #{@average})" %></th>
+        <th>Ratings
+        <% unless @reviews.blank? %>
+          <%= "(average = #{@average})" %>
+          <% end %>
+        </th>
       </tr>
 
       <% @reviews.each do |review| %>
