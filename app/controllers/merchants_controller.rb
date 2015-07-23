@@ -9,6 +9,7 @@ class MerchantsController < ApplicationController
 
     @merchant_products = @merchant.products
 
+    render :show
   end
 
   def new
