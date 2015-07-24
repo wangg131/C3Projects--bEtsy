@@ -5,15 +5,15 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_categories, :set_login_name
 
-   def set_categories
-     @categories = Category.all.order(:name)
-   end
+  def set_categories
+   @categories = Category.all.order(:name)
+  end
 
-   def set_login_name
-     @merchant = Merchant.find_by(id: session[:merchant_id])
+  def set_login_name
+   @merchant = Merchant.find_by(id: session[:merchant_id])
 
-     @merchant_name = @merchant ? @merchant.name : "Guest"
-   end
+   @merchant_name = @merchant ? @merchant.name : "Guest"
+  end
 
   def require_login
     unless session[:merchant_id]
@@ -69,4 +69,3 @@ class ApplicationController < ActionController::Base
     return cart_units
   end
 end
-

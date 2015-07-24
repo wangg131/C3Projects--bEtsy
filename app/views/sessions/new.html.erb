@@ -4,7 +4,8 @@
     <h3>Login</h3>
 
     <% if flash.now[:login_error] %>
-      <div>
+      <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
         <%= flash.now[:login_error] %>
       </div>
       <br>
@@ -20,7 +21,7 @@
         <%= f.password_field :password, class: "form-control" %>
       </div>
 
-      <%= f.submit "LOGIN", class: "btn btn-default" %>
+      <%= f.submit "LOGIN", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

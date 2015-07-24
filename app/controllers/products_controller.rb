@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   def index
     # a guest or merchant can view all products with their details
     # @products = Product.all
-    @products = Product.where(active: true) 
+    @products = Product.where(active: true)
 
     @order_item = current_order.order_items.new
     # a guest or merchant can view all products by category
@@ -119,13 +119,6 @@ class ProductsController < ApplicationController
     redirect_to(:back)
   end
 
-  def instock?
-    # checks to see if product.stock > 0
-      # if true, then it's ok to purchase
-      # if false, then the product is 'out of stock' and cannot be purchased
-  end
-
-
   def categories_update(product)
     product.categories.destroy_all
 
@@ -145,6 +138,7 @@ class ProductsController < ApplicationController
   def average_rating(reviews)
     reviews.inject(0) { |sum, r| sum + r.rating}.to_f / reviews.size
   end
+
 #--------------------------------------------------------------------------------
   private
 
@@ -155,5 +149,4 @@ class ProductsController < ApplicationController
   def review_params
     params.require(:review).permit(:content, :rating, :product_id)
   end
-
 end

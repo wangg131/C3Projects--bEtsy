@@ -1,29 +1,47 @@
 <h1>Edit Product</h1>
 
-<%= form_for @product, url: merchant_product_path(params[:merchant_id], params[:id]) do |f| %>
-  <fieldset>
-    <legend>Product Details</legend>
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+<div class="col-md-8">
+  <%= form_for @product, url: merchant_product_path(params[:merchant_id], params[:id]), class: 'form' do |f| %>
+    <fieldset>
+      <legend>Product Details</legend>
 
-      <%= f.label :description %>
-      <%= f.text_area :description %>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
 
-      <%= f.label :price %>
-      <%= f.text_field :price %>
+        <div class="form-group">
+          <%= f.label :description %>
+          <%= f.text_area :description, class: "form-control" %>
+        </div>
 
-      <%= f.label :stock %>
-      <%= f.number_field :stock %>
+        <div class="form-group">
+          <%= f.label :price %>
+          <%= f.text_field :price, class: "form-control" %>
+        </div>
 
-      <%= f.label :active %>
-      <%= f.select :active, [['Active', true], ['Inactive', false]] %>
+        <div class="form-group">
+          <%= f.label :stock %>
+          <%= f.number_field :stock, class: "form-control" %>
+        </div>
 
-      <%= f.label :photo_url %>
-      <%= f.text_field :photo_url %>
+        <div class="form-group">
+          <%= f.label :active %>
+          <%= f.select :active, [['Active', true], ['Inactive', false]], class: "form-control" %>
+        </div>
 
-      <%= f.hidden_field :merchant_id, :value => params[:merchant_id] %>
+        <div class="form-group">
+          <%= f.label :photo_url %>
+          <%= f.text_field :photo_url, class: "form-control" %>
+        </div>
 
-      <%= f.collection_check_boxes( :categories, @categories, :id, :name, checked: @product.categories.map(&:id)) %>
-  </fieldset>
-  <%= f.submit %>
-<% end %>
+        <%= f.hidden_field :merchant_id, :value => params[:merchant_id] %>
+
+        <div class="form-group">
+          <%= f.label :categories %>
+          <%= f.collection_check_boxes( :categories, @categories, :id, :name, checked: @product.categories.map(&:id), class: "form-control") %>
+        </div>
+    </fieldset>
+    <%= f.submit class: "btn btn-primary" %>
+  <% end %>
+</div>

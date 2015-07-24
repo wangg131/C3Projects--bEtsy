@@ -32,7 +32,7 @@
             <td><%= f.submit "Update Quantity", class: "btn btn-default" %></td>
           <% end %>
 
-          <td><%= link_to "Remove", order_item_path(item.id), data: {confirm: "Are you sure you want to remove this item from your cart?"}, method: :delete, class: "btn btn-default" %></td>
+          <td><%= link_to "Remove", order_item_path(item.id), data: {confirm: "Are you sure you want to remove this item from your cart?"}, method: :delete, class: "btn btn-danger" %></td>
           <td><%= number_to_currency(item.revenue) %></td>
         </tr>
       <% end %>
