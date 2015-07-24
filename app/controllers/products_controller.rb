@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :require_login, except: [:index, :show]
+  before_action :check_product_active_status, only: [:show]
 
   def index
     # a guest or merchant can view all products with their details
@@ -60,15 +61,17 @@ class ProductsController < ApplicationController
     # redirects you to the merchant dashboard page
     @product = Product.create(product_params)
 
-    @review = Review.create(review_params)
+    if @product.save
+      categories_update(@product)
 
-    categories_update(@product)
-
-    if params[:review]
-      @review = Review.create(review_params)
+      if params[:review]
+        @review = Review.create(review_params)
+      end
+      redirect_to merchant_dashboard_path(params[:merchant_id])
+    else
+      flash[:error] = "Please enter valid values"
+      redirect_to :back
     end
-
-    redirect_to merchant_dashboard_path(params[:merchant_id])
   end
 
   def edit
@@ -154,7 +157,3 @@ class ProductsController < ApplicationController
   end
 
 end
-
-
-
-

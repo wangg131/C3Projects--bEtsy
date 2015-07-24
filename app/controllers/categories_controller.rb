@@ -19,8 +19,13 @@ class CategoriesController < ApplicationController
   end
 
   def show
+
  
     @products = Category.find(params[:id]).products.where(active: true) 
+
+    @category = Category.find(params[:id])
+    # @products = @category.products 
+
   end
 
 

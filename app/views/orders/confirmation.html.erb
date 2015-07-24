@@ -2,25 +2,75 @@
 
 <h3>Below is your order confirmation</h3>
 
-<table>
-  <th>Item</th>
-  <th>Price</th>
-  <% @order_items.each do |item| %>
-  <tr>
-    <td><%= item.product.name %></td>
-    <td><%= number_to_currency(item.revenue) %></td>
-  </tr>
-  <% end %>
-  <tr>
-    <td><%= "Total: #{number_to_currency(@total)}" %></td>
-  </tr>
-</table>
+<p>Order placed: <%= @order.created_at %></p>
 
-<h3>Billed To:</h3>
-<ul>
-  <% @customer_info.each do |info| %>
-  <li><%= info %></li>
-  <% end %>
-</ul>
+<h4>Payment Details</h4>
+<div class="row">
+  <div class="col-md-8 .col-md-offset-2">
+    <table class="table">
+      <tr>
+        <td class="text-right">Status:</td>
+        <td>To be shipped</td>
+        <td class="text-right">Credit Card:</td>
+        <td><%= @order.credit_card %></td>
+      </tr>
+      <tr>
+        <td class="text-right">Name:</td>
+        <td><%= @order.name %></td>
+        <td class="text-right">Exp Date:</td>
+        <td><%= @order.exp_date %></td>
+      </tr>
+      <tr>
+        <td class="text-right">Email:</td>
+        <td><%= @order.email %></td>
+        <td class="text-right">CCV Code:</td>
+        <td><%= @order.cvv %></td>
+      </tr>
+      <tr>
+        <td class="text-right">Address:</td>
+        <td><%= @order.street %> <%= @order.city %>, <%= @order.state %> <%= @order.zip %></td>
+        <td class="text-right">Billing Zip:</td>
+        <td><%= @order.billing_zip %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<h4>Order Details</h4>
+<div class="row">
+  <div class="col-md-10 .col-md-offset-1">
+    <table class="table">
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Total Price</th>
+        <th>Status</th>
+      </tr>
+      <% total = 0 %>
+      <% @order_items.each do |order_item| %>
+        <% if order_item.order_id == @order.id %>
+          <tr>
+            <td class="col-sm-4"><%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %></td>
+            <td class="col-sm-1"><%= order_item.quantity %></td>
+            <td class="col-sm-2"><%= number_to_currency(order_item.product.price) %></td>
+            <td class="col-sm-2"><%= number_to_currency(order_item.revenue) %></td>
+            <% total += order_item.revenue %>
+            <td class="col-sm-3"><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      <tfoot>
+        <tr>
+          <td>TOTAL</td>
+          <td></td>
+          <td></td>
+          <td><strong><%= number_to_currency(total) %></strong></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
 
 <%= link_to "More Shopping", root_path %>

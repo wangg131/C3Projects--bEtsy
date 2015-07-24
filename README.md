@@ -1,4 +1,8 @@
-Kari, Carly, Shanna, and marleigh. Gonna rock this.  # C3Projects--bEtsy
+Kari, Carly, Shanna, and marleigh. Gonna rock this.  
+# Heroku Link
+- https://shop-primo.herokuapp.com/
+
+# C3Projects--bEtsy
 [b]Etsy will be an online store where a wide variety of products can be listed and sold by any user. In this project we will focus on reinforcing the major components of Rails, Model Validation, as well as introducing some more complex logic such as user authentication.
 
 #### In this project you will cover

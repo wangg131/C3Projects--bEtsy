@@ -1,9 +1,7 @@
 class Review < ActiveRecord::Base
-  # Scopes 
-  
-  # Validations 
+  # Validations
   validates :content, presence: true
-  validates :rating, presence: true
+  validates :rating, presence: true, numericality: { only_integer: true }
   validates :product_id, presence: true
 
   # Associations
