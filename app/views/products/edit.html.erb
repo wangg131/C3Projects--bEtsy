@@ -15,10 +15,11 @@
 
       <%= f.text_field :photo_url %>
 
-      <%= f.collection_check_boxes( :categories, @categories, :id, :name, active:  @product.categories.include?(@product.id)) %>
-
       <%= f.hidden_field :merchant_id, :value => params[:merchant_id] %>
 
+      <%= f.collection_check_boxes :categories, @categories, :id, :name%>
+
   </fieldset>
+
   <%= f.submit %>
 <% end %>
