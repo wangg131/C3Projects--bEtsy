@@ -15,9 +15,6 @@ Rails.application.routes.draw do
   resources :products do
     resources :reviews, only: [:new, :create]
   end
-  # resources :carts, only: [:show]
-  # resources :categories
-  # resources :guests
 
   get '/login'  =>  'sessions#new', as: 'login'
   post '/login' =>  'sessions#create'
@@ -28,7 +25,7 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :show]
   end
 
-  resources :categories, only: [:new, :create, :index, :show]
+  resources :categories, only: [:new, :create, :show]
 
   resources :orders, only: [:edit, :update, :show] do
     get :confirmation
@@ -45,11 +42,6 @@ Rails.application.routes.draw do
   post '/add_to_cart/:id' =>  'carts#add_to_cart', as: 'add_to_cart'
 
   resources :order_items
-  # resources :orders
-  # resources :payments
-  # resources :products
-  # resources :reviews
-  # resources :sessions
 
   # Example resource route with options:
   #   resources :products do

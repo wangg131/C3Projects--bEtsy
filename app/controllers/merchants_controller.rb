@@ -1,8 +1,5 @@
 class MerchantsController < ApplicationController
   before_action :require_login, only: [:dashboard]
-  def index
-
-  end
 
   def show
     @merchant = Merchant.find(params[:id])
@@ -26,20 +23,6 @@ class MerchantsController < ApplicationController
       flash.now[:error] = "Try again, account was not created."
       render :new
     end
-
-  end
-
-  def edit
-
-  end
-
-
-  def update
-
-  end
-
-  def destroy
-
   end
 
   def dashboard

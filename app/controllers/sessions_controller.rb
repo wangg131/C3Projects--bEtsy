@@ -1,7 +1,4 @@
 class SessionsController < ApplicationController
-  def new
-
-  end
 
   def create
     @merchant = Merchant.find_by(email: params[:session][:email])

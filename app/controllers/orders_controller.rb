@@ -1,8 +1,6 @@
 class OrdersController < ApplicationController
   before_action :require_login, except: [:edit, :update, :confirmation]
 
-  #before_action :restrict_across_merchant, except: [:edit, :update, :confirmation]
-
   def index
     if session[:merchant_id] == params[:merchant_id].to_i
       @merchant = Merchant.find(params[:merchant_id])
@@ -64,10 +62,6 @@ class OrdersController < ApplicationController
     @redacted_cc = redacted_cc(@order.credit_card)
   end
 
-  def create
-    # order gets created initially withOUT payment details (this happens at checkout)
-  end
-
   def edit
     # every time a new order_item is added/removed from the cart
     # when the customer adds their payment details
@@ -100,18 +94,12 @@ class OrdersController < ApplicationController
     redirect_to order_confirmation_path(params[:id])
   end
 
-
-  def destroy
-    # if the customer 'clears' their cart ??? (need button for this)
-  end
-
   def confirmation
     @order = Order.find(params[:order_id])
     @order_items = @order.order_items
     @total = get_total(@order_items)
     @customer_info = get_customer_info(@order)
   end
-
 
   def get_total(order_items)
     order_items.inject(0) do |sum, i|
@@ -169,7 +157,6 @@ class OrdersController < ApplicationController
     return relevant_orders.uniq
   end
 
-
   def revenue(order_items, bool)
     revenue = 0
     order_items.each do |order_item|
@@ -179,6 +166,7 @@ class OrdersController < ApplicationController
     end
     return revenue
   end
+  
 ############################################################
   private
 

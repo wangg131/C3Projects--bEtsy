@@ -1,5 +1,4 @@
 class CartsController < ApplicationController
-
   def show
     @order_items = current_order.order_items
 
@@ -37,12 +36,6 @@ class CartsController < ApplicationController
       shipped: false,
       quantity: 1)
 
-    # @order.products << @order_item
     redirect_to '/cart'
   end
-
-
-#________________________________________________________________________________
-  private
-
 end
