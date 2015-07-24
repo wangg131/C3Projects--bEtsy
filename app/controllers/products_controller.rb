@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :require_login, except: [:index, :show]
+  before_action :check_product_active_status, only: [:show]
 
   def index
     # a guest or merchant can view all products with their details

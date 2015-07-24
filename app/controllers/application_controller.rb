@@ -24,6 +24,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_product_active_status
+    product = Product.find(params[:id])
+
+    unless product.active
+      flash[:error] = "Sorry, this is not an active product."
+
+      redirect_to root_path
+    end
+  end
+
   # def restrict_across_merchant
   #   unless session[:merchant_id] == params[:merchant_id]
 
