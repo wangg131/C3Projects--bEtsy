@@ -1,4 +1,28 @@
-Kari, Carly, Shanna, and marleigh. Gonna rock this.  # C3Projects--bEtsy
+Kari, Carly, Shanna, and marleigh. Gonna rock this.  
+
+Gems added for this project:
+
+gem 'bcrypt', '~> 3.1.7'
+
+gem 'bootstrap-sass'
+
+gem 'bootstrap_forms', '~> 2.0.0'
+
+gem 'better_errors'
+gem 'binding_of_caller'
+
+gem 'pg'
+
+gem 'pry'
+gem 'pry-rails'
+
+gem 'sqlite3'
+
+gem 'rspec-rails', '~> 3.0'
+
+
+
+# C3Projects--bEtsy
 [b]Etsy will be an online store where a wide variety of products can be listed and sold by any user. In this project we will focus on reinforcing the major components of Rails, Model Validation, as well as introducing some more complex logic such as user authentication.
 
 #### In this project you will cover
