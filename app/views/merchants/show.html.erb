@@ -1,13 +1,12 @@
 <h1><%= @merchant.name %></h1>
 
-<div class="products row">
-  <% @merchant_products.each do |product| %>
-    <div class="product-square col-sm-4">
-      <div class="product-image"><%= image_tag(product.photo_url) %></div>
-      <h3><%= link_to product.name, merchant_product_path(id: product.id, merchant_id: @merchant.id) %></h3>
-      <h4><%= number_to_currency(product.price) %> each</h4>
-      <p>Available: <%= product.stock %></p>
-      <p><%= product.description %></p>
-    </div>
-  <% end %>
-</div>
+<% @merchant_products.each do |product| %>
+  <div class="col-md-4">
+    <ul style="list-style: none;">
+      <li><div class="product-image thumbnail"><%= image_tag(product.photo_url) %></div></li>
+      <li><h3><%= link_to product.name, product_path(product.id) %></h3></li>
+      <li><h5><%= number_to_currency(product.price) %> each</h5></li>
+      <li><h5>Available: <%= product.stock %></h5></li>
+    </ul>
+  </div>
+<% end %>

@@ -4,7 +4,9 @@ class ProductsController < ApplicationController
 
   def index
     # a guest or merchant can view all products with their details
-    @products = Product.all
+    # @products = Product.all
+    @products = Product.where(active: true) 
+
     @order_item = current_order.order_items.new
     # a guest or merchant can view all products by category
   end
