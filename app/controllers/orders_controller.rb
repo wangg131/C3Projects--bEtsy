@@ -65,7 +65,7 @@ class OrdersController < ApplicationController
   def edit
     # every time a new order_item is added/removed from the cart
     # when the customer adds their payment details
-
+    # params[:id] is the order.id 
     if session[:order_id] == params[:id].to_i
       @order = Order.find(params[:id])
     else
@@ -166,7 +166,7 @@ class OrdersController < ApplicationController
     end
     return revenue
   end
-  
+
 ############################################################
   private
 
