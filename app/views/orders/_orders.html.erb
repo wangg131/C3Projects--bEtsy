@@ -69,7 +69,7 @@
             <td class="col-sm-2"><%= number_to_currency(order_item.revenue) %></td>
             <% total += order_item.revenue %>
             <td class="col-sm-2"><%= order_item.shipped ? "Shipped" : "Not Shipped" %></td>
-            <td class="col-sm-2"> <%= order_item.shipped ? (" ") : (link_to "Shipped", mark_shipped_path(params[:merchant_id], order_item.id), method: :patch, class: "btn btn-default") %> </td>
+            <td class="col-sm-2"> <%= order_item.shipped ? (" ") : (link_to "Shipped", mark_shipped_path(params[:merchant_id], order_item.id), method: :patch, class: "btn btn-success") %> </td>
           </tr>
         <% end %>
       <% end %>
