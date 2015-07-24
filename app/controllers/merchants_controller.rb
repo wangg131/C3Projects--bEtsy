@@ -7,7 +7,7 @@ class MerchantsController < ApplicationController
   def show
     @merchant = Merchant.find(params[:id])
 
-    @merchant_products = @merchant.products
+    @merchant_products = @merchant.products.where(active: true)
 
     render :show
   end

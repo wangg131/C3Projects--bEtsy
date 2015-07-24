@@ -20,7 +20,7 @@ class CategoriesController < ApplicationController
 
   def show
  
-    @products = Category.find(params[:id]).products 
+    @products = Category.find(params[:id]).products.where(active: true) 
   end
 
 
