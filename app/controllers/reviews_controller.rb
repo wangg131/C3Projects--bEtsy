@@ -1,5 +1,4 @@
 class ReviewsController < ApplicationController
-
   def create
     @review = Review.create(review_params)
 
@@ -19,7 +18,7 @@ class ReviewsController < ApplicationController
     params.require(:review).permit(:content, :rating, :product_id)
   end
 
- def product_params
+  def product_params
     params.require(:product).permit(:name, :description, :price, :stock, :active, :photo_url, :merchant_id, :category_id)
- end
+  end
 end
