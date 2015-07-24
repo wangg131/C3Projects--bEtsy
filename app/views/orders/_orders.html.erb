@@ -6,11 +6,6 @@
     <h4>Shipped: <%= number_to_currency(shipped_revenue)%></h4>
     <h4>Not Shipped: <%= number_to_currency(unshipped_revenue) %></h4>
   </div>
-
-  <!-- these totals aren't correct bc merchant.shipped is pulling all order items in an order
-  some of these order items do not belong to this particular merchant. maybe need to
-  change the shipped method? -->
-
   <div class="col-md-6">
     <h3>Total Number of Order Items: <%= (shipped_count + unshipped_count) %></h3>
     <h4>Shipped: <%= shipped_count %></h4>
