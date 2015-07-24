@@ -1,6 +1,6 @@
 class Merchant < ActiveRecord::Base
   # Validations
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true, format: {with: /@/}
   validates :password, presence: true
   validates :password_confirmation, presence: true
