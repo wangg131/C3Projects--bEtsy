@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :require_login, except: [:estimate, :edit, :update, :confirmation]
+  before_action :require_login, except: [:estimate, :results, :edit, :update, :confirmation]
 
   def index
     if session[:merchant_id] == params[:merchant_id].to_i
@@ -25,7 +25,24 @@ class OrdersController < ApplicationController
   end
 
   def estimate
-    render edit_order_path(params[:id])
+    @order_items = current_order.order_items
+    calc_order_total
+    redirect_to results_path if params[:estimate]
+  end
+
+  def results
+    @order_items = current_order.order_items
+    calc_order_total
+  end
+
+  def calc_order_total
+    @order_total = 0
+
+    @order_items.each do |order_item|
+      @order_total += order_item.revenue
+    end
+
+    return @order_total
   end
 
   def shipped
@@ -70,6 +87,8 @@ class OrdersController < ApplicationController
     # every time a new order_item is added/removed from the cart
     # when the customer adds their payment details
     # params[:id] is the order.id
+    @order_items = current_order.order_items
+    calc_order_total
     if session[:order_id] == params[:id].to_i
       @order = Order.find(params[:id])
     else
