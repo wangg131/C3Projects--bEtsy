@@ -37,11 +37,11 @@ class OrdersController < ApplicationController
       @package_size << product.box_size
     end
     if @package_size.include?("large")
-      @package_size = "large"
+      @package_size = [16, 12, 8]
     elsif @package_size.include?("medium")
-      @package_size = "medium"
+      @package_size = [12, 12, 12]
     else
-      @package_size = "small"
+      @package_size = [8, 8, 8]
     end
     redirect_to results_path if params[:estimate]
   end
@@ -49,7 +49,7 @@ class OrdersController < ApplicationController
   def results
     @order_items = current_order.order_items
     estimate_request = params[:estimate]
-    @shipment_response = HTTParty.get("http://localhost:3001/", :body => estimate_request.to_json )
+    @shipment_response = HTTParty.get("http://localhost:3001/", :body => estimate_request)
     calc_order_total
   end
 
