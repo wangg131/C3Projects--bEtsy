@@ -49,7 +49,7 @@ class OrdersController < ApplicationController
     estimate_request = params[:estimate]
     response = HTTParty.get(localhost:3001)
     calc_order_total
-raise
+    raise
   end
 
   def calc_order_total
