@@ -34,7 +34,17 @@ Rails.application.routes.draw do
     get :confirmation
   end
 
-  post 'orders/:id/estimate' => 'orders#estimate', as: 'estimate'
+  get 'orders/:id/estimate', to: 'orders#estimate', as: "estimate"
+  post 'orders/:id/results', to: 'orders#results', as: "results"
+
+  get "search/twitter" => 'tweets#search'
+post "search/twitter", to: "tweets#search"
+
+get "search/instagram" => 'instagrams#search'
+post "search/instagram", to: "instagrams#search"
+
+get "/search", to: "feeds#search", as: "search"
+
 
   get 'merchant/:merchant_id/orders/shipped' => 'orders#shipped', as: "orders_shipped"
   get 'merchant/:merchant_id/orders/unshipped' => 'orders#unshipped', as: "orders_unshipped"
