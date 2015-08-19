@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 20150819050827) do
     t.boolean  "active"
     t.string   "photo_url"
     t.integer  "merchant_id"
+    t.float    "weight"
+    t.string   "box_size"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

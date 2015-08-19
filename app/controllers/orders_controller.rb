@@ -27,12 +27,29 @@ class OrdersController < ApplicationController
   def estimate
     @order_items = current_order.order_items
     calc_order_total
+    @order = current_order
+    @total_weight = 0
+    @package_size = []
+    @order.products.each do |product|
+      @total_weight += product.weight
+      @package_size << product.box_size
+    end
+    if @package_size.include?("large")
+      @package_size = "large"
+    elsif @pacakge_size.include?("medium")
+      @package_size = "medium"
+    else
+      @package_size = "small"
+    end
     redirect_to results_path if params[:estimate]
   end
 
   def results
     @order_items = current_order.order_items
+    estimate_request = params[:estimate]
+    response = HTTParty.get(localhost:3001)
     calc_order_total
+raise
   end
 
   def calc_order_total
@@ -194,7 +211,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-  params.require(:order).permit(:status, :name, :email, :street, :city, :state, :zip, :credit_card, :exp_date, :cvv, :billing_zip)
+    params.require(:order).permit(:status, :name, :email, :street, :city, :state, :zip, :credit_card, :exp_date, :cvv, :billing_zip)
   end
 
   def redacted_cc(credit_card)

@@ -53,6 +53,9 @@
       <%= f.text_field :zip %>
     </div>
       <%= f.hidden_field :country, :value => 'US' %>
+      <%= f.hidden_field :box_size, :value => @package_size %>
+      <%= f.hidden_field :total_weight, :value => @total_weight %>
+
  </fieldset>
 
   <%= f.submit 'Get Estimate', class: 'btn btn-primary' %>
