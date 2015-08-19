@@ -49,8 +49,7 @@ class OrdersController < ApplicationController
   def results
     @order_items = current_order.order_items
     estimate_request = params[:estimate]
-    shipment = HTTParty.get("http://localhost:3001/", :body => estimate_request.to_json )
-    raise
+    @shipment_response = HTTParty.get("http://localhost:3001/", :body => estimate_request.to_json )
     calc_order_total
   end
 
