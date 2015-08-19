@@ -1,6 +1,5 @@
 <h3><%= @unit_total %> <%= @unit_total == 1 ? "Item" : "Items" %> in Your Cart</h3>
 
-
 <% if @order_items.count == 0 %>
   <p class="text-center">
     There are no items in your shopping cart.  Please <%= link_to "go back", root_path %> and add some items to your cart.
@@ -37,6 +36,9 @@
   </div>
 <% end %>
 
+
 <h3>USPS Delivery 1, $ Rate, $ Total Price <%= link_to "Select", edit_order_path(current_order.id), class: "btn btn-primary" %></h3>
 <h3>USPS Delivery 2, $ Rate, $ Total Price <%= link_to "Select", edit_order_path(current_order.id), class: "btn btn-primary" %></h3>
 <h3>UPS Delivery 1, $ Rate, $ Total Price <%= link_to "Select", edit_order_path(current_order.id), class: "btn btn-primary" %></h3>
+
+<%= @shipment_response %>
