@@ -1,3 +1,5 @@
+require 'httparty'
+
 class OrdersController < ApplicationController
   before_action :require_login, except: [:estimate, :results, :edit, :update, :confirmation]
 
@@ -36,7 +38,7 @@ class OrdersController < ApplicationController
     end
     if @package_size.include?("large")
       @package_size = "large"
-    elsif @pacakge_size.include?("medium")
+    elsif @package_size.include?("medium")
       @package_size = "medium"
     else
       @package_size = "small"
@@ -47,9 +49,8 @@ class OrdersController < ApplicationController
   def results
     @order_items = current_order.order_items
     estimate_request = params[:estimate]
-    response = HTTParty.get(localhost:3001)
+    response = HTTParty.get("https://localhost:3001/", :body => estimate_request )
     calc_order_total
-raise
   end
 
   def calc_order_total
