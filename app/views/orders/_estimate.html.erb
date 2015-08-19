@@ -1,6 +1,6 @@
 <h1>Get Shipping Estimate</h1>
 
-<%= bootstrap_form_for :estimate, url: estimate_path, :html => {:class => 'form-horizontal'} do |f| %>
+<%= bootstrap_form_for :estimate,:url => { :controller => 'application', :action => 'request_invite' } class: 'form-horizontal' do |f| %>
 <fieldset>
   <legend>Shipping Details</legend>
     <div class="col-md-8">

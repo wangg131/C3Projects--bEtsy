@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
   end
 
   def estimate
-    render :edit
+    render edit_order_path(params[:id])
   end
 
   def shipped
