@@ -30,9 +30,7 @@ Rails.application.routes.draw do
 
   resources :categories, only: [:new, :create, :show]
 
-  resources :orders, only: [:edit, :update, :show] do
-    get :confirmation
-  end
+  resources :orders, only: [:edit, :update, :show] 
 
   get 'orders/:id/estimate', to: 'orders#estimate', as: "estimate"
   post 'orders/:id/results', to: 'orders#results', as: "results"
