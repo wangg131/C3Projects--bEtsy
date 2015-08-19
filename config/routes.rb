@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
+
+
   resources :products do
     resources :reviews, only: [:new, :create]
   end
@@ -23,6 +25,7 @@ Rails.application.routes.draw do
     get :dashboard
     resources :products
     resources :orders, only: [:index, :show]
+
   end
 
   resources :categories, only: [:new, :create, :show]
@@ -30,6 +33,8 @@ Rails.application.routes.draw do
   resources :orders, only: [:edit, :update, :show] do
     get :confirmation
   end
+
+  post 'orders/:id/estimate' => 'orders#estimate', as: 'estimate'
 
   get 'merchant/:merchant_id/orders/shipped' => 'orders#shipped', as: "orders_shipped"
   get 'merchant/:merchant_id/orders/unshipped' => 'orders#unshipped', as: "orders_unshipped"
