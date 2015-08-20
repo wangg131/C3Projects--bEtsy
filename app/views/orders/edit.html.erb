@@ -45,95 +45,6 @@
   </div>
 <% end %>
 
-<h3><%= @unit_total %> <%= @unit_total == 1 ? "Item" : "Items" %> in Your Cart</h3>
-
-<% if @order_items.count == 0 %>
-  <p class="text-center">
-    There are no items in your shopping cart.  Please <%= link_to "go back", root_path %> and add some items to your cart.
-  </p>
-<% else %>
-  <div class="row">
-    <table class="table">
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>Name</th>
-        <th>Total</th>
-      </tr>
-      <% @order_items.each do |item| %>
-        <tr>
-          <td></td>
-          <td></td>
-          <td><%= image_tag(item.product.photo_url, class: "cart-thumbnail") %></td>
-
-          <td><%= link_to "#{item.product.name}", merchant_product_path(merchant_id: item.product.merchant_id, id: item.product.id) %></td>
-
-          <td><%= number_to_currency(item.revenue) %></td>
-        </tr>
-      <% end %>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><strong>Total before shipping: </strong></td>
-        <td><strong><%= number_to_currency(@order_total) %></strong></td>
-      </tr>
-    </table>
-  </div>
-<% end %>
-<div class="col-sm-3">
-  <h3 class="primo">UPS</h3>
-  <table class ="table">
-    <thead>
-      <th>
-        Service
-      </th>
-      <th>
-        Price
-      </th>
-      <tbody>
-        <% @ups.each do |rate| %>
-        <tr>
-          <td>
-            <%= rate[0] %>
-          </td>
-          <td>
-            $<%= rate[1].to_f/100 %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </thead>
-  </table>
-</div>
-
-<div class="col-sm-3">
-  <h3 class="primo">USPS</h3>
-  <table class ="table">
-    <thead>
-      <th>
-        Service
-      </th>
-      <th>
-        Price
-      </th>
-      <tbody>
-        <% @usps.each do |rate| %>
-        <tr>
-          <td>
-            <%= rate[0] %>
-          </td>
-          <td>
-            $<%= rate[1].to_f/100 %>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </thead>
-  </table>
-</div>
-</div>
 
 <%= bootstrap_form_for @order, url: order_path(params[:id]), :html => {:class => 'form-horizontal'} do |f| %>
 <fieldset>
@@ -154,3 +65,5 @@
 
   <%= f.submit 'Place Order', :data => {:confirm => 'Place Order Now?'}, class: 'btn btn-primary' %>
 <% end %>
+
+<%= raise %>

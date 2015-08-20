@@ -44,6 +44,15 @@
 <fieldset>
   <legend>Shipping Details</legend>
     <div class="col-md-8">
+      <%= f.text_field :name %>
+    </div>
+    <div class="col-md-8">
+      <%= f.text_field :email %>
+    </div>
+    <div class="col-md-8">
+      <%= f.text_field :street %>
+    </div>
+    <div class="col-md-8">
       <%= f.text_field :city %>
     </div>
     <div class="col-md-8">
@@ -55,10 +64,7 @@
       <%= f.hidden_field :country, :value => 'US' %>
       <%= f.hidden_field :box_size, :value => @package_size %>
       <%= f.hidden_field :total_weight, :value => @total_weight %>
-
  </fieldset>
+
   <%= f.submit 'Get Estimate', class: 'btn btn-primary' %>
-  <% if params[:estimate_button] %>
-    <%= @shipment_response %>
-  <% end %>
 <% end %>

@@ -1,7 +1,7 @@
 require 'httparty'
 
 class OrdersController < ApplicationController
-  before_action :require_login, except: [:estimate, :results, :edit, :update, :confirmation]
+  before_action :require_login, except: [:estimate, :results, :edit, :update, :confirmation, :create_estimate]
 
   def index
     if session[:merchant_id] == params[:merchant_id].to_i
@@ -46,13 +46,21 @@ class OrdersController < ApplicationController
   end
 
   def results
+    estimate = params["estimate"]
+    current_order.update!(name: estimate["name"], email: estimate["email"], street: estimate["street"], city: estimate["city"], state: estimate["state"], zip: estimate["zip"])
     @order_items = current_order.order_items
     estimate_request = params[:estimate]
     @shipment_response = HTTParty.get("http://localhost:3001/", :body => estimate_request)
     @usps = @shipment_response[1]
     @ups = @shipment_response[0]
     calc_order_total
+  end
 
+  def create_estimate
+    @order_items = current_order.order_items
+    calc_order_total
+    @order = Order.find(params[:id])
+    render :edit
   end
 
   def calc_order_total
