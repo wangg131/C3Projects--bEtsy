@@ -30,19 +30,12 @@ Rails.application.routes.draw do
 
   resources :categories, only: [:new, :create, :show]
 
-  resources :orders, only: [:edit, :update, :show] 
+  resources :orders, only: [:edit, :update, :show]
 
   get 'orders/:id/estimate', to: 'orders#estimate', as: "estimate"
   post 'orders/:id/results', to: 'orders#results', as: "results"
-
-  get "search/twitter" => 'tweets#search'
-post "search/twitter", to: "tweets#search"
-
-get "search/instagram" => 'instagrams#search'
-post "search/instagram", to: "instagrams#search"
-
-get "/search", to: "feeds#search", as: "search"
-
+  # post 'orders/:id/create-estimate', to:'orders#create_estimate', as: 'create-estimate'
+  get 'orders/:id/confirmation', to: 'orders#confirmation', as: 'order_confirmation'
 
   get 'merchant/:merchant_id/orders/shipped' => 'orders#shipped', as: "orders_shipped"
   get 'merchant/:merchant_id/orders/unshipped' => 'orders#unshipped', as: "orders_unshipped"

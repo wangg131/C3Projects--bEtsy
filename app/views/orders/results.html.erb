@@ -36,6 +36,8 @@
   </div>
 <% end %>
 
+
+<%= form_for :service_info, url: create_estimate_path do |f|  %>
 <div class="col-sm-3">
   <h3 class="primo">UPS</h3>
   <table class ="table table-border">
@@ -54,6 +56,9 @@
           </td>
           <td>
             $<%= rate[1].to_f/100 %>
+          </td>
+          <td>
+            <%= f.radio_button :service, rate %>
           </td>
         </tr>
         <% end %>
@@ -81,9 +86,16 @@
           <td>
             $<%= rate[1].to_f/100 %>
           </td>
+          <td>
+            <%= radio_button_tag :service, rate %>
+          </td>
         </tr>
         <% end %>
       </tbody>
     </thead>
   </table>
 </div>
+<br>
+<%= f.hidden_field :estimate, :value => @estimate %>
+<%= f.submit 'Continue to Payment', class: 'btn btn-primary below' %>
+<% end %>
