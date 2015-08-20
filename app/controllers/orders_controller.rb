@@ -46,11 +46,11 @@ class OrdersController < ApplicationController
   end
 
   def results
-    estimate = params["estimate"]
-    current_order.update!(name: estimate["name"], email: estimate["email"], street: estimate["street"], city: estimate["city"], state: estimate["state"], zip: estimate["zip"])
+    @estimate = params["estimate"]
+    current_order.update!(name: @estimate["name"], email: @estimate["email"], street: @estimate["street"], city: @estimate["city"], state: @estimate["state"], zip: @estimate["zip"])
     @order_items = current_order.order_items
-    estimate_request = params[:estimate]
-    @shipment_response = HTTParty.get("http://localhost:3001/", :body => estimate_request)
+    # estimate_request = params[:estimate]
+    @shipment_response = HTTParty.get("http://localhost:3001/", :body => @estimate)
     @usps = @shipment_response[1]
     @ups = @shipment_response[0]
     calc_order_total
@@ -60,7 +60,7 @@ class OrdersController < ApplicationController
     @order_items = current_order.order_items
     calc_order_total
     @order = Order.find(params[:id])
-    render :edit
+    redirect_to edit_order_path
   end
 
   def calc_order_total
@@ -115,6 +115,7 @@ class OrdersController < ApplicationController
     # every time a new order_item is added/removed from the cart
     # when the customer adds their payment details
     # params[:id] is the order.id
+    # @estimate = params["service_info"]["estimate"]
     @order_items = current_order.order_items
     calc_order_total
     if session[:order_id] == params[:id].to_i
@@ -124,6 +125,7 @@ class OrdersController < ApplicationController
 
       redirect_to root_path
     end
+    raise
   end
 
   def update
@@ -146,7 +148,7 @@ class OrdersController < ApplicationController
   end
 
   def confirmation
-    @order = Order.find(params[:order_id])
+    @order = current_order
     @order_items = @order.order_items
     @total = get_total(@order_items)
     @customer_info = get_customer_info(@order)
