@@ -118,7 +118,7 @@ class OrdersController < ApplicationController
     # when the customer adds their payment details
     # params[:id] is the order.id
     params["service_info"]["estimate"] = JSON.parse(params["service_info"]["estimate"])
-    @estimate = params["service_info"]["estimate"]
+    @shipping_info = params
     @order_items = current_order.order_items
     calc_order_total
     if session[:order_id] == params[:id].to_i
@@ -128,7 +128,6 @@ class OrdersController < ApplicationController
 
       redirect_to root_path
     end
-
   end
 
   def update

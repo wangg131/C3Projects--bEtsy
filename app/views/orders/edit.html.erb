@@ -61,7 +61,7 @@
     <div class="col-md-8">
       <%= f.text_field :billing_zip %>
     </div>
-    <%= f.hidden_field :estimate, :value => @estimate.to_json %>
+    <%= f.hidden_field :estimate, :value => @shipping_info.to_json %>
  </fieldset>
 
   <%= f.submit 'Place Order', :data => {:confirm => 'Place Order Now?'}, class: 'btn btn-primary' %>
