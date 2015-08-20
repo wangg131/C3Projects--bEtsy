@@ -46,10 +46,10 @@ class OrdersController < ApplicationController
   end
 
   def results
+    @order = Order.find(params[:id])
     @estimate = params["estimate"]
-    current_order.update!(name: @estimate["name"], email: @estimate["email"], street: @estimate["street"], city: @estimate["city"], state: @estimate["state"], zip: @estimate["zip"])
+    @order.update!(name: @estimate["name"], email: @estimate["email"], street: @estimate["street"], city: @estimate["city"], state: @estimate["state"], zip: @estimate["zip"])
     @order_items = current_order.order_items
-    # estimate_request = params[:estimate]
     @shipment_response = HTTParty.get("http://localhost:3001/", :body => @estimate)
     @usps = @shipment_response[1]
     @ups = @shipment_response[0]
@@ -57,10 +57,12 @@ class OrdersController < ApplicationController
   end
 
   def create_estimate
+    @estimate = params["service_info"]["estimate"]
     @order_items = current_order.order_items
     calc_order_total
     @order = Order.find(params[:id])
-    redirect_to edit_order_path
+    edit
+    render :edit
   end
 
   def calc_order_total
@@ -115,7 +117,7 @@ class OrdersController < ApplicationController
     # every time a new order_item is added/removed from the cart
     # when the customer adds their payment details
     # params[:id] is the order.id
-    # @estimate = params["service_info"]["estimate"]
+    @estimate = params["service_info"]["estimate"]
     @order_items = current_order.order_items
     calc_order_total
     if session[:order_id] == params[:id].to_i
@@ -125,14 +127,13 @@ class OrdersController < ApplicationController
 
       redirect_to root_path
     end
-    raise
   end
 
   def update
     @order = Order.find(params[:id])
     @order.update(order_params)
     @order.update(status: "complete")
-
+    raise
     @order.order_items.each do |order_item|
       product = Product.find(order_item.product_id)
       previous_stock = product[:stock]
@@ -148,7 +149,7 @@ class OrdersController < ApplicationController
   end
 
   def confirmation
-    @order = current_order
+    @order = Order.find(params[:id])
     @order_items = @order.order_items
     @total = get_total(@order_items)
     @customer_info = get_customer_info(@order)
