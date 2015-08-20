@@ -43,7 +43,6 @@ class OrdersController < ApplicationController
     else
       @package_size = "small"
     end
-    render :action => 'estimate' if params[:estimate_button]
   end
 
   def results
@@ -53,7 +52,7 @@ class OrdersController < ApplicationController
     @usps = @shipment_response[1]
     @ups = @shipment_response[0]
     calc_order_total
-    
+
   end
 
   def calc_order_total
