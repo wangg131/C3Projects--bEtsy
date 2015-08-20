@@ -37,11 +37,11 @@ class OrdersController < ApplicationController
       @package_size << product.box_size
     end
     if @package_size.include?("large")
-      @package_size = [16, 12, 8]
+      @package_size = "large"
     elsif @package_size.include?("medium")
-      @package_size = [12, 12, 12]
+      @package_size = "medium"
     else
-      @package_size = [8, 8, 8]
+      @package_size = "small"
     end
     redirect_to results_path if params[:estimate]
   end
