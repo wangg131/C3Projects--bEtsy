@@ -96,6 +96,7 @@
   </table>
 </div>
 <br>
-<%= f.hidden_field :estimate, :value => @estimate %>
+<%= f.hidden_field :estimate, :value => @estimate.to_json %>
+
 <%= f.submit 'Continue to Payment', class: 'btn btn-primary below' %>
 <% end %>

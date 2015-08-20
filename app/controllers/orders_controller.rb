@@ -57,7 +57,7 @@ class OrdersController < ApplicationController
   end
 
   def create_estimate
-    @estimate = params["service_info"]["estimate"]
+    @estimate = JSON.parse(params["service_info"]["estimate"])
     @order_items = current_order.order_items
     calc_order_total
     @order = Order.find(params[:id])
@@ -117,6 +117,7 @@ class OrdersController < ApplicationController
     # every time a new order_item is added/removed from the cart
     # when the customer adds their payment details
     # params[:id] is the order.id
+    params["service_info"]["estimate"] = JSON.parse(params["service_info"]["estimate"])
     @estimate = params["service_info"]["estimate"]
     @order_items = current_order.order_items
     calc_order_total
@@ -127,13 +128,14 @@ class OrdersController < ApplicationController
 
       redirect_to root_path
     end
+
   end
 
   def update
     @order = Order.find(params[:id])
     @order.update(order_params)
     @order.update(status: "complete")
-    raise
+
     @order.order_items.each do |order_item|
       product = Product.find(order_item.product_id)
       previous_stock = product[:stock]
@@ -145,7 +147,13 @@ class OrdersController < ApplicationController
 
     session[:order_id] = nil # this clears the cart after you've checked out
 
+    params["order"]["estimate"] = JSON.parse(params["order"]["estimate"])
+    @shipping_details = params
+raise
+    HTTParty.post("http://localhost:3001/save", :body => @shipping_details)
+
     redirect_to order_confirmation_path(params[:id])
+
   end
 
   def confirmation
