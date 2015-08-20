@@ -106,3 +106,30 @@ ul li {
 .thumbnail {
   margin-top: 20px;
 }
+
+.col-sm-3 table{
+  margin-top: -15px;
+}
+
+.col-sm-3 td{
+  height: 30px;
+  padding: 10px;
+}
+
+.col-sm-3 tr:nth-child(even){
+  background-color: #FFF0FB;
+}
+
+.col-sm-3 th{
+  padding: 10px;
+}
+
+.col-sm-3 h3{
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.primo {
+  background-color: #F328D4;
+}

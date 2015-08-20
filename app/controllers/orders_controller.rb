@@ -43,14 +43,16 @@ class OrdersController < ApplicationController
     else
       @package_size = "small"
     end
-    redirect_to results_path if params[:estimate]
   end
 
   def results
     @order_items = current_order.order_items
     estimate_request = params[:estimate]
     @shipment_response = HTTParty.get("http://localhost:3001/", :body => estimate_request)
+    @usps = @shipment_response[1]
+    @ups = @shipment_response[0]
     calc_order_total
+
   end
 
   def calc_order_total
@@ -218,4 +220,5 @@ class OrdersController < ApplicationController
   def redacted_cc(credit_card)
     credit_card.chars.last(4).join
   end
+
 end

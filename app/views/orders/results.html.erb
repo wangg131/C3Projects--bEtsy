@@ -36,9 +36,54 @@
   </div>
 <% end %>
 
+<div class="col-sm-3">
+  <h3 class="primo">UPS</h3>
+  <table class ="table table-border">
+    <thead>
+      <th>
+        Service
+      </th>
+      <th>
+        Price
+      </th>
+      <tbody>
+        <% @ups.each do |rate| %>
+        <tr>
+          <td>
+            <%= rate[0] %>
+          </td>
+          <td>
+            $<%= rate[1].to_f/100 %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </thead>
+  </table>
+</div>
 
-<h3>USPS Delivery 1, $ Rate, $ Total Price <%= link_to "Select", edit_order_path(current_order.id), class: "btn btn-primary" %></h3>
-<h3>USPS Delivery 2, $ Rate, $ Total Price <%= link_to "Select", edit_order_path(current_order.id), class: "btn btn-primary" %></h3>
-<h3>UPS Delivery 1, $ Rate, $ Total Price <%= link_to "Select", edit_order_path(current_order.id), class: "btn btn-primary" %></h3>
-
-<%= @shipment_response %>
+<div class="col-sm-3">
+  <h3 class="primo">USPS</h3>
+  <table class ="table table-border">
+    <thead>
+      <th>
+        Service
+      </th>
+      <th>
+        Price
+      </th>
+      <tbody>
+        <% @usps.each do |rate| %>
+        <tr>
+          <td>
+            <%= rate[0] %>
+          </td>
+          <td>
+            $<%= rate[1].to_f/100 %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </thead>
+  </table>
+</div>
