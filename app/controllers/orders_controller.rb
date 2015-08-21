@@ -51,7 +51,9 @@ class OrdersController < ApplicationController
     @estimate = params["estimate"]
     @order.update!(name: @estimate["name"], email: @estimate["email"], street: @estimate["street"], city: @estimate["city"], state: @estimate["state"], zip: @estimate["zip"])
     @order_items = current_order.order_items
-    @shipment_response = HTTParty.get("http://localhost:3001/", :body => @estimate)
+    @shipment_response = HTTParty.get("http://shipyostuff.herokuapp.com/", :body => @estimate)
+    # for heroku: http://shipyostuff.herokuapp.com/
+    # for localhost: http://localhost:3001/
     if @shipment_response.include?("message")
       flash[:error] = @shipment_response["message"]
       redirect_to estimate_path
@@ -162,7 +164,9 @@ class OrdersController < ApplicationController
     update_shipping = @shipping_details["order"]["estimate"]["service"].split(" ").pop
     update_shipping2 = update_shipping.to_f/100
     @order.update!(ship_price: update_shipping2)
-    HTTParty.post("http://localhost:3001/save", :body => @shipping_details)
+    HTTParty.post("http://shipyostuff.herokuapp.com/save", :body => @shipping_details)
+    # heroku url http://shipyostuff.herokuapp.com/save
+    # localhost url http://localhost:3001/save
 
     redirect_to order_confirmation_path(params[:id])
 
