@@ -56,7 +56,8 @@
       <%= f.text_field :city %>
     </div>
     <div class="col-md-8">
-      <%= f.text_field :state %>
+      <%= f.select :state, options_for_select(us_states),
+                  class: 'form-control' %>
     </div>
     <div class="col-md-8">
       <%= f.text_field :zip %>
