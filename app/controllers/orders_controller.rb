@@ -148,7 +148,7 @@ class OrdersController < ApplicationController
 
     params["order"]["estimate"] = JSON.parse(params["order"]["estimate"])
     @shipping_details = params
-raise
+
     HTTParty.post("http://localhost:3001/save", :body => @shipping_details)
 
     redirect_to order_confirmation_path(params[:id])
