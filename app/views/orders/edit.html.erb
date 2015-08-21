@@ -32,14 +32,14 @@
           <td></td>
           <td></td>
           <td>Shipping & Handling</td>
-          <td> </td>
+          <td>$<%= @shipping_price %></td>
       </tr>
       <tr>
         <td></td>
         <td></td>
         <td></td>
         <td><strong>Total: </strong></td>
-        <td><strong><%= number_to_currency(@order_total) %></strong></td>
+        <td><strong>$<%= @order_with_shipping %></strong></td>
       </tr>
     </table>
   </div>
@@ -61,7 +61,8 @@
     <div class="col-md-8">
       <%= f.text_field :billing_zip %>
     </div>
-    <%= f.hidden_field :estimate, :value => @shipping_info.to_json %>
+      <%= f.hidden_field :estimate, :value => @shipping_info.to_json %>
+      <%= f.hidden_field :order, :value => @order_with_shipping %>
  </fieldset>
 
   <%= f.submit 'Place Order', :data => {:confirm => 'Place Order Now?'}, class: 'btn btn-primary' %>

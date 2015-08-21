@@ -62,11 +62,12 @@
       <% end %>
       <tfoot>
         <tr>
-          <td>TOTAL</td>
+          <td>TOTAL WITH SHIPPING</td>
           <td></td>
           <td></td>
-          <td><strong><%= number_to_currency(total) %></strong></td>
+          <td><strong>$<%= @order.ship_price + total %></strong></td>
           <td></td>
+
         </tr>
       </tfoot>
     </table>

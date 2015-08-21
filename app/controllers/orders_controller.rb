@@ -43,6 +43,7 @@ class OrdersController < ApplicationController
     else
       @package_size = "small"
     end
+
   end
 
   def results
@@ -59,12 +60,14 @@ class OrdersController < ApplicationController
       @ups = @shipment_response[0]
       calc_order_total
     end
+
   end
 
   def create_estimate
     @estimate = JSON.parse(params["service_info"]["estimate"])
     @order_items = current_order.order_items
     calc_order_total
+    # @order_with_shipping = calc_order_total + @shipping_price
     @order = Order.find(params[:id])
     edit
     render :edit
@@ -124,8 +127,10 @@ class OrdersController < ApplicationController
     # params[:id] is the order.id
     params["service_info"]["estimate"] = JSON.parse(params["service_info"]["estimate"])
     @shipping_info = params
+    shipping_array = @shipping_info["service"].split(" ")
+    @shipping_price = (shipping_array.pop.to_f)/100
     @order_items = current_order.order_items
-    calc_order_total
+    @order_with_shipping = calc_order_total + @shipping_price
     if session[:order_id] == params[:id].to_i
       @order = Order.find(params[:id])
     else
@@ -140,6 +145,7 @@ class OrdersController < ApplicationController
     @order.update(order_params)
     @order.update(status: "complete")
 
+
     @order.order_items.each do |order_item|
       product = Product.find(order_item.product_id)
       previous_stock = product[:stock]
@@ -153,7 +159,9 @@ class OrdersController < ApplicationController
 
     params["order"]["estimate"] = JSON.parse(params["order"]["estimate"])
     @shipping_details = params
-
+    update_shipping = @shipping_details["order"]["estimate"]["service"].split(" ").pop
+    update_shipping2 = update_shipping.to_f/100
+    @order.update!(ship_price: update_shipping2)
     HTTParty.post("http://localhost:3001/save", :body => @shipping_details)
 
     redirect_to order_confirmation_path(params[:id])
@@ -163,8 +171,9 @@ class OrdersController < ApplicationController
   def confirmation
     @order = Order.find(params[:id])
     @order_items = @order.order_items
-    @total = get_total(@order_items)
+
     @customer_info = get_customer_info(@order)
+
   end
 
   def get_total(order_items)
