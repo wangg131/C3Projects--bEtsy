@@ -51,7 +51,7 @@ class OrdersController < ApplicationController
     @order.update!(name: @estimate["name"], email: @estimate["email"], street: @estimate["street"], city: @estimate["city"], state: @estimate["state"], zip: @estimate["zip"])
     @order_items = current_order.order_items
     @shipment_response = HTTParty.get("http://localhost:3001/", :body => @estimate)
-    if @shipment_response["message"]
+    if @shipment_response.include?("message")
       flash[:error] = @shipment_response["message"]
       redirect_to estimate_path
     else
