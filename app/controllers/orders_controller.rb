@@ -129,8 +129,14 @@ class OrdersController < ApplicationController
     # params[:id] is the order.id
     params["service_info"]["estimate"] = JSON.parse(params["service_info"]["estimate"])
     @shipping_info = params
-    shipping_array = @shipping_info["service"].split(" ")
-    @shipping_price = (shipping_array.pop.to_f)/100
+    if @shipping_info["service_info"]["service"].include?("UPS")
+      shipping_array = @shipping_info["service_info"]["service"].split(" ")
+      shipping_array.pop
+      @shipping_price = (shipping_array.pop.to_f)/100
+    else
+      shipping_array = @shipping_info["service"].split(" ")
+      @shipping_price = (shipping_array.pop.to_f)/100
+    end
     @order_items = current_order.order_items
     @order_with_shipping = calc_order_total + @shipping_price
     if session[:order_id] == params[:id].to_i
