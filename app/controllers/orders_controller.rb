@@ -51,9 +51,14 @@ class OrdersController < ApplicationController
     @order.update!(name: @estimate["name"], email: @estimate["email"], street: @estimate["street"], city: @estimate["city"], state: @estimate["state"], zip: @estimate["zip"])
     @order_items = current_order.order_items
     @shipment_response = HTTParty.get("http://localhost:3001/", :body => @estimate)
-    @usps = @shipment_response[1]
-    @ups = @shipment_response[0]
-    calc_order_total
+    if @shipment_response["message"]
+      flash[:error] = @shipment_response["message"]
+      redirect_to estimate_path
+    else
+      @usps = @shipment_response[1]
+      @ups = @shipment_response[0]
+      calc_order_total
+    end
   end
 
   def create_estimate
