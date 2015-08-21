@@ -48,6 +48,9 @@
       <th>
         Price
       </th>
+      <th>
+        Estimated Delivery
+      </th>
       <tbody>
         <% @ups.each do |rate| %>
         <tr>
@@ -56,6 +59,13 @@
           </td>
           <td>
             $<%= rate[1].to_f/100 %>
+          </td>
+          <td>
+            <% if rate[2] %>
+            <%= DateTime.parse(rate[2]).strftime('%D') %>
+            <% else %>
+            Not available
+            <% end %>
           </td>
           <td>
             <%= f.radio_button :service, rate %>
